@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/global.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
+
 import '../../core/utils/enums.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../data/model/trip_model.dart';
@@ -48,9 +50,9 @@ class SeatsCubit extends Cubit<SeatsStates> {
 
   Future<void> unSelectSeats(List<SeatModel> seatModel) async {
     List<int> apiList=[];
-    seatModel.forEach((element) {
+    for (var element in seatModel) {
       apiList.add(element.id!);
-    });
+    }
 
     if(seatModel.isNotEmpty){
     (await tripsRepo.unSelectSeats(apiList)).fold((l) {
@@ -139,38 +141,18 @@ class SeatsCubit extends Cubit<SeatsStates> {
  timerAfterResume({required int repeatTime,required Duration? time,required Duration? extraTime}){
     DateTime? start=DataStore.instance.startTime;
     DateTime? resume=DataStore.instance.resumeTime;
-    print('start');
-    print(start);
-    print('resume');
-    print(resume);
-    print('diff');
-    print(resume!.difference(start!)<Duration(minutes: 5));
-    if(resume.difference(start)<Duration(minutes: 5)&&repeatTime!=1 ){
+    if(resume!.difference(start!)<const Duration(minutes: 5)&&repeatTime!=1 ){
       Duration? newTimer = resume.difference(start);
-      print('newTimer diff');
-      print(newTimer);
-      print('sec in cache');
 
      var newTimer2 = time!-newTimer;
       List<String> components2 = newTimer2.toString().split(':');
      seconds=Duration(minutes:int.parse(components2[1]),seconds: int.parse(components2[2].split('.').first));
-     print('newTimer2');
-     print(newTimer2);
-     print('seconds');
-     print(seconds);
     }
-    if(resume.difference(start)<Duration(minutes: 3)&&repeatTime==1 ){
+    if(resume.difference(start)<const Duration(minutes: 3)&&repeatTime==1 ){
       Duration? newTimer = resume.difference(start);
-      print('newTimer diff');
-      print(newTimer);
-      print('sec in cache');
      var newTimer2 = extraTime!-newTimer;
       List<String> components2 = newTimer2.toString().split(':');
      seconds=Duration(minutes:int.parse(components2[1]),seconds: int.parse(components2[2].split('.').first));
-     print('newTimer2');
-     print(newTimer2);
-     print('seconds');
-     print(seconds);
     }
  }
 

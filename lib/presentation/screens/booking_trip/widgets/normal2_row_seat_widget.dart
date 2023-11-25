@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/presentation/screens/booking_trip/widgets/seat_widget.dart';
+
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 
 class NormalRowSeatWidget extends StatelessWidget {

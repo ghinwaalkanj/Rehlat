@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/style/app_colors.dart';
 import 'package:trips/presentation/style/app_text_style.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/dialog/action_alert_dialog.dart';

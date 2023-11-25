@@ -5,15 +5,14 @@ import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/cubit/home/home_cubit.dart';
 import 'package:trips/cubit/main/main_cubit.dart';
+
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/custom_button.dart';
 import '../../../common_widgets/dialog/error_dialog.dart';
-import '../../../common_widgets/time_over_dialog.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 import '../screens/fill_passengers_info.dart';
 
@@ -75,8 +74,11 @@ class PriceContainer extends StatelessWidget {
                     color: Colors.white,
                     fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
                 onPressed: () {
-                  if(context.read<SeatsCubit>().seatsIds.length.toString()==context.read<HomeCubit>().passengers)AppRouter.navigateTo(context: context, destination: const PassengersInfoScreens());
-                  else ErrorDialog.openDialog(context, 'selected_seats_validate'.translate());
+                  if(context.read<SeatsCubit>().seatsIds.length.toString()==context.read<HomeCubit>().passengers) {
+                    AppRouter.navigateTo(context: context, destination: const PassengersInfoScreens());
+                  } else {
+                    ErrorDialog.openDialog(context, 'selected_seats_validate'.translate());
+                  }
                 },),
             ],
           ),

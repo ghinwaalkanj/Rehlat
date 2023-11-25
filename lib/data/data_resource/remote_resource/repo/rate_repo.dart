@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import '../../../../domain/models/profile_param.dart';
+import 'package:dio/dio.dart';
+
 import '../../../model/trip_model.dart';
 import '../api_handler/base_api_client.dart';
 import '../links.dart';
-import 'package:dio/dio.dart';
 
 class RateRepo {
 

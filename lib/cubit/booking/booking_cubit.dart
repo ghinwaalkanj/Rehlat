@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
+
+import '../../core/utils/utils_functions.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../data/model/booking_trip_model.dart';
 import 'booking_states.dart';
@@ -14,6 +18,9 @@ import 'booking_states.dart';
   List confirmedList=[];
   List tempList=[];
   List historyList=[];
+  String? blockedDuration;
+  Headers? verifyHeaders;
+
 
   void changeBookingPage(int pageIndex){
     index=pageIndex;
@@ -44,12 +51,17 @@ import 'booking_states.dart';
 
     confirmReservation(BookingTripModel bookingTripModel,String code) async {
        emit(LoadingConfirmReservationState());
-      (await tripsRepo.confirmReservation(bookingId: bookingTripModel.id!,code: code)).fold((l) => emit(ErrorConfirmReservationState(error: l)),
+      (await tripsRepo.confirmReservation(bookingId: bookingTripModel.id!,code: code,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) => emit(ErrorConfirmReservationState(error: l)),
               (r) {
             emit(SuccessConfirmReservationState());
             tempList.remove(bookingTripModel);
             confirmedList.insert(0,bookingTripModel);
           });
+       if(verifyHeaders?['retry-after']?.first!=null){
+         blockedDuration=verifyHeaders!['retry-after']!.first;
+         String time=FunctionUtils().formattedTime(timeInSecond: int.parse(blockedDuration!));
+         emit(BlockReservationState(error:'${'block_msg'.translate()} \n $time ${'minute'.translate()}'));
+       }
          }
 
   verifyCodeBooking({required BookingTripModel bookingTripModel,required bool isBookingScreen}) async {

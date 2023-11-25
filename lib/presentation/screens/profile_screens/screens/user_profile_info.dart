@@ -11,7 +11,6 @@ import '../../../common_widgets/custom_error_screen.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_images.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 import 'edit_profile_screen.dart';
 
@@ -33,7 +32,7 @@ class UserProfileInfoScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(AppImages.warningImage,height: 100,width: 120),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               Text('first_login'.translate(), style: AppTextStyle2.getSemiBoldStyle(
             fontSize: AppFontSize.size_14,
             color: Colors.black,

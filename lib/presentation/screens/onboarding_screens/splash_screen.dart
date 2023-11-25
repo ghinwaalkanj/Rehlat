@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/utils/app_router.dart';
-import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import 'package:trips/presentation/screens/onboarding_screens/root_onboarding_screen.dart';
 import 'package:trips/presentation/style/app_images.dart';
@@ -25,10 +24,10 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 1, milliseconds: 3), () async {
       if (DataStore.instance.isFirstTime ) {
-      AppRouter.navigateTo(context: context, destination: OnBoardingRootScreen());
+      AppRouter.navigateTo(context: context, destination: const OnBoardingRootScreen());
       }
       else{
-        AppRouter.navigateTo(context: context, destination: RootScreen());
+        AppRouter.navigateTo(context: context, destination: const RootScreen());
         context.read<RootPageCubit>().checkEvaluation();
       }
     });

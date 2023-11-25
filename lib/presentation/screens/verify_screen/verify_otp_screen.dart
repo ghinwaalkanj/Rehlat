@@ -13,14 +13,12 @@ import 'package:trips/presentation/screens/booking_trip/screens/hop_hop_seats_in
 import 'package:trips/presentation/screens/verify_screen/send_otp_screen.dart';
 import 'package:trips/presentation/screens/verify_screen/success_verify_dialog.dart';
 
+import '../../../core/notifications/push_notifications with local_flutter .dart';
 import '../../../cubit/otp_cubit/otp_cubit.dart';
 import '../../../cubit/otp_cubit/otp_states.dart';
 import '../../../cubit/result_search_card/result_search_cubit.dart';
-import '../../../cubit/reverse_trip/reserve_trip_cubit.dart';
 import '../../../cubit/seats/seats_cubit.dart';
 import '../../../data/data_resource/local_resource/data_store.dart';
-import '../../../domain/models/profile_param.dart';
-import '../../../domain/models/seat_model.dart';
 import '../../common_widgets/custom_button.dart';
 import '../../style/app_colors.dart';
 import '../../style/app_font_size.dart';
@@ -28,22 +26,24 @@ import '../../style/app_images.dart';
 import '../../style/app_text_style.dart';
 import '../../style/app_text_style_2.dart';
 import '../booking_trip/screens/normal2_seats_info_screen.dart';
+import '../booking_trip/screens/unknown_bus_info_screen.dart';
 import '../booking_trip/screens/vip_seats_info_screen.dart';
 
 
 class VerifyOTPScreen extends StatelessWidget {
 
-   VerifyOTPScreen({Key? key,}) : super(key: key);
+   const VerifyOTPScreen({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OtpCubit,OtpStates>(
       bloc:  context.read<OtpCubit>()..code=null,
-      listener: (context, state) {
+      listener: (context, state) async {
         if(state is ValidateVerifyOtpState){ErrorDialog.openDialog(context, state.error);}
+        if(state is BlockState){ErrorDialog.openDialog(context, state.error);}
         if(state is LoadingVerifyOtpState)LoadingDialog().openDialog(context);
         if(state is ErrorVerifyOtpState){
-           LoadingDialog().closeDialog(context);}
+          LoadingDialog().closeDialog(context);}
         if(state is SuccessVerifyOtpState){
            context.read<SeatsCubit>().seconds=context.read<HomeCubit>().timer;
            if(DataStore.instance.token!=null)context.read<ResultSearchCubit>().getTripDetails();
@@ -51,17 +51,21 @@ class VerifyOTPScreen extends StatelessWidget {
            successVerifyDialog(context: context,isVerifyOtp:true,onConfirm: (){
              SchedulerBinding.instance.addPostFrameCallback((_) {
             navigatorKey.currentContext!.read<SeatsCubit>().seatsIds=[];
-            if(context.read<ResultSearchCubit>().selectedTripModel?.busType=='vip') {
-              AppRouter.navigateRemoveTo(context: context, destination: VipSeatsInfoScreen());
+            if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==33) {
+              AppRouter.navigateRemoveTo(context: context, destination: const VipSeatsInfoScreen());
             }
-            if(context.read<ResultSearchCubit>().selectedTripModel?.busType=='normal') {
-              AppRouter.navigateRemoveTo(context: context, destination: NormalSeatsInfoScreen());
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==45) {
+              AppRouter.navigateRemoveTo(context: context, destination: const NormalSeatsInfoScreen());
             }
-            if(context.read<ResultSearchCubit>().selectedTripModel?.busType=='small') {
-              AppRouter.navigateRemoveTo(context: context, destination: SmallSeatsInfoScreen());
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==27) {
+              AppRouter.navigateRemoveTo(context: context, destination: const SmallSeatsInfoScreen());
+            }
+            else{
+              AppRouter.navigateRemoveTo(context: context, destination: const UnknownBusScreen());
             }
           });
           });
+            if(DataStore.instance.token!=null)await PushNotificationService().setupInteractedMessage();
          }
       },
       builder: (context, state) =>   Scaffold(
@@ -85,7 +89,7 @@ class VerifyOTPScreen extends StatelessWidget {
                       Text('enter_code'.translate(),style: AppTextStyle.lightBlackW400_13.copyWith(
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal-Regular':'Poppins-Regular'
                       ),),
-                      Text('${context.read<OtpCubit>().phoneNumber ?? ''}',style: AppTextStyle.lightBlackW400_13Underline,),
+                      Text(context.read<OtpCubit>().phoneNumber ?? '',style: AppTextStyle.lightBlackW400_13Underline,),
                     ],
                   ),
                 const SizedBox(height: 24,),
@@ -113,13 +117,13 @@ class VerifyOTPScreen extends StatelessWidget {
                   children: [
                     if(state is ErrorVerifyOtpState) Text('code_error2'.translate(),style: AppTextStyle.redBold_14,),
                     if(state is ErrorVerifyOtpState) InkWell(
-                        onTap: () =>AppRouter.navigateRemoveTo(context: context, destination: SendPhoneScreen()),
+                        onTap: () =>AppRouter.navigateRemoveTo(context: context, destination: const SendPhoneScreen()),
                         child: Text('change_phone'.translate(),style: AppTextStyle.redBold_14.copyWith(decoration: TextDecoration.underline,color: Colors.black),)),
                   ],
                 ),
                 if(state is ErrorVerifyOtpState) Padding(
                   padding: const EdgeInsets.symmetric(vertical: 36.0),
-                  child: ImageWidget(url: AppImages.errorCodeIcon).buildAssetSvgImage(),
+                  child: const ImageWidget(url: AppImages.errorCodeIcon).buildAssetSvgImage(),
                 ),
                 CustomButton(
                   h: 55,

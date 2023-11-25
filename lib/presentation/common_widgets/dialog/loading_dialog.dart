@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../style/app_colors.dart';
 import '../../style/app_images.dart';
 import 'dialog_transition_builder.dart';

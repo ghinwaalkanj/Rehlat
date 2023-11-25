@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
+
 import '../../../core/utils/app_router.dart';
 import '../../style/app_images.dart';
 import '../root_screens/root_screen.dart';

@@ -4,14 +4,13 @@ import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/home/home_cubit.dart';
 import 'package:trips/data/model/company_model.dart';
 import 'package:trips/domain/models/passenger_model.dart';
+
 import '../../../../cubit/passenger_cubit/passenger_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_states.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
-import '../../../../cubit/seats/seats_states.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
-import '../../../common_widgets/GENDER_DROP_DOWN.dart';
 import '../../../common_widgets/auth_text_form_field.dart';
-import '../../../common_widgets/custom_button.dart';
+import '../../../common_widgets/gender_drop_down.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style.dart';
@@ -20,7 +19,7 @@ import '../../../style/app_text_style_2.dart';
 class PassengerInfoCard extends StatefulWidget {
    final int index ;
    final  PassengerModel? passengerModel;
-    PassengerInfoCard({Key? key,   required this.index,required this.passengerModel}) : super(key: key);
+   const PassengerInfoCard({Key? key,   required this.index,required this.passengerModel}) : super(key: key);
 
   @override
   State<PassengerInfoCard> createState() => _PassengerInfoCardState();
@@ -44,7 +43,6 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<PassengerCubit,PassengerStates>(
       builder: (context, state) =>  Padding(
         padding: const EdgeInsets.only(bottom:20.0),
@@ -130,7 +128,7 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
                 selectionItem:(widget.passengerModel!.gender!=null)? widget.passengerModel!.gender=='male'?'0':'1' :null,
                 ),
                  const SizedBox(height: 22,),
-                if(widget.index==0)
+                if(widget.index==0&&(context.read<HomeCubit>().searchTripParam.passenger!='1'))
                 CheckboxListTile(
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
@@ -141,7 +139,7 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
                   ),
                   value:  context.read<PassengerCubit>().isSamePrimaryPassenger,
                   onChanged: (value) {
-                    context.read<PassengerCubit>().changeSamePrimary(value??false,widget.passengerModel!,int.parse(context.read<HomeCubit>().passengers??'0'));
+                    context.read<PassengerCubit>().changeSamePrimary(value??false,widget.passengerModel!,int.parse(context.read<HomeCubit>().passengers));
                   },),
               ],
             ),

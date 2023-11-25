@@ -5,7 +5,6 @@ import 'package:trips/core/localization/app_localization.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
-import '../../../common_widgets/dialog/error_dialog.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style.dart';

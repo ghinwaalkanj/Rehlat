@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/cubit/result_search_card/result_search_state.dart';
+
 import '../../core/utils/enums.dart';
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
@@ -110,7 +111,6 @@ class ResultSearchCubit extends Cubit<ResultSearchStates> {
       goToSendOtp=false;
     }
     if(DataStore.instance.token==null){
-      print('tttt');
       goToSendOtp=true;
     }
   }

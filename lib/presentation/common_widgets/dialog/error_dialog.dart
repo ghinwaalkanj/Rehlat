@@ -7,7 +7,6 @@ import '../../../data/data_resource/local_resource/data_store.dart';
 import '../../style/app_colors.dart';
 import '../../style/app_font_size.dart';
 import '../../style/app_images.dart';
-import '../../style/app_text_style.dart';
 import '../../style/app_text_style_2.dart';
 import '../custom_button.dart';
 import 'custom_dialog.dart';
@@ -34,7 +33,7 @@ class _ErrorDialogBody extends StatelessWidget {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 50,),
+          const SizedBox(height: 50,),
          if(verifySuccess==true) const ImageWidget(url: AppImages.successDialogImage,width: 88,height: 88,fit: BoxFit.fill,).buildAssetSvgImage(),
           Padding(
             padding:  EdgeInsets.symmetric(

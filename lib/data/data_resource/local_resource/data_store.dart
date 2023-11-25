@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 class DataStore {
@@ -40,6 +41,9 @@ class DataStore {
     if (!box.containsKey("token")) return null;
     return "${box.get("token")}";
   }
+  String? get fcmToken {
+    return "${box.get("fcmToken")}";
+  }
   String? get name {
     if (!box.containsKey("name")) return null;
     return "${box.get("name")}";
@@ -54,6 +58,7 @@ class DataStore {
   }
 
   Future<void> setToken(String? value) => box.put("token", value);
+  Future<void> setFcmToken(String? value) => box.put("fcmToken", value);
   Future<void> setName(String value) => box.put("name", value);
   Future<void> setAge(String? value) => box.put("age", value);
   Future<void> setPhone(String? value) => box.put("phone", value);

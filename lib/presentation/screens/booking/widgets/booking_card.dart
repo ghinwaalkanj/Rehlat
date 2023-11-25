@@ -4,17 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
-import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/presentation/common_widgets/cached_image.dart';
 import 'package:trips/presentation/style/app_images.dart';
+
 import '../../../../cubit/booking/booking_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../data/model/booking_trip_model.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style_2.dart';
-import '../booking_screen/code_otp_booking.dart';
 import 'booking_card_paint.dart';
 
 class BookingCard extends StatelessWidget {
@@ -132,7 +131,7 @@ class BookingCard extends StatelessWidget {
                            Expanded(
                              child: Padding(
                                padding:  EdgeInsets.symmetric(horizontal: 6.h),
-                               child: ImageWidget(url: AppImages.betweenImage,color: Colors.black,).buildAssetSvgImage(),
+                               child: const ImageWidget(url: AppImages.betweenImage,color: Colors.black,).buildAssetSvgImage(),
                              ),
                            ),
                             Expanded(
@@ -158,7 +157,7 @@ class BookingCard extends StatelessWidget {
                          child: Row(
                            mainAxisAlignment: MainAxisAlignment.start,
                            children: [
-                             ImageWidget(url: AppImages.greenSeatImage).buildAssetSvgImage(),
+                             const ImageWidget(url: AppImages.greenSeatImage).buildAssetSvgImage(),
                              const SizedBox(width: 12,),
                             Text('${bookingTripModel.mySeats?.length.toString()??''} ${'seats_2'.translate()} : '  ,style: AppTextStyle2.getSemiBoldStyle(
                             fontSize: AppFontSize.size_12,

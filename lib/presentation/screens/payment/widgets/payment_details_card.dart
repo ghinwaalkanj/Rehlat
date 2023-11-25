@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/style/app_text_style.dart';
+
 import '../../../../cubit/main/main_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_cubit.dart';
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
@@ -97,8 +98,8 @@ class PaymentDetailsCard extends StatelessWidget {
                           fontSize: AppFontSize.size_14,
                           color: Colors.black,
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-                              Spacer(),
-                              Text(context.read<PassengerCubit>().passengerList[index].age.toString()??'', style: AppTextStyle2.getSemiBoldStyle(
+                              const Spacer(),
+                              Text(context.read<PassengerCubit>().passengerList[index].age.toString(), style: AppTextStyle2.getSemiBoldStyle(
                           fontSize: AppFontSize.size_14,
                           color: Colors.black,
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),

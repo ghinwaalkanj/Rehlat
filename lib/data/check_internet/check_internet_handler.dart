@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'check_internet.dart';
 import 'package:overlay_support/overlay_support.dart';
+
+import 'check_internet.dart';
 
 
 ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();

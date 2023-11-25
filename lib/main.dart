@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/presentation/screens/onboarding_screens/splash_screen.dart';
+
 import 'core/di.dart';
 import 'core/localization/app_localization.dart';
+import 'core/notifications/message_notification_hundler.dart';
 import 'core/utils/global.dart';
+import 'core/utils/utils_functions.dart';
 import 'cubit/booking/booking_cubit.dart';
 import 'cubit/evaluation/evaluation_cubit.dart';
 import 'cubit/home/home_cubit.dart';
@@ -29,10 +33,9 @@ Future<void> main() async {
   await DataStore.instance.init();
   setUp();
   BaseApiClient();
-
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
+  await Firebase.initializeApp();
+  await FunctionUtils().getNotificationPermission();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(const MyApp());
 }
 
@@ -72,13 +75,12 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const SplashScreen(),
+          home: const MessageHandlerWidget(child: SplashScreen()),
             supportedLocales: const [
               Locale('ar'),
               Locale('en'),
             ],
             localizationsDelegates: const [
-            //  CountryLocalizations.delegate,
               AppLocalizationsDelegate.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,

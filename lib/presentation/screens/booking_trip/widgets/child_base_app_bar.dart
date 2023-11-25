@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../cubit/home/home_cubit.dart';
 import '../../../../cubit/main/main_cubit.dart';
@@ -37,14 +38,13 @@ class ChildBaseAppBar extends StatelessWidget {
                fontSize: AppFontSize.size_14,
                color: Colors.white,
                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),softWrap: true,)),
-           // / const SizedBox(width: 12,),
+             // / const SizedBox(width: 12,),
              Text('${context.read<HomeCubit>().passengers} ${'passenger'.translate()}',style:   AppTextStyle2.getSemiBoldStyle(
                fontSize: AppFontSize.size_12,
                color: Colors.white,
                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',))
           ],
         ),
-        const SizedBox(height: 0,),
         Text(DateFormat('E, LLL d ',DataStore.instance.lang).format(context.read<HomeCubit>().date??DateTime.now()).toString(),
           style: AppTextStyle2.getSemiBoldStyle(
                     fontSize: AppFontSize.size_14,
@@ -58,10 +58,10 @@ class ChildBaseAppBar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('${context.read<ResultSearchCubit>().selectedTripModel?.startDate?.hour??''} : ${context.read<ResultSearchCubit>().selectedTripModel?.startDate?.minute??''}',style:   AppTextStyle2.getSemiBoldStyle(
-  fontSize: AppFontSize.size_16,
-  color: Colors.white,
-  fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
+                  Text(DateFormat('jm',DataStore.instance.lang).format(context.read<ResultSearchCubit>().selectedTripModel!.startDate??DateTime.now()).toString(),style:   AppTextStyle2.getSemiBoldStyle(
+                  fontSize: AppFontSize.size_16,
+                  color: Colors.white,
+                  fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
                   Text(context.read<ResultSearchCubit>().selectedTripModel?.sourceCity?.name??'',style: AppTextStyle.whiteW400_14,
                     softWrap: true,
                   ),
@@ -69,8 +69,8 @@ class ChildBaseAppBar extends StatelessWidget {
               ),
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 6.w),
-              child: ImageWidget(url:AppImages.betweenImage,color: Colors.white ,).buildAssetSvgImage(),
+              padding:  EdgeInsets.symmetric(horizontal: 6.w,vertical: 5),
+              child: const ImageWidget(url:AppImages.betweenImage,color: Colors.white ,).buildAssetSvgImage(),
              // Image.asset(AppImages.betweenImage,width: 180.w,height: 45.h,color: Colors.white,fit: BoxFit.contain),
             ),
              Expanded(
@@ -92,7 +92,7 @@ class ChildBaseAppBar extends StatelessWidget {
               fontSize: AppFontSize.size_18,
               color: Colors.white,
               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Text('${context.read<SeatsCubit>().price.toString()} ${context.read<MainCubit>().currency}',
                 style: AppTextStyle.yellowW600_20,

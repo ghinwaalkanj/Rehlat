@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/screens/booking/widgets/booking_card.dart';
+
 import '../../../../cubit/booking/booking_cubit.dart';
 import '../../../../cubit/booking/booking_states.dart';
 import '../../../../cubit/root/root_cubit.dart';

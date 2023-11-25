@@ -23,6 +23,7 @@ class AuthTextFormField extends StatelessWidget {
   final double? width;
   final double? borderWidth;
   final double? borderRadius;
+  final int? minLines;
   final VoidCallback? onComplete;
   final Function(String value)? onChanged;
 
@@ -32,6 +33,7 @@ class AuthTextFormField extends StatelessWidget {
         this.borderWidth,
       this.labelText,
         this.borderColor,
+        this.minLines,
       this.errorText,
       this.isObscure = false,
        this.controller,
@@ -57,9 +59,9 @@ class AuthTextFormField extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
-        minLines: 1,
+        minLines: minLines??1,
         maxLines: isObscure?1:14,
-      scrollPadding: EdgeInsets.only(bottom:300),
+       scrollPadding: const EdgeInsets.only(bottom:300),
        onChanged:(value) {
          if(onChanged!=null)onChanged!(value);},
         onEditingComplete:onComplete,
@@ -71,7 +73,7 @@ class AuthTextFormField extends StatelessWidget {
         controller: controller,
         cursorColor: Colors.deepOrange,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 0),
+          contentPadding:  EdgeInsets.symmetric(horizontal: 34.0, vertical:(minLines!=null)?12:0),
           hintStyle: hintStyle,
           hintText: hintText,
           prefixIcon: prefixIcon,
@@ -110,6 +112,7 @@ class AuthTextFormField extends StatelessWidget {
           labelStyle: labelStyle??AppTextStyle.darkXGrayW500_16,
           errorText: errorText,
           suffixIcon: suffixIcon,
+          errorStyle:  AppTextStyle.redBold_14,
         ),
       ),
     );

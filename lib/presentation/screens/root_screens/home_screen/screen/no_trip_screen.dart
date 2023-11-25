@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trips/presentation/style/app_images.dart';
 import 'package:trips/presentation/style/app_text_style.dart';
+
 import '../../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../common_widgets/custom_button.dart';
 import '../../../../style/app_colors.dart';

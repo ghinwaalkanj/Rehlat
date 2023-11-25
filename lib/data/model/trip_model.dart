@@ -1,4 +1,5 @@
 import '../../domain/models/seat_model.dart';
+import 'bus_model.dart';
 import 'company_model.dart';
 
 class TripModel {
@@ -10,9 +11,10 @@ class TripModel {
   int? numberOfSeats;
   int? ticketPrice;
   int? seatsLeaft;
-  String? busType;
+  BusModel? busModel;
   dynamic rate;
   List<SeatModel>? seats;
+  bool? canReserveTemp;
   int repeatTime;
   int? timer;
   int? extraTimer;
@@ -23,11 +25,12 @@ class TripModel {
     this.sourceCity,
     this.destinationCity,
     this.startDate,
+    this.canReserveTemp,
     this.numberOfSeats,
     this.ticketPrice,
     this.seatsLeaft,
     this.seats,
-    this.busType,
+    this.busModel,
     this.rate,
     this.repeatTime=0,
     this.timer,
@@ -43,9 +46,10 @@ class TripModel {
     numberOfSeats: json["number_of_seats"],
     ticketPrice: json["ticket_price"],
     seatsLeaft: json["seats_leaft"],
-    busType: json["bus_type"],
+    busModel:BusModel.fromJson(json["bus"]),
     rate: json["rate"].toDouble(),
     timer:json["timer"],
+    canReserveTemp:json["can_reserve_temp"],
     extraTimer:json["extra_time"],
     seats: json["seats"] == null ? [] : List<SeatModel>.from(json["seats"]!.map((x) => SeatModel.fromJson(x))),
   );

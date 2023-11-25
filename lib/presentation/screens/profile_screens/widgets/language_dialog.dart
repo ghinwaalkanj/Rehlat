@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/main/main_cubit.dart';
+
 import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../cubit/root/root_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 
 class LanguageDialog extends StatelessWidget {

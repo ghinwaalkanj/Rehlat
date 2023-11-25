@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
-import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/base_app_bar.dart';
 import '../../../style/app_colors.dart';
-import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style_2.dart';
 import '../widgets/cancel_reservation_dialog.dart';
 import '../widgets/hop_hop_row_seat_widget.dart';
 import '../widgets/price_container.dart';
@@ -35,9 +33,16 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SeatsCubit,SeatsStates>(
         bloc:  context.read<SeatsCubit>()..selectedTicketPrice=context.read<ResultSearchCubit>().selectedTripModel?.ticketPrice??1,
-        listener: (context, state) {},
+        listener: (context, state) {
+
+        },
         builder: (context, state) =>  WillPopScope(
-            onWillPop: () async{
+            onWillPop: () async {
+              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![0].number);
+              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![1].number);
+              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![2].number);
+              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![3].number);
+              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![4].number);
               cancelReservationDialog(context: context);
               return false;
             },
@@ -46,7 +51,7 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
               children: [
               BaseAppBar(
                   titleScreen: 'seats_information'.translate(),
-                  tripInfo: TripInfoWidget(),
+                  tripInfo: const TripInfoWidget(),
                   child:Stack(
                       alignment: Alignment.bottomCenter,
                       children: [

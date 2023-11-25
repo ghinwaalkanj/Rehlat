@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../style/app_colors.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../core/utils/image_helper.dart';
 import '../../common_widgets/dialog/action_alert_dialog.dart';
 import '../../style/app_images.dart';

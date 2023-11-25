@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+
 import '../../../../domain/models/passenger_model.dart';
 import '../../../../domain/models/search_param_model.dart';
 import '../../../model/booking_model.dart';
-import '../../../model/booking_trip_model.dart';
 import '../../../model/city_model.dart';
 import '../../../model/company_model.dart';
 import '../../../model/full_user_model.dart';
+import '../../../model/notification_model/full_notification_model.dart';
 import '../../../model/trip_model.dart';
 import '../api_handler/base_api_client.dart';
 import '../links.dart';
@@ -30,9 +31,10 @@ class TripsRepo  {
         });
   }
 
-  Future<Either<String, dynamic>> sendOtp(String phone,String? fullName) {
+  Future<Either<String, dynamic>> sendOtp(String phone,String? fullName,{required Function(Headers) getHeaders}) {
     return BaseApiClient.get(
         url: '${Links.baseUrl}${Links.sendOtp}',
+        getHeaders11: (p0) =>getHeaders(p0),
         queryParameters: {
           "phone":phone,
           "name":fullName
@@ -42,9 +44,10 @@ class TripsRepo  {
         });
   }
 
-  Future<Either<String, FullUserModel>> phoneVerify(String phone,String code) {
+  Future<Either<String, FullUserModel>> phoneVerify(String phone,String code,{required Function(Headers) getHeaders}) {
     return BaseApiClient.post(
         url: '${Links.baseUrl}${Links.phoneVerify}',
+        getHeaders11: (p0) =>getHeaders(p0),
         formData: FormData.fromMap({
           "phone": phone,
           "code":code,
@@ -124,9 +127,10 @@ class TripsRepo  {
         });
   }
 
-  Future<Either<String, bool>> confirmReservation({required int bookingId,required String code }) {
+  Future<Either<String, bool>> confirmReservation({required int bookingId,required String code,required Function(Headers) getHeaders }) {
     return BaseApiClient.post(
-      formData: FormData.fromMap({"code":code}),
+        getHeaders11: (p0) =>getHeaders(p0),
+        formData: FormData.fromMap({"code":code}),
         url: '${Links.baseUrl}${Links.confirmReservation}/$bookingId',
         converter: (value) {
           return true;
@@ -141,4 +145,20 @@ class TripsRepo  {
         });
   }
 
+  Future<Either<String, dynamic>> sendFcmToken({required String fcmToken}) {
+    return BaseApiClient.post(
+        formData: {"fcm_token":fcmToken},
+        url: Links.baseUrl + Links.updateFcm,
+        converter: (value) {
+          //  return LoginResponse.fromJson(value["data"]);
+        });
+  }
+
+  Future<Either<String, FullNotificationModel>> getNotification({required String url}) {
+    return BaseApiClient.get(
+        url: url,
+        converter: (value) {
+          return FullNotificationModel.fromJson(value);
+        });
+  }
 }

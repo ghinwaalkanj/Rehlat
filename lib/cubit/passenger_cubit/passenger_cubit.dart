@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/passenger_cubit/passenger_states.dart';
+
 import '../../core/utils/app_regexp.dart';
 import '../../core/utils/global.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
@@ -82,8 +83,6 @@ class PassengerCubit extends Cubit<PassengerStates> {
         }
         else if((element.number?.isNotEmpty??false)&& (AppRegexp.phoneRegexp.hasMatch(element.number.toString())!=true)){element.isNumberTrue=false;}
         bool x =element.isNameNull!=true&&element.isAgeNull!=true;
-        print('x');
-        print(x);
       if(x==true && element.isNumberTrue==true) {
         isNullList.add(false);
       } else  {
@@ -91,11 +90,7 @@ class PassengerCubit extends Cubit<PassengerStates> {
       }
     }
     isNull= isNullList.every((element) {
-      print('element');
-      print(element);
       return element==false;});
-    print('isNull');
-    print(isNull);
     if(isNull==true){
       addPassenger();
       emit(SuccessValidatePassengersState());
@@ -116,8 +111,6 @@ class PassengerCubit extends Cubit<PassengerStates> {
   }
 
   addPassenger({PassengerModel? passengerModel, }){
-    print('passengerList');
-    print(passengerList);
     for (var element in passengerList) {
       element.phoneError=null;
       element.nameError=null;
@@ -127,12 +120,8 @@ class PassengerCubit extends Cubit<PassengerStates> {
           element.ageError='age_bigger_than'.translate();
           emit(ErrorPassengerValidState());
         }
-        if(element.number!=null&&element.number!=0){
-          print('element.number');
-          print(element.number);
+        if(element.number!=null&&element.number!='0'){
           if(AppRegexp.phoneRegexp.hasMatch('${element.number}')==false){
-            print('validate.number');
-            print(AppRegexp.phoneRegexp.hasMatch(element.number.toString()));
             element.phoneError='phone_valid'.translate();
             emit(ErrorPassengerValidState());
           }

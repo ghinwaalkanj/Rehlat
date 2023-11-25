@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../domain/models/profile_card_model.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 
 class ProfileCard extends StatelessWidget {

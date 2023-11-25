@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/custom_button.dart';
@@ -32,7 +33,7 @@ class _EditProfileSuccessBody extends StatelessWidget {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 50,),
+          const SizedBox(height: 50,),
           if(verifySuccess==true)  const ImageWidget(url: AppImages.successDialogImage,width: 88,height: 88,fit: BoxFit.fill,).buildAssetSvgImage(),
           Padding(
             padding:  EdgeInsets.symmetric(

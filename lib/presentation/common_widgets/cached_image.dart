@@ -46,7 +46,7 @@ class CachedImage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ExtendedImage(
-                image: const AssetImage(AppImages.whiteLogoImage),
+                image: const AssetImage(AppImages.darkLogoImage),
                 clearMemoryCacheWhenDispose: true,
                 fit: BoxFit.contain,
               ),
@@ -57,7 +57,7 @@ class CachedImage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ExtendedImage(
-                image: AssetImage(fallbackPlaceHolder ?? AppImages.whiteLogoImage),
+                image: AssetImage(fallbackPlaceHolder ?? AppImages.darkLogoImage),
                 clearMemoryCacheWhenDispose: true,
                 fit: BoxFit.contain,
                 color: color,

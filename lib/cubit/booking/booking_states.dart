@@ -17,6 +17,10 @@ class ErrorConfirmReservationState extends BookingStates{
   final String error;
   ErrorConfirmReservationState({required this.error});
 }
+class BlockReservationState extends BookingStates{
+  final String error;
+  BlockReservationState({required this.error});
+}
 
 class LoadingRequestConfirmReservationState extends BookingStates{}
 class SuccessRequestConfirmReservationState extends BookingStates{

@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../style/app_font_size.dart';
 import '../style/app_images.dart';
-import '../style/app_text_style.dart';
 import '../style/app_text_style_2.dart';
 import 'custom_button.dart';
 

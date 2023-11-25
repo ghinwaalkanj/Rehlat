@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/utils/enums.dart';
-import '../../data/data_resource/local_resource/data_store.dart';
+
+import '../../core/notifications/push_notifications with local_flutter .dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../data/model/city_model.dart';
 import '../../data/model/company_model.dart';
 import '../../data/model/trip_model.dart';
 import '../../domain/models/search_param_model.dart';
-import '../../domain/models/sort_model.dart';
-import '../../presentation/screens/root_screens/home_screen/widgets/companies_dialog.dart';
 import 'home_states.dart';
 
 
@@ -62,7 +60,7 @@ class HomeCubit extends Cubit<HomePageStates> {
     }
 
     addReturnDate(DateTime dateTime){
-      if(dateTime.isAfter(date??DateTime.now())??false) {
+      if(dateTime.isAfter(date??DateTime.now())) {
         returnDate=dateTime;
         emit(ChangeGoDateState());
       } else {
@@ -89,9 +87,10 @@ class HomeCubit extends Cubit<HomePageStates> {
     getCompanies();
     emit(LoadingGetCitiesState());
     (await tripsRepo.getCities()).fold((l) => emit(ErrorGetCitiesState(error: l)),
-            (r) {
+            (r) async {
           citiesList=r;
           emit(SuccessGetCitiesState());
+          await PushNotificationService().setupInteractedMessage();
         });
   }
 

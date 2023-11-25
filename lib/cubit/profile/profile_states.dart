@@ -40,3 +40,7 @@ class ErrorProfileVerifyOtpState extends ProfileStates{
   final String? error;
   ErrorProfileVerifyOtpState({required this.error});
 }
+class BlockProfileState extends ProfileStates{
+  final String? error;
+  BlockProfileState({required this.error});
+}

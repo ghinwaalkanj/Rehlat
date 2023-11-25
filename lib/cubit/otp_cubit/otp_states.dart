@@ -21,6 +21,10 @@ class ValidateVerifyOtpState extends OtpStates{
   final String? error;
   ValidateVerifyOtpState({required this.error});}
 
+class BlockState extends OtpStates{
+  final String? error;
+  BlockState({required this.error});}
+
 class LoadingVerifyOtpState extends OtpStates{}
 class SuccessVerifyOtpState extends OtpStates{}
 class ErrorVerifyOtpState extends OtpStates{

@@ -4,17 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../cubit/profile/profile_states.dart';
 import '../../../../cubit/root/root_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../data/model/company_model.dart';
-import '../../../common_widgets/GENDER_DROP_DOWN.dart';
 import '../../../common_widgets/auth_text_form_field.dart';
 import '../../../common_widgets/base_app_bar.dart';
 import '../../../common_widgets/custom_button.dart';
 import '../../../common_widgets/dialog/error_dialog.dart';
+import '../../../common_widgets/gender_drop_down.dart';
 import '../../../common_widgets/profile_otp_screen.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
@@ -36,7 +37,7 @@ class EditProfileScreen extends StatelessWidget {
         if(state is LoadingRequestUpdateProfileState)LoadingDialog().openDialog(context);
         if(state is SuccessUpdateProfileState){
           context.read<RootPageCubit>().changePageIndex(0);
-          AppRouter.navigateRemoveTo(context: context, destination: RootScreen());
+          AppRouter.navigateRemoveTo(context: context, destination: const RootScreen());
           ErrorDialog.openDialog(context,'update_profile_success'.translate(),verifySuccess: true);
         }
         if(state is ErrorUpdateProfileState){
@@ -47,7 +48,7 @@ class EditProfileScreen extends StatelessWidget {
           EditProfileSuccess.openDialog(context, 'profile_send_otp'.translate(),verifySuccess: true,
           (state.isVerifyScreen==false)?(){
             Navigator.pop(context);
-            AppRouter.navigateTo(context: context, destination:ProfileOTPCodeScreen());}:(){
+            AppRouter.navigateTo(context: context, destination:const ProfileOTPCodeScreen());}:(){
             Navigator.pop(context);
           },);
         }

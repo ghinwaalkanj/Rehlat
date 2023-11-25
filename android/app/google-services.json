@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049930545808",
+    "project_id": "rehlat-5ca67",
+    "storage_bucket": "rehlat-5ca67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049930545808:android:d777d52e2b4650257ef615",
+        "android_client_info": {
+          "package_name": "com.example.trips"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJLouLksCeJwL-NOqwUVdf2PvDEHi3Y3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

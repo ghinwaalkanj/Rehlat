@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../cubit/booking/booking_cubit.dart';
 import '../../../../cubit/booking/booking_states.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
@@ -18,6 +19,7 @@ class BookingOTPCodeScreen extends StatelessWidget {
     return BlocConsumer<BookingCubit,BookingStates>(
           bloc:  context.read<BookingCubit>()..code='',
           listener: (context, state) {
+            if(state is BlockReservationState){ErrorDialog.openDialog(context, state.error);}
             if(state is SuccessRequestConfirmReservationState) ErrorDialog.openDialog(context,'profile_send_otp'.translate(),verifySuccess: true);
             if(state is ErrorConfirmReservationState) LoadingDialog().closeDialog(context);
           },

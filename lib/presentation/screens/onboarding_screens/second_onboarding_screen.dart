@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../cubit/onboarding/onboarding_cubit.dart';
 import '../../style/app_images.dart';
 import 'base_onboarding.dart';

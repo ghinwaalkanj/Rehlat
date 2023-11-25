@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
+
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
-import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/base_app_bar.dart';
 import '../../../style/app_colors.dart';
-import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style_2.dart';
 import '../widgets/cancel_reservation_dialog.dart';
 import '../widgets/normal2_row_seat_widget.dart';
 import '../widgets/price_container.dart';
@@ -39,6 +37,7 @@ class _NormalSeatsInfoScreenState extends State<NormalSeatsInfoScreen> {
   bool get _isShrink {
     return  scrollController.hasClients && scrollController.offset > (1.sw - 96);}
 
+  @override
   void initState() {
     super.initState();
     scrollController=scrollController..addListener(_scrollListener) ;
@@ -60,7 +59,7 @@ class _NormalSeatsInfoScreenState extends State<NormalSeatsInfoScreen> {
               children: [
                 BaseAppBar(
                     titleScreen: 'seats_information'.translate(),
-                    tripInfo: TripInfoWidget(),
+                    tripInfo: const TripInfoWidget(),
                   child:Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
@@ -88,7 +87,7 @@ class _NormalSeatsInfoScreenState extends State<NormalSeatsInfoScreen> {
                               ),
                             ],
                           ),
-                          PriceContainer()
+                          const PriceContainer()
                            ]),
                       )
                      ])),

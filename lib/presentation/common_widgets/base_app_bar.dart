@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../style/app_colors.dart';
 import '../style/app_font_size.dart';
-import '../style/app_text_style.dart';
 import '../style/app_text_style_2.dart';
 
 class BaseAppBar extends StatelessWidget {

@@ -4,15 +4,13 @@ import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/cubit/root/root_cubit.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
+
 import '../../../../cubit/booking/booking_cubit.dart';
-import '../../../../cubit/main/main_cubit.dart';
-import '../../../../cubit/main/main_states.dart';
 import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../cubit/profile/profile_states.dart';
 import '../../../common_widgets/base_app_bar.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 import '../../onboarding_screens/splash_screen.dart';
 import '../widgets/profile_card.dart';
@@ -29,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
       child:  Padding(
         padding: const EdgeInsets.only(top: 6,),
         child:Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.lightXXXGrey,
             borderRadius: BorderRadius.vertical(top: Radius.circular(44)),
           ),
@@ -44,8 +42,8 @@ class ProfileScreen extends StatelessWidget {
                    isLogout: true,
                     widgetCard: Row(
                   children: [
-                    Icon(Icons.account_circle_outlined,color: AppColors.darkGreen),
-                    SizedBox(width: 21,),
+                    const Icon(Icons.account_circle_outlined,color: AppColors.darkGreen),
+                    const SizedBox(width: 21,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                           fontSize: AppFontSize.size_14,
                           color:  Colors.black,
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-                        SizedBox(height: 4,),
+                        const SizedBox(height: 4,),
                       //   Text('UserName@Gmail.com',style:   AppTextStyle2.getBoldStyle(
                       // fontSize: AppFontSize.size_14,
                       // color:  Colors.black,
@@ -79,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                     DataStore.instance.setName('');
                     DataStore.instance.setPhone('');
                     DataStore.instance.deleteCertificates();
-                    AppRouter.navigateRemoveTo(context: context, destination: SplashScreen());
+                    AppRouter.navigateRemoveTo(context: context, destination: const SplashScreen());
                     context.read<RootPageCubit>().changePageIndex(0);
                     context.read<BookingCubit>().clearList();
                   }:(){},
@@ -96,10 +94,10 @@ class ProfileScreen extends StatelessWidget {
                       color:  Colors.black,
                       fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
                     ],
-                  ):Text(''),
+                  ):const Text(''),
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
               ],
             ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/data_resource/local_resource/data_store.dart';
+
 import 'app_colors.dart';
 import 'app_font_size.dart';
 

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/presentation/screens/verify_screen/send_otp_screen.dart';
+
 import '../../../data/data_resource/local_resource/data_store.dart';
-import '../../cubit/profile/profile_cubit.dart';
 import '../style/app_colors.dart';
 import '../style/app_font_size.dart';
 import '../style/app_images.dart';
@@ -20,8 +19,8 @@ class BaseOTPCodeScreen extends StatelessWidget {
   final bool isErrorState;
   final String phoneNumber;
   final String code;
-   Function(String value) getCode;
-   BaseOTPCodeScreen({Key? key,required this.getCode,required this.onTap,required this.isErrorState,required this.onResend, required this.phoneNumber, required this.code,}) : super(key: key);
+  final Function(String value) getCode;
+  const BaseOTPCodeScreen({Key? key,required this.getCode,required this.onTap,required this.isErrorState,required this.onResend, required this.phoneNumber, required this.code,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

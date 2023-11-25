@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trips/presentation/style/app_text_style.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../cubit/onboarding/onboarding_cubit.dart';
 import '../../../cubit/onboarding/onboarding_states.dart';
 import '../../../data/data_resource/local_resource/data_store.dart';
 import '../../style/app_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../style/app_font_size.dart';
 import '../../style/app_text_style_2.dart';
 

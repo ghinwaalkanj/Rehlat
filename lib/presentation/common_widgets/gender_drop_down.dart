@@ -1,13 +1,12 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/presentation/common_widgets/shimmer/shimmer_widget.dart';
-import '../../cubit/home/home_cubit.dart';
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../style/app_colors.dart';
 import '../style/app_text_style.dart';
 
+// ignore: must_be_immutable
 class DropDownAppWidget extends StatefulWidget {
   final List dropDownList;
   final String chooseTitle;
@@ -43,7 +42,7 @@ class _DropDownAppWidgetState extends State<DropDownAppWidget> {
                 width: 1,
                 color:widget.borderSideColor?? AppColors.darkGrey,
             ),
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
         ),
         child: DropdownButton2(
           isExpanded: true,
@@ -85,7 +84,7 @@ class _DropDownAppWidgetState extends State<DropDownAppWidget> {
                         color: widget.isSource?Colors.transparent:AppColors.darkGreen,
                       ),
                     ),
-                  ): SizedBox(width: 15,),
+                  ): const SizedBox(width: 15,),
                   Padding(
                         padding:DataStore.instance.lang=='en'?
                         EdgeInsets.only(left:(widget.isSearch)?25: 15): EdgeInsets.only(right:(widget.isSearch)?25: 15),

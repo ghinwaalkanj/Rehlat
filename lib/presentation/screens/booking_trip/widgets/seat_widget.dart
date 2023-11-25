@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/utils/image_helper.dart';
+
 import '../../../../cubit/home/home_cubit.dart';
-import '../../../../cubit/reverse_trip/reserve_trip_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../domain/models/seat_model.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_images.dart';
-import '../../../style/app_text_style.dart';
 import '../../../style/app_text_style_2.dart';
 
 // ignore: must_be_immutable
@@ -33,7 +32,7 @@ class SeatWidget extends StatelessWidget {
           children: [
             if(seatModel!.status=="available")ImageWidget(url: AppImages.whiteSeatImage,height:height?? 42,width:width?? 42,).buildAssetSvgImage(),
             if(seatModel!.status=="temporary") ImageWidget(url: AppImages.yellowSeatImage,height: height??42,width: width??42,).buildAssetSvgImage(),
-            if(seatModel!.selectedByMe==true) ImageWidget(url: AppImages.greenSeatImage,height:height?? 42,width:width?? 42,).buildAssetSvgImage(),
+            if(seatModel!.status=="available"&&seatModel!.selectedByMe==true) ImageWidget(url: AppImages.greenSeatImage,height:height?? 42,width:width?? 42,).buildAssetSvgImage(),
             if(seatModel!.status=="unavailable") ImageWidget(url: AppImages.greySeatImage,height:height?? 42,width:width?? 42,).buildAssetSvgImage(),
             if(seatModel!.status=="available"&&seatModel!.isSelected==true) ImageWidget(url: AppImages.inUseSeatIcon,height:height?? 42,width:width?? 42,).buildAssetSvgImage(),
             Padding(

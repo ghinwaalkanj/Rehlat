@@ -11,6 +11,7 @@ import 'package:trips/data/model/trip_model.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/widgets/waiting_feature_card_dialog.dart';
 import 'package:trips/presentation/style/app_images.dart';
 import 'package:trips/presentation/style/app_text_style.dart';
+
 import '../../../../../cubit/main/main_cubit.dart';
 import '../../../../../cubit/passenger_cubit/passenger_cubit.dart';
 import '../../../../../cubit/result_search_card/result_search_cubit.dart';
@@ -91,7 +92,7 @@ class SearchResultCard extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),softWrap: true),
                   const SizedBox(width: 8,),
-                  if(tripModel.busType=='vip') const ImageWidget(url: AppImages.vipIcon).buildAssetSvgImage(),
+                  if(tripModel.busModel?.name=='vip') const ImageWidget(url: AppImages.vipIcon).buildAssetSvgImage(),
                  const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

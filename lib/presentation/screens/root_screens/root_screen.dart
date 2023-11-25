@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
@@ -8,6 +8,7 @@ import 'package:trips/core/utils/global.dart';
 import 'package:trips/cubit/seats/seats_cubit.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/screen/home_screen.dart';
+
 import '../../../core/utils/app_router.dart';
 import '../../../core/utils/enums.dart';
 import '../../../cubit/home/home_cubit.dart';
@@ -17,7 +18,6 @@ import '../../../cubit/root/root_states.dart';
 import '../../common_widgets/dialog/action_alert_dialog.dart';
 import '../../common_widgets/dialog/error_dialog.dart';
 import '../../common_widgets/dialog/loading_dialog.dart';
-import '../../common_widgets/time_over_dialog.dart';
 import '../../style/app_colors.dart';
 import '../../style/app_font_size.dart';
 import '../../style/app_text_style.dart';
@@ -63,27 +63,22 @@ class _RootScreenState extends State<RootScreen>  with WidgetsBindingObserver {
           extraTime: navigatorKey.currentContext!.read<HomeCubit>().extraTimer,
           time: navigatorKey.currentContext!.read<HomeCubit>().timer
         );}
-        print("app in resumed");
         break;
       case AppLifecycleState.inactive:
         navigatorKey.currentContext!.read<SeatsCubit>().stateCycleApp=StateType.inActive;
-        print("app in inactive");
         break;
       case AppLifecycleState.paused:
          navigatorKey.currentContext!.read<SeatsCubit>().stateCycleApp=StateType.inActive;
-        print("app in paused");
-        Future.delayed(navigatorKey.currentContext!.read<SeatsCubit>().seconds??Duration()).then((value) {
+        Future.delayed(navigatorKey.currentContext!.read<SeatsCubit>().seconds??const Duration()).then((value) {
           if(navigatorKey.currentContext!.read<SeatsCubit>().x=='00:00'&& navigatorKey.currentContext!.read<SeatsCubit>().stateCycleApp==StateType.inActive) {
           navigatorKey.currentContext!.read<SeatsCubit>().x ='';
           navigatorKey.currentContext!.read<SeatsCubit>().cancelTimer();
           navigatorKey.currentContext!.read<SeatsCubit>().isHideDialog=true;
           navigatorKey.currentContext!.read<SeatsCubit>().unSelectSeats(navigatorKey.currentContext!.read<SeatsCubit>().seatsIds);
-          AppRouter.navigateRemoveTo(context: navigatorKey.currentContext!,destination: RootScreen());
+          AppRouter.navigateRemoveTo(context: navigatorKey.currentContext!,destination: const RootScreen());
           }});
-        print("app in paused");
         break;
       case AppLifecycleState.detached:
-        print("app in detached");
         break;
     }
   }

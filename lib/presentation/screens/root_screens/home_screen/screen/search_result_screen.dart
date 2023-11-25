@@ -6,6 +6,7 @@ import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/data/model/trip_model.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/screen/sort_by_bottom_sheet.dart';
 import 'package:trips/presentation/screens/root_screens/root_screen.dart';
+
 import '../../../../../core/utils/enums.dart';
 import '../../../../../core/utils/image_helper.dart';
 import '../../../../../cubit/home/home_cubit.dart';
@@ -24,6 +25,7 @@ import '../../../../style/app_text_style.dart';
 import '../../../../style/app_text_style_2.dart';
 import '../../../booking_trip/screens/hop_hop_seats_info_screen.dart';
 import '../../../booking_trip/screens/normal2_seats_info_screen.dart';
+import '../../../booking_trip/screens/unknown_bus_info_screen.dart';
 import '../../../booking_trip/screens/vip_seats_info_screen.dart';
 import '../widgets/search_card_result.dart';
 import 'no_trip_screen.dart';
@@ -44,14 +46,17 @@ class SearchResultScreen extends StatelessWidget {
         if(state is SuccessGetTripDetailsState){
           LoadingDialog().closeDialog(context);
           if(context.read<ResultSearchCubit>().goToSendOtp==false){
-            if( context.read<ResultSearchCubit>().selectedTripModel?.busType=='vip') {
-              AppRouter.navigateRemoveTo(context: context, destination: VipSeatsInfoScreen());
+             if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==33) {
+              AppRouter.navigateRemoveTo(context: context, destination: const VipSeatsInfoScreen());
             }
-            if( context.read<ResultSearchCubit>().selectedTripModel?.busType=='normal') {
-              AppRouter.navigateRemoveTo(context: context, destination: NormalSeatsInfoScreen());
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==45) {
+              AppRouter.navigateRemoveTo(context: context, destination: const NormalSeatsInfoScreen());
             }
-            if( context.read<ResultSearchCubit>().selectedTripModel?.busType=='small') {
-              AppRouter.navigateRemoveTo(context: context, destination: SmallSeatsInfoScreen());
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==27) {
+              AppRouter.navigateRemoveTo(context: context, destination: const SmallSeatsInfoScreen());
+            }
+            else{
+              AppRouter.navigateRemoveTo(context: context, destination: const UnknownBusScreen());
             }
           }
         }

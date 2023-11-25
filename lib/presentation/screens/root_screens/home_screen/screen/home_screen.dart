@@ -7,6 +7,7 @@ import 'package:trips/presentation/common_widgets/cached_image.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
 import 'package:trips/presentation/common_widgets/shimmer/horizontal_rectangle_list_shimmer.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/screen/search_container_widget.dart';
+
 import '../../../../../cubit/home/home_cubit.dart';
 import '../../../../../cubit/home/home_states.dart';
 import '../../../../style/app_font_size.dart';
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 21),
                   child: SizedBox(
                       height: 187.h,
-                      child: HomeShimmerWidget()))
+                      child: const HomeShimmerWidget()))
                   :  Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 21),
                 child: SizedBox(

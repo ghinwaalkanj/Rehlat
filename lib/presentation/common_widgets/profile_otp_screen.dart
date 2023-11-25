@@ -7,6 +7,7 @@ import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/presentation/common_widgets/dialog/error_dialog.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
 import 'package:trips/presentation/screens/verify_screen/send_otp_screen.dart';
+
 import '../../../data/data_resource/local_resource/data_store.dart';
 import '../../cubit/profile/profile_cubit.dart';
 import '../../cubit/profile/profile_states.dart';
@@ -25,6 +26,7 @@ class ProfileOTPCodeScreen extends StatelessWidget {
     return BlocConsumer<ProfileCubit,ProfileStates>(
       bloc:  context.read<ProfileCubit>()..code=null,
       listener: (context, state) {
+        if(state is BlockProfileState){ErrorDialog.openDialog(context, state.error);}
         if(state is SuccessRequestUpdateProfileState)LoadingDialog().closeDialog(context);
         if(state is ProfileValidateState){ErrorDialog.openDialog(context, state.error);}
         if(state is LoadingProfileVerifyOtpState)LoadingDialog().openDialog(context);
@@ -50,7 +52,7 @@ class ProfileOTPCodeScreen extends StatelessWidget {
                         Text('enter_code'.translate(),style: AppTextStyle.lightBlackW400_13.copyWith(
                             fontFamily: DataStore.instance.lang=='ar'?'Tajawal-Regular':null
                         ),),
-                        Text('${context.read<ProfileCubit>().phoneController.text ?? ''}',style: AppTextStyle.lightBlackW400_13Underline,),
+                        Text(context.read<ProfileCubit>().phoneController.text,style: AppTextStyle.lightBlackW400_13Underline,),
                       ],
                     ),
                   const SizedBox(height: 24,),

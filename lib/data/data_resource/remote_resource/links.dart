@@ -20,6 +20,9 @@ abstract class Links {
   static const checkTrip = "check-trip";
   static const rateTrip = "rate-trip";
   static const updatePhone = "update-phone";
+  static const sendClaim = "send-claim";
+  static const updateFcm = "update-fcm";
+  static const getNotification = "notifications";
   static const requestReservation = "request/confirm-reservation";
   //endregion
 }

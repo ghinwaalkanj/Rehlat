@@ -5,12 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/root/root_cubit.dart';
-import 'package:trips/presentation/screens/evaluation_dialogs/thanks_dialog.dart';
 import 'package:trips/presentation/style/app_colors.dart';
+
 import '../../../cubit/evaluation/evaluation_cubit.dart';
 import '../../../cubit/evaluation/evaluation_states.dart';
 import '../../common_widgets/dialog/action_alert_dialog.dart';
-import '../../common_widgets/dialog/error_dialog.dart';
 
 evalAnimatedDialog({required BuildContext context}) {
   return ActionAlertDialog.show(

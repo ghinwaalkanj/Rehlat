@@ -5,6 +5,7 @@ import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/presentation/common_widgets/dialog/error_dialog.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
 import 'package:trips/presentation/screens/verify_screen/verify_otp_screen.dart';
+
 import '../../../cubit/otp_cubit/otp_cubit.dart';
 import '../../../cubit/otp_cubit/otp_states.dart';
 import '../../../data/data_resource/local_resource/data_store.dart';
@@ -26,10 +27,10 @@ class SendPhoneScreen extends StatelessWidget {
         if(state is LoadingSendOtpState)LoadingDialog().openDialog(context);
         if(state is ErrorSendOtpState){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context, '${state.error},${'try_again'.translate()}');}
+          ErrorDialog.openDialog(context, '${state.error}');}
         if(state is SuccessSendOtpState){
           LoadingDialog().closeDialog(context);
-         if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: VerifyOTPScreen());
+         if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: const VerifyOTPScreen());
          if (state.isVerifyScreen==true)ErrorDialog.openDialog(context,'success_resend_otp'.translate(),verifySuccess: true );
         }
       },

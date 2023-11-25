@@ -6,20 +6,21 @@ import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/cubit/home/home_states.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/screen/search_result_screen.dart';
+
 import '../../../../../core/utils/image_helper.dart';
 import '../../../../../cubit/home/home_cubit.dart';
 import '../../../../../cubit/result_search_card/result_search_cubit.dart';
-import '../../../../common_widgets/GENDER_DROP_DOWN.dart';
 import '../../../../common_widgets/auth_text_form_field.dart';
 import '../../../../common_widgets/custom_button.dart';
 import '../../../../common_widgets/dialog/error_dialog.dart';
 import '../../../../common_widgets/dialog/loading_dialog.dart';
-import '../../../../style/app_font_size.dart';
-import '../../../../style/app_text_style_2.dart';
-import '../widgets/date_time_picker.dart';
+import '../../../../common_widgets/gender_drop_down.dart';
 import '../../../../style/app_colors.dart';
+import '../../../../style/app_font_size.dart';
 import '../../../../style/app_images.dart';
 import '../../../../style/app_text_style.dart';
+import '../../../../style/app_text_style_2.dart';
+import '../widgets/date_time_picker.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({Key? key}) : super(key: key);
@@ -131,7 +132,7 @@ class SearchWidget extends StatelessWidget {
                              selectionItem: context.read<HomeCubit>().dest!=null?context.read<HomeCubit>().dest.toString():null,
                             getSelectionId: (id) {
                               context.read<HomeCubit>().dest=id;
-                               context.read<HomeCubit>().searchTripParam.destinationCity=int.parse(id!);
+                              context.read<HomeCubit>().searchTripParam.destinationCity=int.parse(id!);
 
                             },),),
                       ],
@@ -180,7 +181,9 @@ class SearchWidget extends StatelessWidget {
                               fontWeight: FontWeight.w900,
                               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
                               onPressed: () {
-                                DateTimeWidget.selectDate(context, (dateTime) {
+                                DateTimeWidget.selectDate(context,
+                                    lastDate:DateTime.now().add(const Duration(days: 30)) ,
+                                    firstDate: DateTime.now(), (dateTime) {
                                   context.read<HomeCubit>().date=dateTime;
                                   context.read<HomeCubit>().selectedDate=dateTime;
                                   context.read<HomeCubit>().addWeek(dateTime);
@@ -197,12 +200,12 @@ class SearchWidget extends StatelessWidget {
                               borderSideColor: AppColors.xBlack,
                               color: Colors.transparent,
                               text: ( context.read<HomeCubit>().returnDate!= null)?context.read<HomeCubit>().returnDate.toString().substring(0,10):'return_date'.translate(),
-                              textStyle: AppTextStyle.lightGrayW500_16.copyWith(fontSize: 14),
+                              textStyle: AppTextStyle.lightGrayW500_16.copyWith(fontSize: 12),
                               onPressed: () {
-                                DateTimeWidget.selectDate(context, (dateTime) {
-
+                                DateTimeWidget.selectDate(context,
+                                    lastDate:DateTime.now().add(const Duration(days: 30)),
+                                    firstDate: DateTime.now(),(dateTime) {
                                   context.read<HomeCubit>().addReturnDate(dateTime);
-
                                 });},),
                           ),
                         ],

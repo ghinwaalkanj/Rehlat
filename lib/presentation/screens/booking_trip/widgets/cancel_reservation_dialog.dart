@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/presentation/screens/root_screens/root_screen.dart';
-import '../../../../core/utils/global.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
-import '../../../../cubit/reverse_trip/reserve_trip_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../common_widgets/dialog/action_alert_dialog.dart';
 import '../../../style/app_images.dart';
@@ -26,6 +25,6 @@ cancelReservationDialog({required BuildContext context,}) {
                  context.read<ResultSearchCubit>().selectedTripModel?.repeatTime=0;
                  context.read<ResultSearchCubit>().selectedTripModel?.repeatTime=0;
                 context.read<SeatsCubit>().unSelectSeats(context.read<SeatsCubit>().seatsIds);
-                AppRouter.navigateRemoveTo(context: context, destination: RootScreen());
+                AppRouter.navigateRemoveTo(context: context, destination: const RootScreen());
               },);
   }

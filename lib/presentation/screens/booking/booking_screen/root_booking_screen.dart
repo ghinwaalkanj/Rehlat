@@ -5,7 +5,7 @@ import 'package:trips/cubit/booking/booking_states.dart';
 import 'package:trips/presentation/common_widgets/base_app_bar.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
 import 'package:trips/presentation/screens/booking/booking_screen/temp_booking.dart';
-import '../../../../core/di.dart';
+
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/booking/booking_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
@@ -14,6 +14,7 @@ import '../../../common_widgets/dialog/loading_dialog.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style_2.dart';
+import '../../notification/screens/notification_screen.dart';
 import 'code_otp_booking.dart';
 import 'confirmed_booking.dart';
 import 'history_booking.dart';
@@ -46,6 +47,14 @@ class BookingScreen extends StatelessWidget {
     },
     builder: (context, state) => BaseAppBar(
       titleScreen:'bookings'.translate() ,
+      rightIcon: (DataStore.instance.token?.isNotEmpty??false)?
+      InkWell(
+        onTap: () => AppRouter.navigateTo(context:context, destination: const NotificationScreen()) ,
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0,),
+          child: Icon(Icons.notifications_none_rounded,color: Colors.white,size: 30),
+        ),
+      ):null,
       notExistArrow: notExistArrow,
       child: Column(
       children: [
@@ -123,13 +132,13 @@ class BookingScreen extends StatelessWidget {
         ),
            if(context.read<BookingCubit>().isError)CustomErrorScreen(onTap: () => context.read<BookingCubit>()..getBookingList(),),
             if(!context.read<BookingCubit>().isError)...[
-            if(context.read<BookingCubit>().index==0) ConfirmedBookingScreen(contextx: context), if(context.read<BookingCubit>().index==1)TempBookingScreen(),
-            if(context.read<BookingCubit>().index==2)HistoryBookingScreen(),
+            if(context.read<BookingCubit>().index==0) ConfirmedBookingScreen(contextx: context),
+              if(context.read<BookingCubit>().index==1)const TempBookingScreen(),
+            if(context.read<BookingCubit>().index==2)const HistoryBookingScreen(),
              ]
       ],
     ),
     ),
-
     );
   }
 }

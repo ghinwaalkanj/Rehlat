@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/global.dart';
+
 import '../../core/utils/app_regexp.dart';
+import '../../core/utils/utils_functions.dart';
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../../data/data_resource/remote_resource/repo/profile_repo.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
@@ -12,6 +15,7 @@ import '../../domain/models/profile_param.dart';
 import '../../presentation/screens/booking/booking_screen/root_booking_screen.dart';
 import '../../presentation/screens/profile_screens/screens/user_profile_info.dart';
 import '../../presentation/screens/profile_screens/widgets/language_dialog.dart';
+import '../../presentation/screens/support_screens/screens/support_screen.dart';
 import 'profile_states.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
@@ -24,19 +28,22 @@ class ProfileCubit extends Cubit<ProfileStates> {
   ProfileParamModel? user;
   TripsRepo tripsRepo;
   String? code;
+  String? blockedDuration;
+  Headers? verifyHeaders;
   ProfileParamModel profileParamModel=ProfileParamModel();
 
   ProfileCubit({required this.profileRepo,required this.tripsRepo}) : super(ProfileInitialState());
 
   List<ProfileCardModel> settingsList=[
-  ProfileCardModel(title:'personal_information',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination: UserProfileInfoScreen()) ),
-  ProfileCardModel(title:'my_booking',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:BookingScreen (notExistArrow: false,)) ),
+  ProfileCardModel(title:'personal_information',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination: const UserProfileInfoScreen()) ),
+  ProfileCardModel(title:'my_booking',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:const BookingScreen (notExistArrow: false,)) ),
   ProfileCardModel(title:'cards',screenDestination:() {} ),
   ProfileCardModel(title:'about_us',screenDestination:() {} ),
   ProfileCardModel(title:'privacy_policy',screenDestination:() {} ),
+  ProfileCardModel(title:'contact_us',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:const SupportScreen())),
   ProfileCardModel(title:'language', screenDestination:()=> showDialog(
   context: navigatorKey.currentContext!,
-    builder: (context) => LanguageDialog(),
+    builder: (context) => const LanguageDialog(),
   ),),
 ];
 
@@ -61,7 +68,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
   }
 
   requestUpdateProfile({required bool isVerifyScreen}) async {
-    bool isPhone=AppRegexp.phoneRegexp.hasMatch(phoneController.text??'');
+    bool isPhone=AppRegexp.phoneRegexp.hasMatch(phoneController.text);
     if(isPhone){
     emit(LoadingRequestUpdateProfileState());
     (await profileRepo.requestUpdateProfile()).fold((l) => emit(ErrorRequestUpdateProfileState(error: l)),
@@ -95,24 +102,24 @@ class ProfileCubit extends Cubit<ProfileStates> {
   }
 
   checkPhone(context){
-    print('phoneController.text');
-    print(phoneController.text);
-    print(user?.phone);
-    print(user?.phone==phoneController.text);
     (user?.phone==phoneController.text)?verifyOtpWithoutPhone(context):verifyOtpWithPhone(context);
   }
 
   Future<void> verifyOtpWithPhone(context) async {
     if(code.toString().length==6 ){
       emit(LoadingProfileVerifyOtpState());
-      (await profileRepo.verifyOtpProfile(code: code!,phone: phoneController.text)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
+      (await profileRepo.verifyOtpProfile(code: code!,phone: phoneController.text,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
               (r) {
            // userModel=r.user;
           //  DataStore.instance.setToken(r.token);
-            print(  DataStore.instance.token);
             emit(SuccessProfileVerifyOtpState());
             updateProfile(context);
           });
+      if(verifyHeaders?['retry-after']?.first!=null){
+        blockedDuration=verifyHeaders!['retry-after']!.first;
+        String time=FunctionUtils().formattedTime(timeInSecond: int.parse(blockedDuration!));
+        emit(BlockProfileState(error:'${'block_msg'.translate()} \n $time ${'minute'.translate()}'));
+      }
     }else{
       String? error;
       if(code.toString().length<6)error='code_valid'.translate();
@@ -123,15 +130,18 @@ class ProfileCubit extends Cubit<ProfileStates> {
   Future<void> verifyOtpWithoutPhone(context) async {
     if(code.toString().length==6 ){
       emit(LoadingProfileVerifyOtpState());
-      (await tripsRepo.phoneVerify(phoneController.text,code!)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
+      (await tripsRepo.phoneVerify(phoneController.text,code!,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
               (r) {
            // userModel=r.user;
             DataStore.instance.setToken(r.token);
-            print(  DataStore.instance.token);
             emit(SuccessProfileVerifyOtpState());
             updateProfile(context);
-
           });
+      if(verifyHeaders?['retry-after']?.first!=null){
+        blockedDuration=verifyHeaders!['retry-after']!.first;
+        String time=FunctionUtils().formattedTime(timeInSecond: int.parse(blockedDuration!));
+        emit(BlockProfileState(error:'${'block_msg'.translate()} \n $time ${'minute'.translate()}'));
+      }
     }else{
       String? error;
       if(code.toString().length<6)error='code_valid'.translate();

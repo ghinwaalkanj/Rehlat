@@ -1,4 +1,5 @@
 import 'package:trips/domain/models/seat_model.dart';
+
 import 'company_model.dart';
 
 class BookingTripModel{
