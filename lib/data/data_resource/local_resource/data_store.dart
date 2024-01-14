@@ -75,10 +75,9 @@ class DataStore {
     return box.get("resumeTime");
   }
 
-
-
   void deleteCertificates() {
     box.deleteAll({"token"});
+    box.delete("token");
   }
 
 }

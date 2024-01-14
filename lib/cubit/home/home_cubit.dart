@@ -9,7 +9,6 @@ import '../../data/model/trip_model.dart';
 import '../../domain/models/search_param_model.dart';
 import 'home_states.dart';
 
-
 class HomeCubit extends Cubit<HomePageStates> {
   HomeCubit({required this.tripsRepo}) : super(HomePageInitialState());
   TripsRepo tripsRepo;
@@ -34,10 +33,12 @@ class HomeCubit extends Cubit<HomePageStates> {
   Duration? extraTimer;
   Duration? timer;
   List<DateTime> weekList=[];
+  int passengerNumPermission=6;
 
 
     searchTrip() async {
       if(searchTripParam.sourceCity!=null && searchTripParam.destinationCity!=null&&searchTripParam.date!=null &&searchTripParam.passenger != null){
+        if((int.parse(searchTripParam.passenger!)<passengerNumPermission)&&searchTripParam.passenger!='0'){
       emit(LoadingSearchTripState());
       (await tripsRepo.searchTrip(searchTripParamModel:searchTripParam,)).fold((l) => emit(ErrorSearchTripState(error: l)),
               (r) {
@@ -47,9 +48,12 @@ class HomeCubit extends Cubit<HomePageStates> {
                 srcCity=citiesList.firstWhere((element) => element.id==searchTripParam.sourceCity);
                 destCity=citiesList.firstWhere((element) => element.id==searchTripParam.destinationCity);
                 emit(SuccessSearchTripState());
-
-      });
-    }else{
+            });
+          }
+        else {
+          emit(ValidatePassengerState());
+        }}
+      else{
         emit(ValidateState());
       }
     }
@@ -76,7 +80,7 @@ class HomeCubit extends Cubit<HomePageStates> {
       emit(ReverseState());
   }
 
-  selectDate(DateTime dateTime){
+    selectDate(DateTime dateTime){
       selectedDate= dateTime;
       date=dateTime;
       searchTripParam.date=dateTime.toString().substring(0,10);
@@ -88,7 +92,8 @@ class HomeCubit extends Cubit<HomePageStates> {
     emit(LoadingGetCitiesState());
     (await tripsRepo.getCities()).fold((l) => emit(ErrorGetCitiesState(error: l)),
             (r) async {
-          citiesList=r;
+          citiesList=r.citiesList;
+          passengerNumPermission=r.limitPassenger;
           emit(SuccessGetCitiesState());
           await PushNotificationService().setupInteractedMessage();
         });
@@ -124,8 +129,6 @@ class HomeCubit extends Cubit<HomePageStates> {
       isLoading=false;
       isError=false;
     emit(SuccessGetCompaniesState());
-
     });
   }
-
 }

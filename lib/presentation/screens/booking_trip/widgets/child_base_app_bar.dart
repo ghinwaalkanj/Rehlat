@@ -45,7 +45,7 @@ class ChildBaseAppBar extends StatelessWidget {
                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',))
           ],
         ),
-        Text(DateFormat('E, LLL d ',DataStore.instance.lang).format(context.read<HomeCubit>().date??DateTime.now()).toString(),
+        Text(DateFormat('E, LLL d ',DataStore.instance.lang=="ar"?"ar_lb":"en").format(context.read<HomeCubit>().date??DateTime.now()).toString(),
           style: AppTextStyle2.getSemiBoldStyle(
                     fontSize: AppFontSize.size_14,
                     color: Colors.white,

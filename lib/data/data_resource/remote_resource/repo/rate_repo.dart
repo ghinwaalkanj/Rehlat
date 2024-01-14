@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../model/trip_model.dart';
+import '../../local_resource/data_store.dart';
 import '../api_handler/base_api_client.dart';
 import '../links.dart';
 
@@ -27,4 +28,15 @@ class RateRepo {
         });
   }
 
+
+  Future<Either<String, bool>> sendLang() {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.sendLanguage}',
+        formData:  FormData.fromMap({
+          "lang": DataStore.instance.lang,
+        }),
+        converter: (value) {
+          return true;
+        });
+  }
 }

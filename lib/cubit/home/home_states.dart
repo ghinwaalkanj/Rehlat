@@ -10,6 +10,7 @@ class SelectedDateState extends HomePageStates{}
 class ReturnDateTimeState extends HomePageStates{}
 class ValidateReturnDateState extends HomePageStates{}
 class ValidateState extends HomePageStates{}
+class ValidatePassengerState extends HomePageStates{}
 
 class LoadingSearchTripState extends HomePageStates{}
 class SuccessSearchTripState extends HomePageStates{}

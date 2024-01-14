@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
@@ -32,17 +33,20 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileCubit,ProfileStates>(
       bloc: context.read<ProfileCubit>()..defineUser(),
-      listener: (context, state) {
+      listener: (context, state) async {
         if(state is ValidatePhoneState)ErrorDialog.openDialog(context,'phone_valid'.translate(),);
         if(state is LoadingRequestUpdateProfileState)LoadingDialog().openDialog(context);
-        if(state is SuccessUpdateProfileState){
+        if(state is LoadingUpdateProfileState)LoadingDialog().openDialog(context);
+        if(state is SuccessUpdateProfileState&&context.read<ProfileCubit>().isPhoneChanged==false){
           context.read<RootPageCubit>().changePageIndex(0);
           AppRouter.navigateRemoveTo(context: context, destination: const RootScreen());
           ErrorDialog.openDialog(context,'update_profile_success'.translate(),verifySuccess: true);
         }
-        if(state is ErrorUpdateProfileState){
+        if(state is ErrorUpdateProfileState&&context.read<ProfileCubit>().isPhoneChanged==false){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context, state.error);}
+          ErrorDialog.openDialog(context, state.error);
+          await SmsAutoFill().listenForCode();
+        }
         if(state is SuccessRequestUpdateProfileState){
           LoadingDialog().closeDialog(context);
           EditProfileSuccess.openDialog(context, 'profile_send_otp'.translate(),verifySuccess: true,
@@ -113,6 +117,7 @@ class EditProfileScreen extends StatelessWidget {
                               color: Colors.white,
                               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
                               onPressed: () {
+                                context.read<ProfileCubit>().isPhoneChanged=false;
                                 context.read<ProfileCubit>().requestUpdateProfile(isVerifyScreen: false);
                               },),
                           ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:trips/core/localization/app_localization.dart';
 
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
@@ -38,7 +37,8 @@ class TripInfoWidget extends StatelessWidget {
                       Expanded(
                         child: Row(
                           children: [
-                            Expanded(child: Text('${context.read<ResultSearchCubit>().selectedTripModel?.company?.name??''} ${'company'.translate()}',style:   AppTextStyle2.getSemiBoldStyle(
+                            Expanded(child: Text('${context.read<ResultSearchCubit>().selectedTripModel?.company?.name??''} ',
+                              style:   AppTextStyle2.getSemiBoldStyle(
                               fontSize: AppFontSize.size_16,
                               color: Colors.white,
                               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),maxLines: 2, )),

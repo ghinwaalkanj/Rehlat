@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/global.dart';
+import 'package:trips/cubit/root/root_cubit.dart';
+import 'package:trips/presentation/screens/profile_screens/screens/terms_conditions.dart';
+import 'package:trips/presentation/screens/support_screens/screens/claim_screen.dart';
 
 import '../../core/utils/app_regexp.dart';
 import '../../core/utils/utils_functions.dart';
@@ -12,10 +15,9 @@ import '../../data/data_resource/remote_resource/repo/profile_repo.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../domain/models/profile_card_model.dart';
 import '../../domain/models/profile_param.dart';
-import '../../presentation/screens/booking/booking_screen/root_booking_screen.dart';
+import '../../presentation/screens/profile_screens/screens/privacy_policy.dart';
 import '../../presentation/screens/profile_screens/screens/user_profile_info.dart';
 import '../../presentation/screens/profile_screens/widgets/language_dialog.dart';
-import '../../presentation/screens/support_screens/screens/support_screen.dart';
 import 'profile_states.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
@@ -30,17 +32,17 @@ class ProfileCubit extends Cubit<ProfileStates> {
   String? code;
   String? blockedDuration;
   Headers? verifyHeaders;
+  bool isPhoneChanged=false;
   ProfileParamModel profileParamModel=ProfileParamModel();
 
   ProfileCubit({required this.profileRepo,required this.tripsRepo}) : super(ProfileInitialState());
 
   List<ProfileCardModel> settingsList=[
   ProfileCardModel(title:'personal_information',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination: const UserProfileInfoScreen()) ),
-  ProfileCardModel(title:'my_booking',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:const BookingScreen (notExistArrow: false,)) ),
-  ProfileCardModel(title:'cards',screenDestination:() {} ),
-  ProfileCardModel(title:'about_us',screenDestination:() {} ),
-  ProfileCardModel(title:'privacy_policy',screenDestination:() {} ),
-  ProfileCardModel(title:'contact_us',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:const SupportScreen())),
+  ProfileCardModel(title:'my_booking',screenDestination:()=> navigatorKey.currentContext!.read<RootPageCubit>().changePageIndex(1) ),
+  ProfileCardModel(title:'terms_text',screenDestination:() =>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination: const TermsScreen()) ),
+  ProfileCardModel(title:'privacy_policy',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination: const PrivacyPolicyScreen()) ),
+  ProfileCardModel(title:'technical_support',screenDestination:()=>AppRouter.navigateTo(context: navigatorKey.currentContext!, destination:const ClaimScreen())),
   ProfileCardModel(title:'language', screenDestination:()=> showDialog(
   context: navigatorKey.currentContext!,
     builder: (context) => const LanguageDialog(),
@@ -64,10 +66,9 @@ class ProfileCubit extends Cubit<ProfileStates> {
      nameController.text =user?.name??'';
      ageController.text =user?.age??'';
      phoneController.text=user?.phone??'';
-
   }
 
-  requestUpdateProfile({required bool isVerifyScreen}) async {
+  requestUpdateProfile({required bool isVerifyScreen,}) async {
     bool isPhone=AppRegexp.phoneRegexp.hasMatch(phoneController.text);
     if(isPhone){
     emit(LoadingRequestUpdateProfileState());
@@ -80,8 +81,9 @@ class ProfileCubit extends Cubit<ProfileStates> {
     }
   }
 
-  updateProfile(context) async {
+  updateProfile() async {
     errorText=null;
+    isPhoneChanged=false;
     if(nameController.text.isNotEmpty  && nameController.text.isNotEmpty ){
      profileParamModel.name= nameController.text;
      profileParamModel.age= ageController.text;
@@ -90,9 +92,10 @@ class ProfileCubit extends Cubit<ProfileStates> {
     emit(LoadingUpdateProfileState());
     (await profileRepo.updateProfile(profileParamModel: profileParamModel)).fold((l) => emit(ErrorUpdateProfileState(error: l)),
             (r) {
+              isPhoneChanged=user?.phone!=phoneController.text?true:false;
           emit(SuccessUpdateProfileState());
           DataStore.instance.setName(nameController.text);
-          DataStore.instance.setPhone(phoneController.text);
+          if(!isPhoneChanged)DataStore.instance.setPhone(phoneController.text);
           DataStore.instance.setAge(ageController.text);
          });
       }else{
@@ -101,19 +104,13 @@ class ProfileCubit extends Cubit<ProfileStates> {
     }
   }
 
-  checkPhone(context){
-    (user?.phone==phoneController.text)?verifyOtpWithoutPhone(context):verifyOtpWithPhone(context);
-  }
-
-  Future<void> verifyOtpWithPhone(context) async {
+  Future<void> verifyOtpWithPhone() async {
     if(code.toString().length==6 ){
       emit(LoadingProfileVerifyOtpState());
       (await profileRepo.verifyOtpProfile(code: code!,phone: phoneController.text,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
               (r) {
-           // userModel=r.user;
-          //  DataStore.instance.setToken(r.token);
             emit(SuccessProfileVerifyOtpState());
-            updateProfile(context);
+            if(isPhoneChanged)DataStore.instance.setPhone(phoneController.text);
           });
       if(verifyHeaders?['retry-after']?.first!=null){
         blockedDuration=verifyHeaders!['retry-after']!.first;
@@ -132,10 +129,8 @@ class ProfileCubit extends Cubit<ProfileStates> {
       emit(LoadingProfileVerifyOtpState());
       (await tripsRepo.phoneVerify(phoneController.text,code!,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) => emit(ErrorProfileVerifyOtpState(error: l)),
               (r) {
-           // userModel=r.user;
             DataStore.instance.setToken(r.token);
             emit(SuccessProfileVerifyOtpState());
-            updateProfile(context);
           });
       if(verifyHeaders?['retry-after']?.first!=null){
         blockedDuration=verifyHeaders!['retry-after']!.first;

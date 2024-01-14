@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
@@ -7,6 +8,7 @@ import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/global.dart';
 import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/cubit/home/home_cubit.dart';
+import 'package:trips/cubit/root/root_cubit.dart';
 import 'package:trips/presentation/common_widgets/dialog/error_dialog.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
 import 'package:trips/presentation/screens/booking_trip/screens/hop_hop_seats_info_screen.dart';
@@ -20,6 +22,7 @@ import '../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../cubit/seats/seats_cubit.dart';
 import '../../../data/data_resource/local_resource/data_store.dart';
 import '../../common_widgets/custom_button.dart';
+import '../../common_widgets/verify_code_widget.dart';
 import '../../style/app_colors.dart';
 import '../../style/app_font_size.dart';
 import '../../style/app_images.dart';
@@ -28,23 +31,65 @@ import '../../style/app_text_style_2.dart';
 import '../booking_trip/screens/normal2_seats_info_screen.dart';
 import '../booking_trip/screens/unknown_bus_info_screen.dart';
 import '../booking_trip/screens/vip_seats_info_screen.dart';
+import '../root_screens/root_screen.dart';
 
 
-class VerifyOTPScreen extends StatelessWidget {
-
-   const VerifyOTPScreen({Key? key,}) : super(key: key);
+class VerifyOTPScreen extends StatefulWidget {
+  final bool? isFromSettings;
+   const VerifyOTPScreen({Key? key,this.isFromSettings=false}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<VerifyOTPScreen> createState() => _VerifyOTPScreenState();
+}
+
+class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
+
+    String? appSignature;
+    String? otpCode;
+
+    // @override
+    // void codeUpdated() {
+    //   setState(() {
+    //     otpCode ='000000';
+    //   });
+    // }
+    //
+    // getSignture() async {
+    //   await SmsAutoFill().listenForCode();
+    //    SmsAutoFill().code.listen((event) {
+    //      print('event222');
+    //      print(event);
+    //    });
+    //   await SmsAutoFill().getAppSignature.then((signature) {
+    //     setState(() {
+    //       appSignature = signature;
+    //     });
+    //   });
+    // }
+    // @override
+    // void initState() {
+    //   super.initState();
+    //   getSignture();
+    // }
+    //
+    // @override
+    // void dispose() {
+    //   super.dispose();
+    // }
+    @override
+    Widget build(BuildContext context) {
     return BlocConsumer<OtpCubit,OtpStates>(
-      bloc:  context.read<OtpCubit>()..code=null,
+      bloc:  context.read<OtpCubit>()..clearCode(),
       listener: (context, state) async {
         if(state is ValidateVerifyOtpState){ErrorDialog.openDialog(context, state.error);}
+        if(state is OtpInit2State){ await SmsAutoFill().listenForCode();}
         if(state is BlockState){ErrorDialog.openDialog(context, state.error);}
         if(state is LoadingVerifyOtpState)LoadingDialog().openDialog(context);
         if(state is ErrorVerifyOtpState){
-          LoadingDialog().closeDialog(context);}
-        if(state is SuccessVerifyOtpState){
+          LoadingDialog().closeDialog(context);
+          await SmsAutoFill().listenForCode();
+        }
+        if(state is SuccessVerifyOtpState && widget.isFromSettings ==false){
            context.read<SeatsCubit>().seconds=context.read<HomeCubit>().timer;
            if(DataStore.instance.token!=null)context.read<ResultSearchCubit>().getTripDetails();
            context.read<ResultSearchCubit>().selectedTripModel=context.read<OtpCubit>().tripModel;
@@ -65,8 +110,12 @@ class VerifyOTPScreen extends StatelessWidget {
             }
           });
           });
+           context.read<RootPageCubit>().sendLang();
             if(DataStore.instance.token!=null)await PushNotificationService().setupInteractedMessage();
          }
+        if(state is SuccessVerifyOtpState && widget.isFromSettings ==true){
+        AppRouter.navigateRemoveTo(context: context, destination: RootScreen());
+        }
       },
       builder: (context, state) =>   Scaffold(
         backgroundColor: Colors.white,
@@ -77,6 +126,7 @@ class VerifyOTPScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40,),
+                 VerifyCodeWidget(),
                 Image.asset(AppImages.darkLogoImage,fit: BoxFit.fill),
                  Text('verify_phone'.translate(),style:   AppTextStyle2.getBoldStyle(
                    fontSize: AppFontSize.size_26,
@@ -94,8 +144,12 @@ class VerifyOTPScreen extends StatelessWidget {
                   ),
                 const SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 18),
                   child: PinFieldAutoFill(
+                      enabled: true,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       decoration:CirclePinDecoration(
                           bgColorBuilder: FixedColorBuilder(AppColors.lightXBlue.withOpacity(0.15)),
                           strokeColorBuilder:  FixedColorBuilder((state is ErrorVerifyOtpState)?AppColors.red2:AppColors.darkGreen)),

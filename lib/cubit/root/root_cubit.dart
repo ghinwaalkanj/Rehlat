@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trips/core/utils/global.dart';
 
 import '../../data/data_resource/remote_resource/repo/rate_repo.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
@@ -19,6 +21,7 @@ class RootPageCubit extends Cubit<RootPageStates> {
   }
   updateLanguage(){
     emit(ChangeIndexState());
+    sendLang();
   }
 
   checkEvaluation() async {
@@ -32,12 +35,24 @@ class RootPageCubit extends Cubit<RootPageStates> {
     }
 
     rateTrip({required int rate ,}) async {
+    if(tripModel!=null){
       emit(LoadingRateTripState());
       (await rateRepo.rateTrip(tripId: tripModel!.id!, rate: rate+1)).fold((l) {
         emit(ErrorRateTripState(error: l));},
               (r) {
             emit(SuccessRateTripState());
             tripModel=null;
-          });
+          });}
+    else{
+      if(navigatorKey.currentContext!= null) Navigator.pop(navigatorKey.currentContext!);
     }
+  }
+
+  sendLang() async {
+    emit(SendLangLoadingState());
+    (await rateRepo.sendLang()).fold((l) =>emit(SendLangErrorState(error:l)),
+            (r) {
+          emit(SendLangSuccessState());
+        });
+      }
   }

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/passenger_cubit/passenger_states.dart';
 
-import '../../core/utils/app_regexp.dart';
 import '../../core/utils/global.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../domain/models/passenger_model.dart';
@@ -20,24 +19,23 @@ class PassengerCubit extends Cubit<PassengerStates> {
   changeSamePrimary(bool value,PassengerModel passengerModel,int passengerNum){
     passengerModel.ageError=null;
     passengerModel.nameError=null;
-    passengerModel.phoneError=null;
+    passengerModel.lastNameError=null;
     isNavigate=false;
     createPassengerList(passengerNum.toString());
     passengerList[0]=passengerModel;
     if(value){
-      if(passengerModel.name!=null && passengerModel.age!=null&&passengerModel.name!=''&&(passengerModel.age!<99 )) {
-        if((passengerModel.number?.isNotEmpty??false)&&AppRegexp.phoneRegexp.hasMatch('${passengerModel.number}')==false){
-          passengerModel.phoneError='phone_valid'.translate();
-          emit(ErrorSamePassengerValidState(error: 'phone_valid'.translate()));
-          isNavigate=false;
+      if(passengerModel.name!=null &&passengerModel.lastName!=null && passengerModel.age!=null&&passengerModel.name!=''&&passengerModel.lastName!=''&&(passengerModel.age!<99 )) {
+        if (passengerModel.name!.length<2||passengerModel.lastName!.length<2) {
+          if(passengerModel.name!.length<2)passengerModel.nameError='name_passenger_valid'.translate();
+          if(passengerModel.lastName!.length<2)passengerModel.lastNameError='name_passenger_valid'.translate();
+          emit(ErrorPassengerValidState());
         }
-       else{
+        else{
           isSamePrimaryPassenger = value;
          for (int i = 0; i < passengerNum; i++) {
            passengerList[i]= passengerModel ;
            emit(ChangeSamePrimaryState());
-           isNavigate=true;
-        }
+           isNavigate=true;}
       }}
       else{
         if (passengerModel.age!=null&&passengerModel.age.toString()!=''&&passengerModel.age!>99 ) {
@@ -46,6 +44,7 @@ class PassengerCubit extends Cubit<PassengerStates> {
         }
         else{
         if(passengerModel.name==null||passengerModel.name=='' ) passengerModel.nameError='name_passenger_valid'.translate();
+        if(passengerModel.lastName==null||passengerModel.lastName=='' ) passengerModel.lastNameError='name_passenger_valid'.translate();
         if(passengerModel.age==null||passengerModel.age.toString()=='') passengerModel.ageError='age_passenger_valid'.translate();
         ErrorDialog.openDialog(navigatorKey.currentContext!, 'same_primary_validate'.translate());
         emit(ErrorPassengerValidState());
@@ -63,10 +62,15 @@ class PassengerCubit extends Cubit<PassengerStates> {
     bool isNull=true;
     List<bool> isNullList=[];
     for (var element in passengerList) {
-      if(element.name==null) {
+      if(element.name==null||element.name==''||(element.name!=null&&element.name!.length<2)) {
         element.isNameNull=true;
       } else {
         element.isNameNull=false;
+      }
+      if(element.lastName==null||element.lastName==''||(element.lastName!=null&&element.lastName!.length<2)) {
+        element.isLastNameNull=true;
+      } else {
+        element.isLastNameNull=false;
       }
       if(element.age==null) {
         element.isAgeNull=true;
@@ -77,13 +81,8 @@ class PassengerCubit extends Cubit<PassengerStates> {
       else {
         element.isAgeNull=false;
       }
-        if(element.number?.isEmpty??true){element.isNumberTrue=true;}
-        else if((element.number?.isNotEmpty??false) && (AppRegexp.phoneRegexp.hasMatch(element.number.toString())==true)){
-        element.isNumberTrue=true;
-        }
-        else if((element.number?.isNotEmpty??false)&& (AppRegexp.phoneRegexp.hasMatch(element.number.toString())!=true)){element.isNumberTrue=false;}
-        bool x =element.isNameNull!=true&&element.isAgeNull!=true;
-      if(x==true && element.isNumberTrue==true) {
+      bool x =element.isNameNull!=true&&element.isAgeNull!=true;
+      if(x==true && element.isLastNameNull!=true) {
         isNullList.add(false);
       } else  {
         isNullList.add(true);
@@ -112,23 +111,23 @@ class PassengerCubit extends Cubit<PassengerStates> {
 
   addPassenger({PassengerModel? passengerModel, }){
     for (var element in passengerList) {
-      element.phoneError=null;
+      element.lastNameError=null;
       element.nameError=null;
       element.ageError=null;
-      if(element.name!=null && element.age!=null&&element.name!=''&&element.age!<99 ){
+      if(element.name!=null &&element.lastName!=null && element.age!=null&&element.name!=''&&element.lastName!=''&&element.age!<99 ){
         if (element.age!=null&&element.age.toString()!=''&&element.age!>99 ) {
           element.ageError='age_bigger_than'.translate();
           emit(ErrorPassengerValidState());
         }
-        if(element.number!=null&&element.number!='0'){
-          if(AppRegexp.phoneRegexp.hasMatch('${element.number}')==false){
-            element.phoneError='phone_valid'.translate();
-            emit(ErrorPassengerValidState());
-          }
+        if (element.name!.length<2||element.lastName!.length<2) {
+          if(element.name!.length<2)element.nameError='name_passenger_valid'.translate();
+          if(element.lastName!.length<2)element.lastNameError='name_passenger_valid'.translate();
+          emit(ErrorPassengerValidState());
         }
       }
       else{
         if(element.name==null||element.name=='' ) element.nameError='name_passenger_valid'.translate();
+        if(element.lastNameError==null||element.lastName=='' ) element.lastNameError='name_passenger_valid'.translate();
         if(element.age==null||element.age.toString()=='') {
           element.ageError='age_passenger_valid'.translate();
         }
@@ -148,7 +147,7 @@ class PassengerCubit extends Cubit<PassengerStates> {
       seatApiList.add(element.id!);
     }
     for (var element in passengerList) {
-      element.name;element.age;element.number;element.gender;
+      element.name;element.age;element.lastNameError;element.gender;
     }
     emit(LoadingReserveSeatsState());
     (await tripsRepo.reserveSeats(ids:seatApiList, passengerList: passengerList,isTemp: isTemp)).fold((l) => emit(ErrorReserveSeatsState(error: l)),

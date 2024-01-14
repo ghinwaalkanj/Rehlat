@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trips/cubit/payment_methods/payment_method_cubit.dart';
+import 'package:trips/cubit/support/support_cubit.dart';
 import 'package:trips/presentation/screens/onboarding_screens/splash_screen.dart';
 
 import 'core/di.dart';
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<ResultSearchCubit>()),
         BlocProvider(create: (context) => getIt<PassengerCubit>()),
         BlocProvider(create: (context) => getIt<BookingCubit>()..getBookingList()),
+        BlocProvider(create: (context) => getIt<SupportCubit>()),
+        BlocProvider(create: (context) => getIt<PaymentMethodCubit>()),
    ],
     child: ScreenUtilInit(
         designSize: const Size(429, 932),

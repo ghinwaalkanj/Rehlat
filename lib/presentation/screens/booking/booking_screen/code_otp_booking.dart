@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
 
 import '../../../../cubit/booking/booking_cubit.dart';
@@ -16,12 +17,19 @@ class BookingOTPCodeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SmsAutoFill().listenForCode();
     return BlocConsumer<BookingCubit,BookingStates>(
           bloc:  context.read<BookingCubit>()..code='',
-          listener: (context, state) {
+          listener: (context, state) async {
             if(state is BlockReservationState){ErrorDialog.openDialog(context, state.error);}
-            if(state is SuccessRequestConfirmReservationState) ErrorDialog.openDialog(context,'profile_send_otp'.translate(),verifySuccess: true);
-            if(state is ErrorConfirmReservationState) LoadingDialog().closeDialog(context);
+            if(state is SuccessRequestConfirmReservationState){
+              ErrorDialog.openDialog(context,'profile_send_otp'.translate(),verifySuccess: true);
+
+            }
+            if(state is ErrorConfirmReservationState){
+              LoadingDialog().closeDialog(context);
+              await SmsAutoFill().listenForCode();
+            }
           },
           builder: (context, state) => BaseOTPCodeScreen(
         onTap: () {context.read<BookingCubit>().confirmReservation(bookingTripModel,context.read<BookingCubit>().code);},

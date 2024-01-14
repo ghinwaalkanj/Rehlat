@@ -1,5 +1,4 @@
 class AppImages {
-
   static const splashImage = 'assets/images/splash.png';
   static const onBoarding1Image = 'assets/images/onboarding1.png';
   static const onBoarding2Image = 'assets/images/onboarding2.png';
@@ -38,5 +37,6 @@ class AppImages {
   static const clockIcon = 'assets/images/clock.jpg';
   static const warningImage = 'assets/images/warning.png';
   static const noInternetIcon = 'assets/lottie/noInternet.json';
+  static const noDataIcon = 'assets/lottie/no_data_found.json';
 
 }

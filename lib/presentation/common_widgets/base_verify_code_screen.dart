@@ -3,6 +3,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/image_helper.dart';
+import 'package:trips/presentation/common_widgets/verify_code_widget.dart';
 import 'package:trips/presentation/screens/verify_screen/send_otp_screen.dart';
 
 import '../../../data/data_resource/local_resource/data_store.dart';
@@ -32,6 +33,7 @@ class BaseOTPCodeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const VerifyCodeWidget(),
                 const SizedBox(height: 40,),
                 Image.asset(AppImages.darkLogoImage,fit: BoxFit.fill),
                 Text('verify_phone'.translate(),style:   AppTextStyle2.getBoldStyle(
@@ -50,7 +52,7 @@ class BaseOTPCodeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 18),
                   child: PinFieldAutoFill(
                       decoration:CirclePinDecoration(
                           bgColorBuilder: FixedColorBuilder(AppColors.lightXBlue.withOpacity(0.15)),

@@ -75,7 +75,7 @@ class _UnknownBusScreenState extends State<UnknownBusScreen> {
                                 ]),
                           )
                         ])),
-                if(state is LoadingSelectSeatsState)
+                if(context.read<SeatsCubit>().isLoadingSelect||context.read<SeatsCubit>().isLoadingUnSelect)
                   Container(
                     alignment: Alignment.center,
                     color: Colors.white60,

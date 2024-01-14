@@ -83,7 +83,7 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
                                 const PriceContainer()
                               ]),
                         ),
-                        if(state is LoadingSelectSeatsState)
+                        if(context.read<SeatsCubit>().isLoadingSelect||context.read<SeatsCubit>().isLoadingUnSelect)
                           Container(
                             alignment: Alignment.center,
                             color: Colors.white60,

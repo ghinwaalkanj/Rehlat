@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/style/app_text_style.dart';
 
@@ -39,11 +40,11 @@ class PaymentDetailsCard extends StatelessWidget {
                       fontSize: AppFontSize.size_14,
                       color: Colors.black,
                       fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-                       const Center(child: Text('thu, jun 28',style: AppTextStyle.lightYellowNormal_14)),
+                        Center(child: Text(DateFormat('E, LLL d ',DataStore.instance.lang).format(context.read<ResultSearchCubit>().selectedTripModel!.startDate??DateTime.now()).toString(),style: AppTextStyle.lightYellowNormal_14)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           Text('${context.read<ResultSearchCubit>().selectedTripModel?.startDate?.hour} : ${context.read<ResultSearchCubit>().selectedTripModel?.startDate?.minute} ',style:   AppTextStyle2.getMediumStyle(
+                           Text(DateFormat('jm',DataStore.instance.lang).format(context.read<ResultSearchCubit>().selectedTripModel!.startDate??DateTime.now()).toString(),style:   AppTextStyle2.getMediumStyle(
                             fontSize: AppFontSize.size_16,
                             color:  Colors.black,
                             fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
@@ -62,14 +63,24 @@ class PaymentDetailsCard extends StatelessWidget {
                       const SizedBox(height: 10,),
                       Row(
                         children: [
-                          Image.asset(AppImages.lmaImage),
+                         // Image.network(context.read<ResultSearchCubit>().selectedTripModel?.company?.logo??''),
                           const SizedBox(width: 4,),
-                           Text(context.read<ResultSearchCubit>().selectedTripModel?.company?.name??'',style:   AppTextStyle2.getBoldStyle(
-                            fontSize: AppFontSize.size_14,
-                            color:  Colors.black,
-                            fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',).copyWith(
-                             fontFamily: DataStore.instance.lang=='ar'?'Tajawal-SemiBold':'Poppins-SemiBold',
-                           ),),
+                           Row(
+                             children: [
+                               Text(context.read<ResultSearchCubit>().selectedTripModel?.company?.name??'',style:   AppTextStyle2.getBoldStyle(
+                                fontSize: AppFontSize.size_14,
+                                color:  Colors.black,
+                                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',).copyWith(
+                                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal-SemiBold':'Poppins-SemiBold',
+                               ),),
+                               Text('company'.translate(),style:   AppTextStyle2.getBoldStyle(
+                                fontSize: AppFontSize.size_14,
+                                color:  Colors.black,
+                                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',).copyWith(
+                                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal-SemiBold':'Poppins-SemiBold',
+                               ),),
+                             ],
+                           ),
                         ],
                       ),
                       const SizedBox(height: 10,),

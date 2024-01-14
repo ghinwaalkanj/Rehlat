@@ -30,7 +30,8 @@ class ProfileCard extends StatelessWidget {
           child: Row(
             children: [
               widgetCard ??
-              Text(profileCardModel!.title.translate(),style:   AppTextStyle2.getBoldStyle(
+              Text(profileCardModel!.title.translate(),
+                style: AppTextStyle2.getBoldStyle(
                 fontSize: AppFontSize.size_14,
                 color:  Colors.black,
                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),

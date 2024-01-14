@@ -29,7 +29,7 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
   String name='';
   TextEditingController? nameController;
   TextEditingController? ageController;
-  TextEditingController? numberController;
+  TextEditingController? lastNameController;
   String? gender;
 
   @override
@@ -37,7 +37,7 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
     super.initState();
     nameController=TextEditingController(text: widget.passengerModel!.name??'');
     ageController=TextEditingController(text: widget.passengerModel!.age==null?'': widget.passengerModel!.age.toString());
-    numberController=TextEditingController(text: widget.passengerModel!.number==null?'': widget.passengerModel!.number.toString());
+    lastNameController=TextEditingController(text: widget.passengerModel!.lastName==null?'': widget.passengerModel!.lastName.toString());
     gender= widget.passengerModel!.gender;
   }
 
@@ -99,8 +99,18 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
                 AuthTextFormField(
                    controller: nameController ,
                     errorText:  widget.passengerModel!.nameError ,
-                   labelText: 'name'.translate(),labelStyle: AppTextStyle.darkGreyNormal_16,borderColor:AppColors.darkGrey ,enableColor: AppColors.darkGreen,
+                   labelText: 'first_name'.translate(),labelStyle: AppTextStyle.darkGreyNormal_16,borderColor:AppColors.darkGrey ,enableColor: AppColors.darkGreen,
                   onChanged: (value) {widget.passengerModel!.name=nameController?.text??'';}
+                ),
+                const SizedBox(height: 16,),
+                AuthTextFormField(
+                  errorText: widget.passengerModel!.lastNameError ,
+                  controller: lastNameController ,
+                  labelText: 'last_name'.translate(),
+                  labelStyle: AppTextStyle.darkGreyNormal_16,
+                  borderColor:AppColors.darkGrey ,
+                  enableColor: AppColors.darkGreen,
+                  onChanged: (value) => widget.passengerModel!.lastName=value,
                 ),
                 const SizedBox(height: 16,),
                 AuthTextFormField(
@@ -108,15 +118,6 @@ class _PassengerInfoCardState extends State<PassengerInfoCard> {
                  errorText: widget.passengerModel!.ageError ,
                   labelText: 'age'.translate(),labelStyle: AppTextStyle.darkGreyNormal_16,keyboardType: TextInputType.phone,borderColor:AppColors.darkGrey ,enableColor: AppColors.darkGreen,
                   onChanged: (value) => widget.passengerModel!.age=int.parse(value),
-                ),
-                const SizedBox(height: 16,),
-                AuthTextFormField(
-                  errorText: widget.passengerModel!.phoneError ,
-                  controller: numberController ,
-                  hintText: '09XXXXXXXX',
-                  labelText: 'number'.translate(),
-                  labelStyle: AppTextStyle.darkGreyNormal_16,keyboardType: TextInputType.phone,borderColor:AppColors.darkGrey ,enableColor: AppColors.darkGreen,
-                  onChanged: (value) => widget.passengerModel!.number=value,
                 ),
                 const SizedBox(height: 16,),
                 DropDownAppWidget(

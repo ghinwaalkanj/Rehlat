@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
+
 import '../../../../core/di.dart';
 import '../../../../cubit/notification_cubit/notification_cubit.dart';
 import '../../../../cubit/notification_cubit/notification_states.dart';
@@ -44,7 +45,7 @@ class NotificationScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 30.0),
                                   child: ListView.separated(
                                    //physics: const BouncingScrollPhysics(),
-                                    itemBuilder: (context, index) =>  NotificationWidget(notificationModel: context.read<NotificationCubit>().notificationList[index]),
+                                    itemBuilder: (context, index) =>  NotificationCardWidget(notificationModel: context.read<NotificationCubit>().notificationList[index]),
                                     separatorBuilder: (context, index) => const Divider(),
                                     itemCount: context.read<NotificationCubit>().notificationList.length),
                                         ),

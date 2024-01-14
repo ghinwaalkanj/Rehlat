@@ -25,26 +25,32 @@ class OtpCubit extends Cubit<OtpStates> {
   UserModel?  userModel;
   String? blockedDuration;
   Headers? verifyHeaders;
+  bool isLogin=true;
   OtpCubit({required this.tripsRepo}) : super(OtpInitialState());
+
+  clearCode(){
+    code=null;
+    emit(OtpInit2State());
+  }
 
   Future<void> sendOtp({required bool isVerifyScreen}) async {
     String? error;
     bool isPhone=AppRegexp.phoneRegexp.hasMatch(phoneNumber??'');
     if(phoneNumber != null  && isPhone){
     emit(LoadingSendOtpState());
-    (await tripsRepo.sendOtp(phoneNumber!,fullName,getHeaders: (p0) =>verifyHeaders=p0,)).fold((l) {
+    (await tripsRepo.sendOtp(phoneNumber!,fullName,getHeaders: (p0) =>verifyHeaders=p0,isRegister: isLogin)).fold((l) {
       if(verifyHeaders?['retry-after']?.first!=null){
         blockedDuration=verifyHeaders!['retry-after']!.first;
         String time=FunctionUtils().formattedTime(timeInSecond: int.parse(blockedDuration!));
         emit(ErrorSendOtpState(error:'${'block_msg'.translate()} \n $time ${'minute'.translate()}'));
       }
       else{
-      emit(ErrorSendOtpState(error: '$l${'try_again'.translate()}'));}
+      emit(ErrorSendOtpState(error: '$l\n${'try_again'.translate()}'));}
     },
     (r) {
     emit(SuccessSendOtpState(isVerifyScreen: isVerifyScreen));
-    if(DataStore.instance.name==null)DataStore.instance.setName(fullName??'');
-    if(DataStore.instance.phone==null)DataStore.instance.setPhone(phoneNumber??'');
+    DataStore.instance.setName(fullName??'');
+    DataStore.instance.setPhone(phoneNumber??'');
     });
       } else{
          if ((DataStore.instance.token==null&&fullName==null) || phoneNumber==null) {
@@ -79,4 +85,9 @@ class OtpCubit extends Cubit<OtpStates> {
      if(code.toString().length<6)error='code_valid'.translate();
      emit(ValidateVerifyOtpState(error:error));
   }}
+
+  updateToSignUp({required bool updateLogin}){
+    isLogin=updateLogin;
+    emit(UpdateToSignUpState());
+  }
 }

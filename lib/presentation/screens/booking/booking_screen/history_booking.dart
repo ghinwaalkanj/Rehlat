@@ -36,6 +36,7 @@ class HistoryBookingScreen extends StatelessWidget {
                     onRefresh: () => context.read<BookingCubit>().getBookingList(),
                   child: ListView.separated(
                       itemBuilder: (context, index) =>  BookingCard(color: AppColors.lightGreyXX,
+                          isHistory: true,
                           bookingTripModel:  context.read<BookingCubit>().historyList[index]
                       ),
                       separatorBuilder: (context, index) =>const SizedBox(height: 20) ,

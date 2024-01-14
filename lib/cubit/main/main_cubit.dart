@@ -5,6 +5,7 @@ import '../../data/data_resource/remote_resource/repo/rate_repo.dart';
 import 'main_states.dart';
 
     class MainCubit extends Cubit<MainStates> {
+
   MainCubit({required this.rateRepo}) : super(MainInitialState());
   int index=0;
   RateRepo rateRepo;
@@ -18,12 +19,4 @@ import 'main_states.dart';
     Future.delayed(const Duration(milliseconds: 100),whenDone);
     //if navigatorKey.currentContext != null)navigatorKey.currentContext!.read<HomePageBloc>().getHomePageData();
   }
-
-
-  sendFcm(){
-
   }
-
-
-
-}

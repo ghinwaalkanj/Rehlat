@@ -31,7 +31,8 @@ class SearchWidget extends StatelessWidget {
       bloc:  context.read<HomeCubit>()..isHomePage=true,
       listener: (context, state) {
         if (state is ValidateState)ErrorDialog.openDialog(context, 'fill_search_trip'.translate());
-        if (state is ValidateReturnDateState)ErrorDialog.openDialog(context, 'return_date_validate'.translate());
+        if (state is ValidateReturnDateState)ErrorDialog.openDialog(context,'return_date_validate'.translate());
+        if (state is ValidatePassengerState)ErrorDialog.openDialog(context,'${'limit_passenger'.translate()} ${context.read<HomeCubit>().passengerNumPermission}');
         if (state is LoadingSearchTripState) LoadingDialog().openDialog(context);
         if (state is SuccessSearchTripState){
           LoadingDialog().closeDialog(context);

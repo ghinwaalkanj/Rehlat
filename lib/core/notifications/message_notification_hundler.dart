@@ -21,10 +21,9 @@ class MessageHandlerWidgetState extends State<MessageHandlerWidget> {
 
     //background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async =>print('testt22'));//
-    //in foreground
 
+    //in foreground
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        print('ttttt');
         if (message != null) {
           var androidPlatformChannelSpecifics = const
           AndroidNotificationDetails(

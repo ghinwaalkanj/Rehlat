@@ -16,7 +16,9 @@ timeOverDialog({required BuildContext context,required bool isPressedOption,requ
       context,
       imageUrl: Image.asset(context.read<ResultSearchCubit>().selectedTripModel?.repeatTime==0?AppImages.timeOverIcon:AppImages.clockIcon,width: 88,height: 88, ),
       dialogTitle: context.read<ResultSearchCubit>().selectedTripModel?.repeatTime==0?'time_over'.translate():'extended_time_over'.translate(),
-      message:context.read<ResultSearchCubit>().selectedTripModel?.repeatTime==0?'time_over_msg'.translate():'extended_time_over_msg'.translate(),
+      message:context.read<ResultSearchCubit>().selectedTripModel?.repeatTime==0?
+      '${'time_over_msg'.translate()} ${context.read<HomeCubit>().extraTimer!.inMinutes} ${'time_over_msg2'.translate()}'
+          :'extended_time_over_msg'.translate(),
       hideDialog:()=>Future.delayed(const Duration(seconds:30,),
       () => isHideDialog= context.read<SeatsCubit>().isHideDialog,
       ).then((value) {

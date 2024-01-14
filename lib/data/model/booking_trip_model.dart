@@ -15,6 +15,7 @@ class BookingTripModel{
   String? busType;
   String? reservationNumber;
   double? rate;
+  bool? isSlidable;
   List<SeatModel>? mySeats;
 
   BookingTripModel({
@@ -30,6 +31,7 @@ class BookingTripModel{
   this.busType,
   this.rate,
   this.mySeats,
+    this.isSlidable=false,
     this.reservationNumber
   });
 

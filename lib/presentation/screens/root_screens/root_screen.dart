@@ -87,7 +87,6 @@ class _RootScreenState extends State<RootScreen>  with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RootPageCubit, RootPageStates>(
-    // bloc:
       listener: (context, state) {
         if(context.read<RootPageCubit>().tripModel!=null) evalAnimatedDialog(context: context,);
         if(state is LoadingRateTripState)  LoadingDialog().openDialog(context);

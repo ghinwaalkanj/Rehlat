@@ -34,7 +34,7 @@ class TripModel {
     this.rate,
     this.repeatTime=0,
     this.timer,
-    this.extraTimer
+    this.extraTimer,
   });
 
   factory TripModel.fromJson(Map<String, dynamic> json) => TripModel(
@@ -54,4 +54,3 @@ class TripModel {
     seats: json["seats"] == null ? [] : List<SeatModel>.from(json["seats"]!.map((x) => SeatModel.fromJson(x))),
   );
 }
-

@@ -43,7 +43,7 @@ class FunctionUtils {
     String second = sec
         .toString()
         .length <= 1 ? "0$sec" : "$sec";
-    return "$minute : $second";
+    return DataStore.instance.lang=='en'? "$minute : $second":"$second : $minute";
   }
 
   getNotificationPermission() async {

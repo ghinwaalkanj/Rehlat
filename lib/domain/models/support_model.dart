@@ -1,18 +1,18 @@
+import 'package:trips/data/model/booking_trip_model.dart';
+
 class SupportModel{
-  String? date;
-  String? reservationID;
+  BookingTripModel? bookingTripModel;
   String? phoneNumber;
    String? claimText;
 
-  SupportModel({ this.date, this.reservationID, this.phoneNumber, this.claimText});
+  SupportModel({ this.bookingTripModel, this.phoneNumber, this.claimText});
 
   Map<String, dynamic> toJson() {
     return {
-      "reservation_date": date,
-      "reservation_number": reservationID,
+      "reservation_date": bookingTripModel?.startDate.toString().substring(0,10),
+      "reservation_number": bookingTripModel?.reservationNumber,
       "phone":phoneNumber,
       "message":claimText
     };
   }
-
 }

@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:trips/data/model/full_city_model.dart';
 
 import '../../../../domain/models/passenger_model.dart';
 import '../../../../domain/models/search_param_model.dart';
 import '../../../model/booking_model.dart';
-import '../../../model/city_model.dart';
 import '../../../model/company_model.dart';
 import '../../../model/full_user_model.dart';
 import '../../../model/notification_model/full_notification_model.dart';
@@ -31,13 +31,14 @@ class TripsRepo  {
         });
   }
 
-  Future<Either<String, dynamic>> sendOtp(String phone,String? fullName,{required Function(Headers) getHeaders}) {
+  Future<Either<String, dynamic>> sendOtp(String phone,String? fullName,{required Function(Headers) getHeaders,required bool isRegister}) {
     return BaseApiClient.get(
         url: '${Links.baseUrl}${Links.sendOtp}',
         getHeaders11: (p0) =>getHeaders(p0),
-        queryParameters: {
+        queryParameters:{
           "phone":phone,
-          "name":fullName
+          "name":fullName,
+          "is_register":isRegister==true?1:0
         },
         converter: (value) {
           return value['message'];
@@ -102,11 +103,11 @@ class TripsRepo  {
   }
 
 
-  Future<Either<String, List<CityModel>>> getCities() {
+  Future<Either<String, FullCityModel>> getCities() {
     return BaseApiClient.get(
         url: '${Links.baseUrl}${Links.cities}',
         converter: (value) {
-          return value['data']['cities']==null?[]: List<CityModel>.from(value["data"]['cities']!.map((x) => CityModel.fromJson(x)));
+          return FullCityModel.fromJson(value['data']);
         });
   }
 
@@ -159,6 +160,22 @@ class TripsRepo  {
         url: url,
         converter: (value) {
           return FullNotificationModel.fromJson(value);
+        });
+  }
+
+  Future<Either<String, bool>> requestCancelTempBooking({required int bookingId}) {
+    return BaseApiClient.get(
+        url: '${Links.baseUrl}${Links.requestCancelTempBooking}/$bookingId',
+        converter: (value) {
+          return true;
+        });
+  }
+  Future<Either<String, bool>>  cancelTempBooking({required int bookingId,required String code}) {
+    return BaseApiClient.post(
+        formData:{"code":code} ,
+        url: '${Links.baseUrl}${Links.cancelTempBooking}',
+        converter: (value) {
+          return true;
         });
   }
 }

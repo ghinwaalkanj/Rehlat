@@ -15,3 +15,10 @@ class ErrorRateTripState extends RootPageStates{
   final String? error;
   ErrorRateTripState({required this.error});
 }
+
+class SendLangLoadingState extends RootPageStates{}
+class SendLangSuccessState extends RootPageStates{}
+class SendLangErrorState extends RootPageStates{
+  final String error;
+  SendLangErrorState({required this.error});
+}

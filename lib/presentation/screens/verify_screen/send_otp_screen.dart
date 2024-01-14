@@ -17,7 +17,8 @@ import '../../style/app_images.dart';
 import '../../style/app_text_style_2.dart';
 
 class SendPhoneScreen extends StatelessWidget {
-  const SendPhoneScreen({Key? key}) : super(key: key);
+  final bool? isFromSettings;
+  const SendPhoneScreen({Key? key, this.isFromSettings=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class SendPhoneScreen extends StatelessWidget {
           ErrorDialog.openDialog(context, '${state.error}');}
         if(state is SuccessSendOtpState){
           LoadingDialog().closeDialog(context);
-         if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: const VerifyOTPScreen());
+         if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: VerifyOTPScreen(isFromSettings: isFromSettings,));
          if (state.isVerifyScreen==true)ErrorDialog.openDialog(context,'success_resend_otp'.translate(),verifySuccess: true );
         }
       },
@@ -55,7 +56,7 @@ class SendPhoneScreen extends StatelessWidget {
                   fontSize: AppFontSize.size_13,
                   fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
                 const SizedBox(height: 24,),
-                if(DataStore.instance.token==null)
+                if(context.read<OtpCubit>().isLogin==false)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 26.0),
                   child: AuthTextFormField(
@@ -107,7 +108,8 @@ class SendPhoneScreen extends StatelessWidget {
                     fillColor: Colors.transparent,
                     borderColor: AppColors.lightXGreen,
                     hintText: '09xxxxxxxx',
-                    onChanged: (value) =>context.read<OtpCubit>().phoneNumber = value,
+                    onChanged: (value) {
+                      context.read<OtpCubit>().phoneNumber = value.replaceAll(' ', '');}
                   ),
                 ),
                 const SizedBox(height: 32,),
@@ -125,6 +127,44 @@ class SendPhoneScreen extends StatelessWidget {
                   onPressed: () {
                     context.read<OtpCubit>().sendOtp(isVerifyScreen: false);
                   },),
+                SizedBox(height: 20,),
+                (context.read<OtpCubit>().isLogin==true)
+                ? InkWell(
+                  onTap: () =>  context.read<OtpCubit>().updateToSignUp(updateLogin: false),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('have_account'.translate(),
+                        style: AppTextStyle2.getBoldStyle(
+                          fontSize: AppFontSize.size_14,
+                          color: AppColors.black,
+                          fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                      ),
+                      Text('signup'.translate(),
+                        style: AppTextStyle2.getBoldStyle(
+                          fontSize: AppFontSize.size_14,
+                          color: AppColors.darkGreen,
+                          fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                      ),
+                    ],
+                  ),
+                ):InkWell(
+                  onTap: () =>  context.read<OtpCubit>().updateToSignUp(updateLogin: true),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('already_have_account'.translate(), style: AppTextStyle2.getBoldStyle(
+                        fontSize: AppFontSize.size_14,
+                        color: AppColors.black,
+                        fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                      ),
+                      Text('log_in1'.translate(),style: AppTextStyle2.getBoldStyle(
+                        fontSize: AppFontSize.size_14,
+                        color: AppColors.lightXGreen,
+                        fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

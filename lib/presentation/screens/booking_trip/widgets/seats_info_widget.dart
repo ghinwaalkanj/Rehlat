@@ -109,7 +109,7 @@ class VipSeatsInfoWidget extends StatelessWidget {
                 color: Colors.black,
                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
                 const SizedBox(width: 7,),
-                Text(context.read<ResultSearchCubit>().selectedTripModel?.seatsLeaft.toString()??"0", style: AppTextStyle2.getSemiBoldStyle(
+                Text(context.read<ResultSearchCubit>().selectedTripModel?.numberOfSeats.toString()??"0", style: AppTextStyle2.getSemiBoldStyle(
                 fontSize: AppFontSize.size_14,
                 color: Colors.black,
                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
@@ -135,27 +135,8 @@ class VipSeatsInfoWidget extends StatelessWidget {
                 ),
               ],
             ),
-               //   const SizedBox(height: 12,),
-            // Row(
-            //   children: [
-            //     ImageWidget(url: AppImages.yellowSeatImage,height: 32,width: 32,).buildAssetSvgImage(),
-            //      const SizedBox(width: 7,),
-            //     Row(
-            //       children: [
-            //         Text('temp'.translate()  style: AppTextStyle2.getSemiBoldStyle(
-  // fontSize: AppFontSize.size_12,
-  // color:  Colors.black,
-  // fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-            //         const SizedBox(height: 6,),
-            //          Text(': ${context.read<ReserveTripCubit>().tempList.length.toString()}'  style: AppTextStyle2.getSemiBoldStyle(
-  // fontSize: AppFontSize.size_12,
-  // color:  Colors.black,
-  // fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-            //       ],
-            //     ),
-            //       ]),
-                  const SizedBox(height: 12,),
-                  Row(
+            const SizedBox(height: 12,),
+            Row(
                   children: [
                   const ImageWidget(url: AppImages.greenSeatImage,height: 32,width: 32,).buildAssetSvgImage(),
                   const SizedBox(width: 7,),

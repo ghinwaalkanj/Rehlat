@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
+import 'package:trips/presentation/common_widgets/must_login.dart';
+
 import '../../../../core/utils/image_helper.dart';
 import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../cubit/profile/profile_states.dart';
@@ -26,20 +28,7 @@ class UserProfileInfoScreen extends StatelessWidget {
           child: (state is ErrorGetProfileState )
               ? CustomErrorScreen(onTap:() => context.read<ProfileCubit>().getProfile(), )
               : DataStore.instance.token== null
-        ?  SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(AppImages.warningImage,height: 100,width: 120),
-              const SizedBox(height: 40,),
-              Text('first_login'.translate(), style: AppTextStyle2.getSemiBoldStyle(
-            fontSize: AppFontSize.size_14,
-            color: Colors.black,
-            fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-            ],
-          ),
-        )
+        ?  const MustLoginScreen()
         :  (state is LoadingGetProfileState)
             ? const SizedBox(
               width: double.infinity,
@@ -58,7 +47,8 @@ class UserProfileInfoScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height:52,),
                   InkWell(
-                    onTap: () => AppRouter.navigateTo(context: context, destination: const EditProfileScreen()),
+                    onTap: () {
+                      AppRouter.navigateTo(context: context, destination: const EditProfileScreen());},
                     child: Align(
                       alignment: Alignment.topRight,
                       child: CircleAvatar(

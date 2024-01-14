@@ -16,9 +16,4 @@ class CompanyModel {
     name: json["name"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "logo": logo,
-    "name": name,
-  };
 }

@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/presentation/common_widgets/shimmer/shimmer_widget.dart';
+
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../style/app_colors.dart';
 import '../style/app_text_style.dart';
@@ -12,6 +13,7 @@ class DropDownAppWidget extends StatefulWidget {
   final String chooseTitle;
   String? selectionItem;
   bool isSearch;
+  bool isBooking;
   bool isSource;
   Color? borderSideColor;
   Color? fillColor;
@@ -19,7 +21,7 @@ class DropDownAppWidget extends StatefulWidget {
   final Function(String? id ) getSelectionId;
 
   DropDownAppWidget({Key? key, required this.dropDownList, this.selectionItem,this.isSource=false,
-     required this.chooseTitle,required this.getSelectionId,this.isSearch=false,this.borderSideColor,this.fillColor,this.textStyle}) : super(key: key);
+     required this.chooseTitle,required this.getSelectionId,this.isSearch=false,this.isBooking=false,this.borderSideColor,this.fillColor,this.textStyle}) : super(key: key);
 
   @override
   State<DropDownAppWidget> createState() => _DropDownAppWidgetState();
@@ -90,7 +92,7 @@ class _DropDownAppWidgetState extends State<DropDownAppWidget> {
                         EdgeInsets.only(left:(widget.isSearch)?25: 15): EdgeInsets.only(right:(widget.isSearch)?25: 15),
                         child: Text(widget.isSearch
                             ? (DataStore.instance.lang=='en'?item.nameEn:item.nameAr)
-                            : item.name,
+                            : (widget.isBooking==false)?item.name:item.reservationNumber,
                           style:widget.textStyle?? AppTextStyle.darkGreyNormal_16,),
                   ),
                 ],

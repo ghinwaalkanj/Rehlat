@@ -15,6 +15,8 @@ import 'seats_states.dart';
 
 class SeatsCubit extends Cubit<SeatsStates> {
   TripsRepo tripsRepo;
+  bool isLoadingUnSelect=false;
+  bool isLoadingSelect=false;
   List<SeatModel> seatsIds=[];
   int price=0;
   int? selectedTicketPrice;
@@ -43,9 +45,12 @@ class SeatsCubit extends Cubit<SeatsStates> {
       ErrorDialog.openDialog(navigatorKey.currentContext!, '$l , ${'try_another'.translate()}');
     },
     (r) {
-      addItemToList(seatModel);
-    emit(SuccessSelectSeatsState());
+
+        getPrice(selectedTicketPrice ?? 1);
+        emit(SuccessSelectSeatsState());
+        addItemToList(seatModel);
     });
+    isLoadingSelect=false;
   }
 
   Future<void> unSelectSeats(List<SeatModel> seatModel) async {
@@ -62,12 +67,13 @@ class SeatsCubit extends Cubit<SeatsStates> {
       ErrorDialog.openDialog(navigatorKey.currentContext!,'try_another'.translate());
     },
     (r) {
-      addItemToList(seatModel[0]);
+
+      getPrice(selectedTicketPrice ?? 1);
     emit(SuccessSelectSeatsState());
+    addItemToList(seatModel[0]);
     });
+    isLoadingUnSelect=false;
   }}
-
-
 
   selectSeatEvent(SeatModel seatModel,String passengers){
     errorStatus=null;
@@ -84,24 +90,23 @@ class SeatsCubit extends Cubit<SeatsStates> {
       emit(StatusValidateState(errorStatus));
     }
     else if (seatsIds.contains(seatModel)){
-      seatModel.selectedByMe = false;
-        emit(LoadingSelectSeatsState());
+        isLoadingUnSelect=true;
+        seatModel.selectedByMe = false;
         if (seatsIds.contains(seatModel)) seatsIds.remove(seatModel);
-        getPrice(selectedTicketPrice ?? 1);
-        availableList.add(seatModel);
+        emit(LoadingSelectSeatsState());
         unSelectSeats([seatModel]);
     }
     else{
-      if(seatsIds.length<(int.tryParse(passengers)??1)) {
+      if(seatsIds.length<(int.tryParse(passengers)??1)&&(!seatsIds.contains(seatModel))) {
+        isLoadingSelect=true;
         seatModel.selectedByMe=true;
-        emit(LoadingSelectSeatsState());
         if (!seatsIds.contains(seatModel)) seatsIds.add(seatModel);
-        getPrice(selectedTicketPrice ?? 1);
+        emit(LoadingSelectSeatsState());
         selectSeats(seatModel);
       }
     else {
       emit(ValidateSeatsLengthState());
-    }
+     }
     }
   }
 
@@ -109,8 +114,6 @@ class SeatsCubit extends Cubit<SeatsStates> {
     selectedTicketPrice=ticketPrice;
     price=ticketPrice*(seatsIds.length);
   }
-
-
 
   startTime(bool isTimeStop){
       DataStore.instance.setStartTime(DateTime.now());
@@ -164,8 +167,6 @@ class SeatsCubit extends Cubit<SeatsStates> {
    emit(EndTimerState());
  }
 
-
-
   getAllList({required TripModel tripModel}){
     availableList=[];
     tempList=[];
@@ -173,7 +174,7 @@ class SeatsCubit extends Cubit<SeatsStates> {
     unavailableList=[];
     inUseList=[];
     tripModel.seats?.forEach((element) {
-      if(element.status=="available"&&(element.isSelected==false))availableList.add(element);
+      if(element.status=="available"&&(element.isSelected==false)&&(element.selectedByMe==false))availableList.add(element);
       if(element.status=="temp")tempList.add(element);
       if(element.selectedByMe==true)selectedList.add(element);
       if(element.status=="unavailable")unavailableList.add(element);
@@ -183,7 +184,6 @@ class SeatsCubit extends Cubit<SeatsStates> {
   }
 
   addItemToList(SeatModel item){
-    //if(item.status=="available")availableList.add(item);
     if(item.status=="temp")tempList.add(item);
     if(item.selectedByMe==true){
       availableList.remove(item);
@@ -192,6 +192,7 @@ class SeatsCubit extends Cubit<SeatsStates> {
     if(item.isSelected==true){
       availableList.remove(item);
       inUseList.add(item);}
+    if(item.status=="available"&&item.isSelected==false&&item.selectedByMe==false&&(availableList.contains(item)==false))availableList.add(item);
     emit(AddItemListState());
   }
 }

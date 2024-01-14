@@ -1,26 +1,26 @@
 class PassengerModel{
 
   int? age;
-  String? number;
+  String? lastName;
   String? name;
   String? gender;
   String? ageError;
-  String? phoneError;
+  String? lastNameError;
   String? nameError;
   bool? isNameNull;
   bool? isAgeNull;
-  bool isNumberTrue;
+  bool? isLastNameNull;
 
  PassengerModel({
     this.age,
     this.name,
     this.gender,
-    this.number,
+    this.lastName,
    this.ageError,
    this.nameError,
    this.isNameNull,
-   this.phoneError,
-   this.isNumberTrue=true,
+   this.lastNameError,
+   this.isLastNameNull,
    this.isAgeNull
   });
 
@@ -29,7 +29,7 @@ class PassengerModel{
      "passengers[$i][age]": age,
      "passengers[$i][name]": name,
      "passengers[$i][gender]": gender,
-     "passengers[$i][number]": number,
+     "passengers[$i][last_name]": lastName,
    };
  }
 

@@ -17,7 +17,7 @@ import 'booking_states.dart';
   String code='';
   List confirmedList=[];
   List tempList=[];
-  List historyList=[];
+    List<BookingTripModel> historyList=[];
   String? blockedDuration;
   Headers? verifyHeaders;
 
@@ -37,8 +37,7 @@ import 'booking_states.dart';
         isError=true;
         confirmedList=[];
         emit(ErrorBookingState(error: l));
-      },
-              (r) {
+      }, (r) {
                 isLoading=false;
                 confirmedList=r.confirmed??[];
                 tempList=r.temp??[];
@@ -72,8 +71,32 @@ import 'booking_states.dart';
           });
   }
 
+  requestCancelTempBooking({required BookingTripModel bookingTripModel,required bool isBookingScreen}) async {
+       emit(LoadingRequestCancelTempState());
+      (await tripsRepo.requestCancelTempBooking(bookingId: bookingTripModel.id!,)).fold((l) => emit(ErrorRequestCancelTempState(error: l)),
+              (r) {
+            emit(SuccessRequestCancelTempState(bookingTripModel:bookingTripModel ,isBookingScreen:isBookingScreen ));
+          });
+  }
+
+  cancelTempBooking({required BookingTripModel bookingTripModel}) async {
+       emit(LoadingCancelTempState());
+      (await tripsRepo.cancelTempBooking(bookingId: bookingTripModel.id!,code: code)).fold((l) => emit(ErrorCancelTempState(error: l)),
+              (r) {
+                tempList.remove(bookingTripModel);
+            emit(SuccessCancelTempState());
+          });
+  }
+
   clearList(){
      confirmedList=[];
      tempList=[];
      historyList=[];
-}}
+}
+
+    closeSlidableCard(){
+    emit(CloseSlidableState());
+      }
+
+
+  }

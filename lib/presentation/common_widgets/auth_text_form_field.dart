@@ -113,6 +113,7 @@ class AuthTextFormField extends StatelessWidget {
           errorText: errorText,
           suffixIcon: suffixIcon,
           errorStyle:  AppTextStyle.redBold_14,
+          errorMaxLines: 2
         ),
       ),
     );

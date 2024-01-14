@@ -118,7 +118,7 @@ class ActionAlertDialog extends StatelessWidget {
             Text(
               dialogTitle,
               textAlign: TextAlign.center,
-              style:titleStyle?? AppTextStyle.lightBlackW700_21,
+              style:titleStyle?? AppTextStyle.lightBlackW700_21.copyWith(fontSize: 16),
             ),
             if(message != null)
             Padding(
@@ -158,7 +158,7 @@ class ActionAlertDialog extends StatelessWidget {
                     child: Text(
                       cancelText!,
                       style:buttonStyle??    AppTextStyle2.getBoldStyle(
-                      fontSize: AppFontSize.size_17,
+                      fontSize: AppFontSize.size_14,
                       color:  Colors.black,
                       fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
                       textAlign: TextAlign.center,
@@ -168,7 +168,7 @@ class ActionAlertDialog extends StatelessWidget {
                 if(confirmText != null)
                   Expanded(
                     child: SizedBox(
-                      height: 54,
+                      height: 44,
                       child: ElevatedButton(
                         style: ButtonStyle(
                           elevation: const MaterialStatePropertyAll(0),
@@ -183,7 +183,7 @@ class ActionAlertDialog extends StatelessWidget {
                         child: Text(
                           confirmText!,
                           style:buttonStyle??   AppTextStyle2.getBoldStyle(
-                      fontSize: AppFontSize.size_17,
+                      fontSize: AppFontSize.size_16,
                       color:  Colors.black,
                       fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
                         ),

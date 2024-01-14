@@ -2,6 +2,8 @@ import '../../data/model/booking_trip_model.dart';
 
 abstract class BookingStates{}
 class ChangeIndexState extends BookingStates{}
+class OpenSlidableState extends BookingStates{}
+class CloseSlidableState extends BookingStates{}
 class BookingInitialState extends BookingStates{}
 
 class LoadingBookingState extends BookingStates{}
@@ -32,4 +34,23 @@ class SuccessRequestConfirmReservationState extends BookingStates{
 class ErrorRequestConfirmReservationState extends BookingStates{
   final String error;
   ErrorRequestConfirmReservationState({required this.error});
+}
+
+class LoadingRequestCancelTempState extends BookingStates{}
+class SuccessRequestCancelTempState extends BookingStates{
+  final BookingTripModel  bookingTripModel ;
+  final bool  isBookingScreen ;
+
+  SuccessRequestCancelTempState({required this.bookingTripModel,required this.isBookingScreen});
+}
+class ErrorRequestCancelTempState extends BookingStates{
+  final String error;
+  ErrorRequestCancelTempState({required this.error});
+}
+
+class LoadingCancelTempState extends BookingStates{}
+class SuccessCancelTempState extends BookingStates{}
+class ErrorCancelTempState extends BookingStates{
+  final String error;
+  ErrorCancelTempState({required this.error});
 }

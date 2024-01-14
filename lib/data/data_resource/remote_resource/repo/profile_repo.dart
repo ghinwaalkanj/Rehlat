@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:trips/data/model/claim_model.dart';
 
 import '../../../../domain/models/profile_param.dart';
 import '../../../../domain/models/support_model.dart';
@@ -54,4 +55,31 @@ class ProfileRepo {
           return true;
         });
   }
+
+  Future<Either<String, List<ClaimModel>>> getClaims() {
+    return BaseApiClient.get(
+        url: '${Links.baseUrl}${Links.getClaim}',
+        converter: (value) {
+          return List<ClaimModel>.from(value["data"]['claims']!.map((x) => ClaimModel.fromJson(x)));
+        });
+  }
+
+  Future<Either<String, dynamic>> getPrivacy() {
+    return BaseApiClient.get(
+        url: '${Links.baseUrl}${Links.privacy}',
+        converter: (value) {
+          return value;
+        });
+  }
+
+  Future<Either<String, dynamic>> getTerms() {
+    return BaseApiClient.get(
+        url: '${Links.baseUrl}${Links.terms}',
+        converter: (value) {
+          return value;
+        });
+  }
+
+
+
 }

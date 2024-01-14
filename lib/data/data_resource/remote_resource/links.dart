@@ -1,8 +1,6 @@
 abstract class Links {
-  // static const baseUrl = "http://starslive.club/public/api/";
-   static const baseUrl = "http://90.153.255.3:8004/api/v1/";
-   //  // static const baseUrl = "https://trips-0b2b.onrender.com/api/v1/";
- // static const videoBaseUrl = "http://5.134.255.237:8069";
+     static const baseUrl = "https://rehlat.sy/backend/api/v1/";
+     // static const baseUrl = "https://trips-0b2b.onrender.com/api/v1/";
 
   //region trips
   static const searchTrips = "trips";
@@ -21,8 +19,16 @@ abstract class Links {
   static const rateTrip = "rate-trip";
   static const updatePhone = "update-phone";
   static const sendClaim = "send-claim";
+  static const getClaim = "get-claims";
   static const updateFcm = "update-fcm";
   static const getNotification = "notifications";
   static const requestReservation = "request/confirm-reservation";
+  static const requestCancelTempBooking = "request-cancel-reservation";
+  static const cancelTempBooking = "cancel-reservation";
+  static const sendLanguage = "profile/lang";
+  static const getPaymentMethods = "methods";
+  static const terms = "terms-of-use";
+  static const privacy = "privacy-policy";
   //endregion
+
 }

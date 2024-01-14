@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/booking/booking_states.dart';
 import 'package:trips/presentation/common_widgets/base_app_bar.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
 import 'package:trips/presentation/screens/booking/booking_screen/temp_booking.dart';
+import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/booking/booking_cubit.dart';
@@ -15,6 +17,7 @@ import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style_2.dart';
 import '../../notification/screens/notification_screen.dart';
+import 'cancel_temp_code_otp.dart';
 import 'code_otp_booking.dart';
 import 'confirmed_booking.dart';
 import 'history_booking.dart';
@@ -27,10 +30,11 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return    BlocConsumer<BookingCubit,BookingStates>(
       bloc: context.read<BookingCubit>()..getBookingList(),
-      listener: (context, state) {
+      listener: (context, state)  {
         if(state is LoadingConfirmReservationState)LoadingDialog().openDialog(context);
         if(state is LoadingRequestConfirmReservationState)LoadingDialog().openDialog(context);
         if(state is SuccessRequestConfirmReservationState){
+          context.read<BookingCubit>().code='';
           LoadingDialog().closeDialog(context);
           if(state.isBookingScreen ==true)AppRouter.navigateTo(context: context, destination: BookingOTPCodeScreen(bookingTripModel: state.bookingTripModel,));}
         if(state is ErrorRequestConfirmReservationState){
@@ -40,11 +44,23 @@ class BookingScreen extends StatelessWidget {
           LoadingDialog().closeDialog(context);
           Navigator.pop(context);
           ErrorDialog.openDialog(context,'success_confirm_temp'.translate(),verifySuccess: true );
+          AppRouter.navigateTo(context: context, destination: PaymentMethodScreen());
         }
         if(state is ErrorConfirmReservationState){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context,state.error );}
-    },
+          ErrorDialog.openDialog(context,state.error );
+           SmsAutoFill().listenForCode();
+        }
+        if(state is LoadingRequestCancelTempState)LoadingDialog().openDialog(context);
+        if(state is SuccessRequestCancelTempState){
+          LoadingDialog().closeDialog(context);
+          context.read<BookingCubit>().code='';
+          if(state.isBookingScreen ==true)AppRouter.navigateTo(context: context, destination: CancelTempCodeScreen(bookingTripModel: state.bookingTripModel,));}
+        if(state is ErrorRequestCancelTempState){
+          LoadingDialog().closeDialog(context);
+          ErrorDialog.openDialog(context, state.error);
+        }
+      },
     builder: (context, state) => BaseAppBar(
       titleScreen:'bookings'.translate() ,
       rightIcon: (DataStore.instance.token?.isNotEmpty??false)?

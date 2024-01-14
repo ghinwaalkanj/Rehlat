@@ -91,7 +91,7 @@ class _NormalSeatsInfoScreenState extends State<NormalSeatsInfoScreen> {
                            ]),
                       )
                      ])),
-                if(state is LoadingSelectSeatsState)
+                if(context.read<SeatsCubit>().isLoadingSelect||context.read<SeatsCubit>().isLoadingUnSelect)
                   Container(
                     alignment: Alignment.center,
                     color: Colors.white60,

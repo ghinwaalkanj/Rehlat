@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
+import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/home/home_cubit.dart';
@@ -34,7 +35,7 @@ class PaymentDetailsScreen extends StatelessWidget {
         if(state is LoadingReserveSeatsState)LoadingDialog().openDialog(context);
         if(state is ErrorReserveSeatsState){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context, '${state.error} , ${'try_again'.translate()}');}
+          ErrorDialog.openDialog(context, '${state.error} , \n${'try_again'.translate()}');}
         if(state is SuccessReserveSeatsState){
           LoadingDialog().closeDialog(context);
           successReservationDialog(context: context,onConfirm: () {
@@ -50,7 +51,7 @@ class PaymentDetailsScreen extends StatelessWidget {
       child: Scaffold(
           body: BaseAppBar(
               titleScreen: 'payment_option'.translate(),
-              tripInfo: PassengerTitleWidget(titleScreen: 'payment_option',),
+              tripInfo: const PassengerTitleWidget(titleScreen: 'payment_option',),
               childAppBar: const ChildBaseAppBar(),
               child: Stack(
               alignment: Alignment.bottomCenter,
@@ -95,7 +96,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                         AppRouter.navigateRemoveTo(context: context, destination: RootScreen());
+                         AppRouter.navigateTo(context: context, destination: const PaymentMethodScreen());
                         },
                         child: Container(
                           height: 80,
