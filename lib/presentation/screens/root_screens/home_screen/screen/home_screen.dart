@@ -55,7 +55,6 @@ class HomeScreen extends StatelessWidget {
                       itemCount: context.read<HomeCubit>().companiesList.length),
                 ),
               ),
-
               const SizedBox(height: 12,)
             ],
           ),

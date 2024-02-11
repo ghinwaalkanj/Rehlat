@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
-
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/home/home_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_cubit.dart';

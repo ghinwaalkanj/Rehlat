@@ -21,13 +21,7 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget> {
     super.initState();
     codeListen();
     SmsAutoFill().getAppSignature.then((signature) {
-      print('otpCode');
-      print(otpCode);
-      print(  'SmsAutoFill().code;');
-      print(  SmsAutoFill().code);
       setState(() {
-        print('signature');
-        print(signature);
         appSignature = signature;
       });
     });
@@ -41,6 +35,6 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox();
+    return  const SizedBox();
   }
 }

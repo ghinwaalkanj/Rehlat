@@ -30,18 +30,18 @@ class BaseOnBoardingScreen extends StatelessWidget {
       builder:(context, state) => Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  urlImage,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                  height: 530.h,
-                ),
-                Expanded(
-                  child: Padding(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    urlImage,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    height: 530.h,
+                  ),
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 33.0),
                     child: Column(
                       children: [
@@ -62,7 +62,7 @@ class BaseOnBoardingScreen extends StatelessWidget {
                           color:  Colors.black,
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)
                         ),
-                        const Spacer(),
+                      //  const Spacer(),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 22.0),
                           child: Row(
@@ -112,9 +112,9 @@ class BaseOnBoardingScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           )),
     );

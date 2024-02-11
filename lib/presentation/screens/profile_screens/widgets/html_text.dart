@@ -9,26 +9,29 @@ class HtmlContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Html(
-    data: html,
-      shrinkWrap: true,
-    style: {
-    "body": Style(
-      color: Colors.red,
-    fontSize: FontSize(33.0,),
-    ),}
-    // textStyle: TextStyle(
-    //   fontSize: size,
-    //   color: color,
-    // ),
-    // customStylesBuilder: (element) {
-    //   return {
-    //     'text-overflow': 'ellipsis',
-    //     'max-lines': '2',
-    //     'font-weight': '600',
-    //     'font-size': '16'
-    //   };
-    // }
-      );
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Html(
+      data: html,
+        shrinkWrap: true,
+      style: {
+      "body": Style(
+        color: Colors.red,
+      fontSize: FontSize(33.0,),
+      ),}
+      // textStyle: TextStyle(
+      //   fontSize: size,
+      //   color: color,
+      // ),
+      // customStylesBuilder: (element) {
+      //   return {
+      //     'text-overflow': 'ellipsis',
+      //     'max-lines': '2',
+      //     'font-weight': '600',
+      //     'font-size': '16'
+      //   };
+      // }
+        ),
+  );
     }
 }

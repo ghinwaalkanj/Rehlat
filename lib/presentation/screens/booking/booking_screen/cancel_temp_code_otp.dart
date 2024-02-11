@@ -28,7 +28,7 @@ class CancelTempCodeScreen extends StatelessWidget {
            context.read<BookingCubit>().code='';
            LoadingDialog().closeDialog(context);
            ErrorDialog.openDialog(context,'cancel_temp_success'.translate(),verifySuccess: true);
-           AppRouter.navigateTo(context: context, destination: RootScreen());
+           AppRouter.navigateTo(context: context, destination: const RootScreen());
       }
        if(state is LoadingCancelTempState) LoadingDialog().openDialog(context);
         if(state is ErrorCancelTempState){

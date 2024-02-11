@@ -22,11 +22,11 @@ class OnBoardingRootScreen extends StatelessWidget {
         controller: context.read<OnBoardingCubit>().pageController,
         itemBuilder:(context,index){
          if(index==0) {
-           return const FirstOnBoardingScreen();
+           return const Expanded(child: FirstOnBoardingScreen());
          } else if(index==1) {
-           return const SecondOnBoardingScreen();
+           return const Expanded(child: SecondOnBoardingScreen());
          } else {
-           return const ThirdOnBoardingScreen();
+           return const Expanded(child: ThirdOnBoardingScreen());
          }
         },
         itemCount: 3,

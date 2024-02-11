@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/image_helper.dart';
 import 'package:trips/presentation/style/app_images.dart';
+
 import '../../../../cubit/booking/booking_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../../data/model/booking_trip_model.dart';
@@ -90,6 +91,7 @@ class BookingCard extends StatelessWidget {
                         fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
                        SizedBox(height: 8.h,),
                         Text(DateFormat('E, LLL d ',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
+                         textAlign: TextAlign.center,
                          style:   AppTextStyle2.getMediumStyle(
                               fontSize: AppFontSize.size_14,
                               color:  Colors.black,

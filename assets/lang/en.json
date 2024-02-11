@@ -178,5 +178,7 @@
   "inactivated_now": "inactivated now",
   "payment_method": "Payment methods:",
   "exit_app": "Are you sure you want to logout?",
-  "terms_text": "Terms and Conditions"
+  "terms_text": "Terms and Conditions",
+  "no_trips_claims": "Complain is accepted during 7 days of trip",
+  "no_notification_yet": "There is no notification yet"
  }

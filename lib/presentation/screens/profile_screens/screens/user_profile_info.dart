@@ -39,90 +39,92 @@ class UserProfileInfoScreen extends StatelessWidget {
                 ],
           ),
         )
-            : Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            : SingleChildScrollView(
               child: Column(
-                children: [
-                  const SizedBox(height:52,),
-                  InkWell(
-                    onTap: () {
-                      AppRouter.navigateTo(context: context, destination: const EditProfileScreen());},
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: CircleAvatar(
-                        radius:32 ,
-                        backgroundColor: AppColors.darkGreen,
-                        child: Text('edit'.translate(),style:AppTextStyle2.getRegularStyle(
-                          fontSize:  AppFontSize.size_18,
-                          color: Colors.white,
-                          fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+          children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height:52,),
+                    InkWell(
+                      onTap: () {
+                        AppRouter.navigateTo(context: context, destination: const EditProfileScreen());},
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: CircleAvatar(
+                          radius:32 ,
+                          backgroundColor: AppColors.darkGreen,
+                          child: Text('edit'.translate(),style:AppTextStyle2.getRegularStyle(
+                            fontSize:  AppFontSize.size_18,
+                            color: Colors.white,
+                            fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height:44,),
-                  const ImageWidget(url: AppImages.profileImage,).buildAssetSvgImage(),
-                  const SizedBox(height:13 ,),
-                  Text(context.read<ProfileCubit>().user?.name??'edit_name_profile'.translate(),style:   AppTextStyle2.getBoldStyle(
-                    fontSize: AppFontSize.size_14,
-                    color:  Colors.black,
-                    fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
-                  const SizedBox(height:13 ,),
+                    const SizedBox(height:44,),
+                    const ImageWidget(url: AppImages.profileImage,).buildAssetSvgImage(),
+                    const SizedBox(height:13 ,),
+                    Text(context.read<ProfileCubit>().user?.name??'edit_name_profile'.translate(),style:   AppTextStyle2.getBoldStyle(
+                      fontSize: AppFontSize.size_14,
+                      color:  Colors.black,
+                      fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+                    const SizedBox(height:13 ,),
 
-                  const SizedBox(height:13 ,),
-                  Text(context.read<ProfileCubit>().user?.phone.toString()??'',style:   AppTextStyle2.getRegularStyle(
-                    fontSize: AppFontSize.size_18,
-                    color:  Colors.black,
-                    fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
-                  const SizedBox(height:45,),
-                ],
+                    const SizedBox(height:13 ,),
+                    Text(context.read<ProfileCubit>().user?.phone.toString()??'',style:   AppTextStyle2.getRegularStyle(
+                      fontSize: AppFontSize.size_18,
+                      color:  Colors.black,
+                      fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
+                    const SizedBox(height:45,),
+                  ],
+                ),
               ),
-            ),
-            if(context.read<ProfileCubit>().user?.gender!=null ||context.read<ProfileCubit>().user?.age!=''  )
-              Container(
-                color: AppColors.lightXXXXGrey,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      if(context.read<ProfileCubit>().user?.gender!=null)
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text('gender'.translate(),style:   AppTextStyle2.getBoldStyle(
-                              fontSize: AppFontSize.size_18,
-                              color:  Colors.black,
-                            fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
-                              const SizedBox(height: 10,),
-                              Text(context.read<ProfileCubit>().user?.gender??'',style:   AppTextStyle2.getRegularStyle(
-                              fontSize: AppFontSize.size_18,
-                              color:  Colors.black,
-                              fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),)
-                            ],
-                          ),
-                        ),
-                      if(context.read<ProfileCubit>().user?.age!=null)
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text('age'.translate(),style:   AppTextStyle2.getBoldStyle(
+              if(context.read<ProfileCubit>().user?.gender!=null ||context.read<ProfileCubit>().user?.age!=''  )
+                Container(
+                  color: AppColors.lightXXXXGrey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        if(context.read<ProfileCubit>().user?.gender!=null)
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text('gender'.translate(),style:   AppTextStyle2.getBoldStyle(
                                 fontSize: AppFontSize.size_18,
                                 color:  Colors.black,
-                                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
-                              const SizedBox(height: 10,),
-                              Text(context.read<ProfileCubit>().user?.age.toString()??'',style:   AppTextStyle2.getRegularStyle(
+                              fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+                                const SizedBox(height: 10,),
+                                Text(context.read<ProfileCubit>().user?.gender??'',style:   AppTextStyle2.getRegularStyle(
                                 fontSize: AppFontSize.size_18,
                                 color:  Colors.black,
                                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),)
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                    ],
+                        if(context.read<ProfileCubit>().user?.age!=null)
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text('age'.translate(),style:   AppTextStyle2.getBoldStyle(
+                                  fontSize: AppFontSize.size_18,
+                                  color:  Colors.black,
+                                  fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+                                const SizedBox(height: 10,),
+                                Text(context.read<ProfileCubit>().user?.age.toString()??'',style:   AppTextStyle2.getRegularStyle(
+                                  fontSize: AppFontSize.size_18,
+                                  color:  Colors.black,
+                                  fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),)
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-              )
+                )
           ],
-    )));
+    ),
+            )));
   }
 }

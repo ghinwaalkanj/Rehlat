@@ -21,28 +21,30 @@ class NoTripScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(AppImages.noTripImage),
-            const SizedBox(height: 47,),
-            Text(title,style: AppTextStyle.lightBlackW700_21),
-            const SizedBox(height: 12,),
-            Text(subTitle,style: AppTextStyle.lightBlackW400_16,),
-            const SizedBox(height: 24,),
-            CustomButton(
-              h: 55,
-              w: 166,
-              radius: 32,
-              color: AppColors.darkYellow,
-              text: buttonTitle,
-               textStyle: AppTextStyle2.getSemiBoldStyle(
-                    fontSize: AppFontSize.size_14,
-                    color: Colors.white,
-                    fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
-              onPressed:onPressed),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(AppImages.noTripImage),
+              const SizedBox(height: 47,),
+              Text(title,style: AppTextStyle.lightBlackW700_21),
+              const SizedBox(height: 12,),
+              Text(subTitle,style: AppTextStyle.lightBlackW400_16,),
+              const SizedBox(height: 24,),
+              CustomButton(
+                h: 55,
+                w: 166,
+                radius: 32,
+                color: AppColors.darkYellow,
+                text: buttonTitle,
+                 textStyle: AppTextStyle2.getSemiBoldStyle(
+                      fontSize: AppFontSize.size_14,
+                      color: Colors.white,
+                      fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                onPressed:onPressed),
+            ],
+          ),
         ),
       ),
     );

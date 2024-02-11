@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
+import 'package:trips/presentation/screens/notification/widgets/notification_widget.dart';
 
 import '../../../../core/di.dart';
 import '../../../../cubit/notification_cubit/notification_cubit.dart';
@@ -12,7 +13,6 @@ import '../../../common_widgets/base_app_bar.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_font_size.dart';
 import '../../../style/app_text_style_2.dart';
-import '../widgets/notification_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -30,10 +30,10 @@ class NotificationScreen extends StatelessWidget {
                     ? CustomErrorScreen(onTap: () =>context.read<NotificationCubit>().getNotification(),)
                     : context.read<NotificationCubit>().isFirstLoading
                     ? const Center(child: CircularProgressIndicator(color: AppColors.primary,))
-                    :   LazyLoadScrollView(
+                    : LazyLoadScrollView(
                           isLoading: context.read<NotificationCubit>().isLoading,
                           onEndOfPage: () =>  context.read<NotificationCubit>().isLast
-                              ? print('test done')
+                              ? debugPrint('test done')
                               : context.read<NotificationCubit>().getNotification(),
                           child: context.read<NotificationCubit>().notificationList.isNotEmpty
                               ? RefreshIndicator(
@@ -57,11 +57,18 @@ class NotificationScreen extends StatelessWidget {
                                   )
                               ],
                             ),
+                          ) : Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Text('no_notification_yet'.translate(), style:AppTextStyle2.getBoldStyle(
+                                    fontSize: AppFontSize.size_14,
+                                    color:  Colors.black,
+                                    fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
+                                ),
+                              ),
+                            ],
                           )
-                              : Text('data', style:AppTextStyle2.getBoldStyle(
-                                  fontSize: AppFontSize.size_12,
-                                  color:  Colors.black,
-                                  fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),)
                     ),
       ),
     ));

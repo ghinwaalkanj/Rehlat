@@ -6,18 +6,20 @@ import '../../../../cubit/result_search_card/result_search_cubit.dart';
 
 class NormalRowSeatWidget extends StatelessWidget {
   final int index;
-  const NormalRowSeatWidget({Key? key, required this.index}) : super(key: key);
+  final bool is44;
+  const NormalRowSeatWidget({Key? key, required this.index,  this.is44=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+          // todo  check seats correctly
          SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index*4+0]),
          SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index*4+1]),
-         (index==10)?SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index*4+2]):const SizedBox(width: 42,),
-         SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[(index!=10)?index*4+2:index*4+3]),
-         SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[(index!=10)?index*4+3:index*4+4]),
+         (index==10&&is44==false)?SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index*4+2]):const SizedBox(width: 42,),
+         SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[(index!=10||is44==true)?index*4+2:index*4+3]),
+         SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[(index!=10||is44==true)?index*4+3:index*4+4]),
          const SizedBox(width: 3,),
       ],
     );

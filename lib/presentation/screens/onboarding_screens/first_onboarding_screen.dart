@@ -11,7 +11,6 @@ class FirstOnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseOnBoardingScreen(
-
         urlImage: AppImages.onBoarding1Image,
         title: 'orem ipsum is  spam placeholder',
         subTitle: 'Lorem ipsum is a placeholder texta typeface without relying on meaningful content ',

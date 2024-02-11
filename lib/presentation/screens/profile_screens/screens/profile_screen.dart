@@ -87,8 +87,6 @@ class ProfileScreen extends StatelessWidget {
                         SystemNavigator.pop();
                       },
                       onCancel:() {
-                        print('token');
-                        print( DataStore.instance.token);
                       Navigator.of(context).pop();},
                       confirmText: "confirm".translate(),
                       cancelText:"cancel".translate(),
@@ -131,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                 Container(
                   clipBehavior: Clip.antiAlias,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                    child: Padding(

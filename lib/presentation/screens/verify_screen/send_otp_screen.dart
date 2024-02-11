@@ -127,7 +127,7 @@ class SendPhoneScreen extends StatelessWidget {
                   onPressed: () {
                     context.read<OtpCubit>().sendOtp(isVerifyScreen: false);
                   },),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 (context.read<OtpCubit>().isLogin==true)
                 ? InkWell(
                   onTap: () =>  context.read<OtpCubit>().updateToSignUp(updateLogin: false),

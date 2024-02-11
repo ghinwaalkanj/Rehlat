@@ -44,7 +44,7 @@ class BookingScreen extends StatelessWidget {
           LoadingDialog().closeDialog(context);
           Navigator.pop(context);
           ErrorDialog.openDialog(context,'success_confirm_temp'.translate(),verifySuccess: true );
-          AppRouter.navigateTo(context: context, destination: PaymentMethodScreen());
+          AppRouter.navigateTo(context: context, destination: const PaymentMethodScreen());
         }
         if(state is ErrorConfirmReservationState){
           LoadingDialog().closeDialog(context);

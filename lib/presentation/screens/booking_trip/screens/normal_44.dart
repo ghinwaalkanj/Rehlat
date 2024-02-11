@@ -3,49 +3,58 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
-import 'package:trips/presentation/common_widgets/socket_io/socket.dart';
 
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../cubit/seats/seats_states.dart';
 import '../../../common_widgets/base_app_bar.dart';
+import '../../../common_widgets/socket_io/socket.dart';
 import '../../../style/app_colors.dart';
 import '../widgets/cancel_reservation_dialog.dart';
+import '../widgets/normal2_row_seat_widget.dart';
 import '../widgets/price_container.dart';
-import '../widgets/seat_widget.dart';
 import '../widgets/seats_info_widget.dart';
 import '../widgets/time_widget.dart';
 import '../widgets/trip_info_widget.dart';
 
-class UnknownBusScreen extends StatefulWidget {
-  const UnknownBusScreen({Key? key}) : super(key: key);
+class NormalSeatsInfo44Screen extends StatefulWidget {
+  const NormalSeatsInfo44Screen({Key? key}) : super(key: key);
 
   @override
-  State<UnknownBusScreen> createState() => _UnknownBusScreenState();
+  State<NormalSeatsInfo44Screen> createState() => _NormalSeatsInfo44ScreenState();
 }
 
-class _UnknownBusScreenState extends State<UnknownBusScreen> {
+class _NormalSeatsInfo44ScreenState extends State<NormalSeatsInfo44Screen> {
+
+  // todo  remove this and rely on api
+updateSeats() {
+  for (int i = 0; i < 29; i++) {
+    context.read<ResultSearchCubit>().selectedTripModel?.seats?[i].status='unavailable';
+  }
+}
+
   @override
   void initState() {
     super.initState();
     context.read<SeatsCubit>().startTime(true);
+    updateSeats();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SeatsCubit,SeatsStates>(
+    return BlocBuilder<SeatsCubit,SeatsStates>(
       bloc: context.read<SeatsCubit>()..selectedTicketPrice=context.read<ResultSearchCubit>().selectedTripModel?.ticketPrice??1,
-      listener: (context, state) {},
-      builder: (context, state) =>  WillPopScope(
+      builder: (context, state) => WillPopScope(
         onWillPop: () async{
           cancelReservationDialog(context: context);
           return true;
         },
         child: Scaffold(
-            body: Stack(
+            body:
+            Stack(
               children: [
                 BaseAppBar(
-                    titleScreen:'seats_information'.translate(),
+                    titleScreen: 'seats_information'.translate(),
                     tripInfo: const TripInfoWidget(),
                     child:Stack(
                         alignment: Alignment.bottomCenter,
@@ -59,17 +68,19 @@ class _UnknownBusScreenState extends State<UnknownBusScreen> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(width: 22.w,),
+                                      SizedBox(width: 13.w,),
                                       const VipSeatsInfoWidget(),
-                                      SizedBox(
-                                          height: MediaQuery.of(context).size.height*0.68,
-                                          child: const VerticalDivider(color: AppColors.lightXGrey,thickness:1,)),
-                                      SizedBox(width: 12.w,),
+                                      const SizedBox(
+                                          height: 550,
+                                          child: VerticalDivider(color: AppColors.lightXGrey,thickness:1,)),
                                       Expanded(
-                                        child: Wrap(
-                                          children: List.generate(context.read<ResultSearchCubit>().selectedTripModel!.seats!.length, (index) => SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index] ),
-                                          )
-                                        ),
+                                        child: ListView.separated(
+                                            padding: EdgeInsets.zero,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) => NormalRowSeatWidget(index:index,is44: true),
+                                            separatorBuilder: (context, index) => const SizedBox(height:6,),
+                                            itemCount: 11),
                                       ),
                                     ],
                                   ),

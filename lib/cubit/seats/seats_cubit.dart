@@ -195,4 +195,26 @@ class SeatsCubit extends Cubit<SeatsStates> {
     if(item.status=="available"&&item.isSelected==false&&item.selectedByMe==false&&(availableList.contains(item)==false))availableList.add(item);
     emit(AddItemListState());
   }
+
+
+  updateSelectSocket(SeatModel seatModel){
+    if(seatModel.status=='selected'){
+    for (var element in availableList) {
+    if(element.number==seatModel.number&&seatModel.status=='selected'&&!seatsIds.contains(element)){
+      availableList.remove(element);
+      inUseList.add(element);
+      element.isSelected=true;
+      emit(AddItemListState());
+      }
+    }}
+    else{
+      for (var element in inUseList) {
+      if(element.number==seatModel.number&&seatModel.status=='unselected'){
+        availableList.add(element);
+        inUseList.remove(element);
+        element.isSelected=false;
+        emit(AddItemListState());
+      }}
+    }
+  }
 }

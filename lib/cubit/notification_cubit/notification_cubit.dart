@@ -25,7 +25,6 @@ class NotificationCubit extends Cubit<NotificationStates> {
             notificationList.addAll(r.data?.data ?? []);
             isFirstLoading = false;
             if (notificationUrl != null) notificationUrl = r.data?.nextPageUrl;
-            print('lengthhh ${notificationList.length}');
             emit(GetNotificationSuccessState());
           });
       isLoading = false;

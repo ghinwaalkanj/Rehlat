@@ -11,7 +11,7 @@ class PushNotificationService {
     var token = await FirebaseMessaging.instance.getToken();
     if(token != null && (DataStore.instance.token?.isNotEmpty??false)){
       DataStore.instance.setFcmToken(token);
-      print('fcmmmmmtoken is =====> ${ DataStore.instance.fcmToken}');
+      debugPrint('fcmmmmmtoken is =====> ${ DataStore.instance.fcmToken}');
      await getIt<TripsRepo>().sendFcmToken(fcmToken: token);
       }
      if (kDebugMode) {

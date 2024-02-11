@@ -11,7 +11,9 @@ import 'package:trips/cubit/home/home_cubit.dart';
 import 'package:trips/cubit/root/root_cubit.dart';
 import 'package:trips/presentation/common_widgets/dialog/error_dialog.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
-import 'package:trips/presentation/screens/booking_trip/screens/hop_hop_seats_info_screen.dart';
+import 'package:trips/presentation/screens/booking_trip/screens/mini_seats_info_screen.dart';
+import 'package:trips/presentation/screens/booking_trip/screens/normal_44.dart';
+import 'package:trips/presentation/screens/booking_trip/screens/vip_29.dart';
 import 'package:trips/presentation/screens/verify_screen/send_otp_screen.dart';
 import 'package:trips/presentation/screens/verify_screen/success_verify_dialog.dart';
 
@@ -83,8 +85,8 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
       listener: (context, state) async {
         if(state is ValidateVerifyOtpState){ErrorDialog.openDialog(context, state.error);}
         if(state is OtpInit2State){ await SmsAutoFill().listenForCode();}
-        if(state is BlockState){ErrorDialog.openDialog(context, state.error);}
-        if(state is LoadingVerifyOtpState)LoadingDialog().openDialog(context);
+        if(state is BlockState){ ErrorDialog.openDialog(context, state.error);}
+        if(state is LoadingVerifyOtpState) LoadingDialog().openDialog(context);
         if(state is ErrorVerifyOtpState){
           LoadingDialog().closeDialog(context);
           await SmsAutoFill().listenForCode();
@@ -104,6 +106,12 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
             }
             else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==27) {
               AppRouter.navigateRemoveTo(context: context, destination: const SmallSeatsInfoScreen());
+            }
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==29) {
+              AppRouter.navigateRemoveTo(context: context, destination: const VipSeats29InfoScreen());
+            }
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==44) {
+              AppRouter.navigateRemoveTo(context: context, destination: const NormalSeatsInfo44Screen());
             }
             else{
               AppRouter.navigateRemoveTo(context: context, destination: const UnknownBusScreen());
@@ -126,7 +134,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40,),
-                 VerifyCodeWidget(),
+                 const VerifyCodeWidget(),
                 Image.asset(AppImages.darkLogoImage,fit: BoxFit.fill),
                  Text('verify_phone'.translate(),style:   AppTextStyle2.getBoldStyle(
                    fontSize: AppFontSize.size_26,

@@ -22,32 +22,35 @@ class PaymentMethodScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Column(
-            children: [
-              const LogoWidget(),
-              const SizedBox(height: 20,),
-              (state is LoadingGetPaymentMethodsState)
-                  ? const CircularProgressIndicator()
-                  : (state is ErrorGetPaymentMethodsState)
-                  ?  CustomErrorScreen(onTap:() => context.read<PaymentMethodCubit>().getPaymentMethods())
-                  : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('payment_method'.translate(),style: AppTextStyle.lightBlackW400_16,),
-                      const SizedBox(height: 20,),
-                      ListView.separated(
-                           padding: EdgeInsets.zero,
-                           shrinkWrap:true,
-                          itemBuilder: (context, index) => PaymentMethodCard(paymentMethodsModel:context.read<PaymentMethodCubit>().paymentMethodsList[index] ),
-                          separatorBuilder:(context, index) => const SizedBox(height: 12,),
-                          itemCount: context.read<PaymentMethodCubit>().paymentMethodsList.length),
-                      const SizedBox(height: 30,),
-                      InkWell(
-                          onTap: () => AppRouter.navigateRemoveTo(context: context, destination: const RootScreen()),
-                          child: Center(child: Text('back_to_home'.translate(),style: AppTextStyle.blackW500_14Underline,))),
-                    ],
-                  )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const LogoWidget(),
+                const SizedBox(height: 20,),
+                (state is LoadingGetPaymentMethodsState)
+                    ? const CircularProgressIndicator()
+                    : (state is ErrorGetPaymentMethodsState)
+                    ?  CustomErrorScreen(onTap:() => context.read<PaymentMethodCubit>().getPaymentMethods())
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('payment_method'.translate(),style: AppTextStyle.lightBlackW400_16,),
+                        const SizedBox(height: 20,),
+                        ListView.separated(
+                             physics: const NeverScrollableScrollPhysics(),
+                             padding: EdgeInsets.zero,
+                             shrinkWrap:true,
+                            itemBuilder: (context, index) => PaymentMethodCard(paymentMethodsModel:context.read<PaymentMethodCubit>().paymentMethodsList[index] ),
+                            separatorBuilder:(context, index) => const SizedBox(height: 12,),
+                            itemCount: context.read<PaymentMethodCubit>().paymentMethodsList.length),
+                        const SizedBox(height: 30,),
+                        InkWell(
+                            onTap: () => AppRouter.navigateRemoveTo(context: context, destination: const RootScreen()),
+                            child: Center(child: Text('back_to_home'.translate(),style: AppTextStyle.blackW500_14Underline,))),
+                      ],
+                    )
+              ],
+            ),
           ),
         ),
       ),

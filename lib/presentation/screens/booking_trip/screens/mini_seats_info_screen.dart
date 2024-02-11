@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
+import 'package:trips/presentation/common_widgets/socket_io/socket.dart';
 
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
@@ -38,12 +39,7 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
         },
         builder: (context, state) =>  WillPopScope(
             onWillPop: () async {
-              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![0].number);
-              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![1].number);
-              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![2].number);
-              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![3].number);
-              print(context.read<ResultSearchCubit>().selectedTripModel?.seats![4].number);
-              cancelReservationDialog(context: context);
+                cancelReservationDialog(context: context);
               return false;
             },
         child: Scaffold(
@@ -58,6 +54,7 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
                         SingleChildScrollView(
                           child: Column(
                               children:  [
+                                SocketWidget(tripId:context.read<ResultSearchCubit>().selectedTripModel?.id??0 ),
                                 const TimeRowWidget(),
                                 const SizedBox(height: 24,),
                                 Row(
@@ -74,7 +71,7 @@ class _SmallSeatsInfoScreenState extends State<SmallSeatsInfoScreen> {
                                           padding: EdgeInsets.zero,
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemBuilder: (context, index) => HopHopRowSeatWidget(index:index),
+                                          itemBuilder: (context, index) => MiniRowSeatWidget(index:index),
                                           separatorBuilder: (context, index) => const SizedBox(height: 6,),
                                           itemCount: 7),
                                     ),

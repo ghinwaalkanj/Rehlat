@@ -12,23 +12,30 @@ import '../../../common_widgets/base_app_bar.dart';
 import '../../../style/app_colors.dart';
 import '../widgets/cancel_reservation_dialog.dart';
 import '../widgets/price_container.dart';
-import '../widgets/seat_widget.dart';
 import '../widgets/seats_info_widget.dart';
 import '../widgets/time_widget.dart';
 import '../widgets/trip_info_widget.dart';
+import '../widgets/vip_row_seat_widget.dart';
 
-class UnknownBusScreen extends StatefulWidget {
-  const UnknownBusScreen({Key? key}) : super(key: key);
+class VipSeats29InfoScreen extends StatefulWidget {
+  const VipSeats29InfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<UnknownBusScreen> createState() => _UnknownBusScreenState();
+  State<VipSeats29InfoScreen> createState() => _VipSeats29InfoScreenState();
 }
 
-class _UnknownBusScreenState extends State<UnknownBusScreen> {
+class _VipSeats29InfoScreenState extends State<VipSeats29InfoScreen> {
+  // todo  remove this and rely on api
+  updateSeats() {
+    for (int i = 0; i < 19; i++) {
+      context.read<ResultSearchCubit>().selectedTripModel?.seats?[i].status='unavailable';
+    }
+  }
   @override
   void initState() {
     super.initState();
     context.read<SeatsCubit>().startTime(true);
+    updateSeats();
   }
 
   @override
@@ -66,10 +73,13 @@ class _UnknownBusScreenState extends State<UnknownBusScreen> {
                                           child: const VerticalDivider(color: AppColors.lightXGrey,thickness:1,)),
                                       SizedBox(width: 12.w,),
                                       Expanded(
-                                        child: Wrap(
-                                          children: List.generate(context.read<ResultSearchCubit>().selectedTripModel!.seats!.length, (index) => SeatWidget(seatModel: context.read<ResultSearchCubit>().selectedTripModel?.seats?[index] ),
-                                          )
-                                        ),
+                                        child: ListView.separated(
+                                            padding: EdgeInsets.zero,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) => VipRowSeatWidget(index:index,isVip29: true),
+                                            separatorBuilder: (context, index) => const SizedBox(height: 6,),
+                                            itemCount: 10),
                                       ),
                                     ],
                                   ),

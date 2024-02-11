@@ -20,7 +20,7 @@ class MessageHandlerWidgetState extends State<MessageHandlerWidget> {
     fetchMessage();
 
     //background
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async =>print('testt22'));//
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async =>debugPrint('testt22'));//
 
     //in foreground
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {

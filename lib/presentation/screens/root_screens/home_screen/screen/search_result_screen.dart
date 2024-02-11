@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/data/model/trip_model.dart';
+import 'package:trips/presentation/screens/booking_trip/screens/normal_44.dart';
+import 'package:trips/presentation/screens/booking_trip/screens/vip_29.dart';
 import 'package:trips/presentation/screens/root_screens/home_screen/screen/sort_by_bottom_sheet.dart';
 import 'package:trips/presentation/screens/root_screens/root_screen.dart';
 
@@ -23,7 +25,7 @@ import '../../../../style/app_font_size.dart';
 import '../../../../style/app_images.dart';
 import '../../../../style/app_text_style.dart';
 import '../../../../style/app_text_style_2.dart';
-import '../../../booking_trip/screens/hop_hop_seats_info_screen.dart';
+import '../../../booking_trip/screens/mini_seats_info_screen.dart';
 import '../../../booking_trip/screens/normal2_seats_info_screen.dart';
 import '../../../booking_trip/screens/unknown_bus_info_screen.dart';
 import '../../../booking_trip/screens/vip_seats_info_screen.dart';
@@ -54,6 +56,12 @@ class SearchResultScreen extends StatelessWidget {
             }
             else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==27) {
               AppRouter.navigateRemoveTo(context: context, destination: const SmallSeatsInfoScreen());
+            }
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==44) {
+              AppRouter.navigateRemoveTo(context: context, destination: const NormalSeatsInfo44Screen());
+            }
+            else if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==29) {
+              AppRouter.navigateRemoveTo(context: context, destination: const VipSeats29InfoScreen());
             }
             else{
               AppRouter.navigateRemoveTo(context: context, destination: const UnknownBusScreen());

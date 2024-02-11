@@ -42,9 +42,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     ],
                   ),
                   (state is LoadingGetPrivacyState)
-                  ? Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
-                    child: const Center(child: CircularProgressIndicator(color: AppColors.darkGreen,)),
+                  ? const Padding(
+                    padding: EdgeInsets.only(top: 50.0),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.darkGreen,)),
                   )
                   : (state is ErrorGetPrivacyState)
                   ? CustomErrorScreen(onTap: () => context.read<PrivacyCubit>().getPrivacy())

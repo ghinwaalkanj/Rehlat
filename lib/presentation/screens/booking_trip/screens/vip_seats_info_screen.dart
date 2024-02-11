@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trips/core/localization/app_localization.dart';
+import 'package:trips/presentation/common_widgets/socket_io/socket.dart';
 
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
@@ -52,6 +53,7 @@ class _VipSeatsInfoScreenState extends State<VipSeatsInfoScreen> {
                           SingleChildScrollView(
                             child: Column(
                                 children:  [
+                                  SocketWidget(tripId:context.read<ResultSearchCubit>().selectedTripModel?.id??0 ),
                                   const TimeRowWidget(),
                                   const SizedBox(height: 8,),
                                   Row(

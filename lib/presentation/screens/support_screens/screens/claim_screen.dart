@@ -5,6 +5,7 @@ import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
+import 'package:trips/presentation/common_widgets/dialog/action_alert_dialog.dart';
 import 'package:trips/presentation/common_widgets/must_login.dart';
 import 'package:trips/presentation/screens/support_screens/screens/create_claim_screen.dart';
 import 'package:trips/presentation/screens/support_screens/widgets/logo.dart';
@@ -34,7 +35,19 @@ class ClaimScreen extends StatelessWidget {
           },
         backgroundColor:AppColors.primary,
           child: const Icon(Icons.add),
-        ):null,
+        ): FloatingActionButton(
+          onPressed: () {
+            ActionAlertDialog.show(
+                context,
+                imageUrl: Image.asset(AppImages.warningImage,height: 70,width: 70),
+                dialogTitle: 'no_trips_claims'.translate(),
+                confirmText: 'ok'.translate(),
+                onConfirm: () => Navigator.pop(context),
+            );
+          },
+          backgroundColor:Colors.grey.withOpacity(0.4),
+          child: const Icon(Icons.add,color: Colors.white70),
+        ),
         body: Column(
               children: [
                 const LogoWidget(),

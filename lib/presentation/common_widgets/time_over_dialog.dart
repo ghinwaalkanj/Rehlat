@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/cubit/home/home_cubit.dart';
 import 'package:trips/presentation/screens/root_screens/root_screen.dart';
-
 import '../../core/utils/app_router.dart';
 import '../../cubit/result_search_card/result_search_cubit.dart';
 import '../../cubit/seats/seats_cubit.dart';
