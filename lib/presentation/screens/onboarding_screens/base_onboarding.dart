@@ -64,7 +64,7 @@ class BaseOnBoardingScreen extends StatelessWidget {
                         ),
                       //  const Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 22.0),
+                          padding:  EdgeInsets.only(bottom: 22.0,top: 0.07.sh),
                           child: Row(
                             children: [
                               SizedBox(

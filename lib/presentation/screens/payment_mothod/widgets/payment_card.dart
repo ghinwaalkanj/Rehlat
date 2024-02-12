@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../data/model/payment_model.dart';
 import '../../../style/app_text_style.dart';
+import 'banks_card.dart';
 
 class PaymentMethodCard extends StatelessWidget {
   final PaymentMethodsModel paymentMethodsModel;
@@ -13,7 +14,7 @@ class PaymentMethodCard extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 80,
+        // height: 200,
           decoration: BoxDecoration(
             borderRadius:  const BorderRadius.all(Radius.circular(14)),
             color: Colors.grey.withOpacity(0.1),
@@ -27,17 +28,21 @@ class PaymentMethodCard extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     child: Image.network(paymentMethodsModel.logo??'',height: 50,width: 50)),
                 const SizedBox(width: 20,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment:(paymentMethodsModel.disable==0)?MainAxisAlignment.start:MainAxisAlignment.center ,
-                  children: [
-                    Text(paymentMethodsModel.name??'',style: AppTextStyle.lightBlackW400_16,),
-                    if(paymentMethodsModel.disable==0)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 6.0),
-                      child: Text('inactivated now',style: AppTextStyle.lightGrey1W400_14,),
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment:(paymentMethodsModel.disable==0)?MainAxisAlignment.start:MainAxisAlignment.center ,
+                    children: [
+                      Text(paymentMethodsModel.name??'',style: AppTextStyle.lightBlackW400_16,),
+                      if(paymentMethodsModel.disable==0)
+                      const Padding(
+                        padding: EdgeInsets.only(top: 6.0),
+                        child: Text('inactivated now',style: AppTextStyle.lightGrey1W400_14,),
+                      ),
+                      if((paymentMethodsModel.banks?.isNotEmpty??false)&&(paymentMethodsModel.disable!=0))
+                       BanksListWidget(bankList: paymentMethodsModel.banks!),
+                    ],
+                  ),
                 )
               ],
             ),
