@@ -49,5 +49,36 @@
            android:name="com.google.firebase.messaging.default_notification_channel_id"
            android:value="high_importance_channel" />
 
+       <receiver
+           android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+           android:exported="false"
+           android:permission="com.google.android.c2dm.permission.SEND"
+           tools:replace="android:exported">
+           <intent-filter>
+               <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+           </intent-filter>
+       </receiver>
+
+       <receiver
+           android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+           android:exported="false"
+           tools:replace="android:exported"
+           android:permission="com.google.android.c2dm.permission.SEND" >
+           <intent-filter>
+               <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+           </intent-filter>
+
+           <meta-data
+               android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+               android:value="true" />
+       </receiver>
+
+       <service
+           android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+           android:exported="false"
+           android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+           android:visibleToInstantApps="true"
+           tools:replace="android:exported" />
+
     </application>
 </manifest>

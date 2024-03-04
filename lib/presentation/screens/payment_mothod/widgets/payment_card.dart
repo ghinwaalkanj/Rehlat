@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trips/presentation/common_widgets/cached_image.dart';
 
 import '../../../../data/model/payment_model.dart';
 import '../../../style/app_text_style.dart';
@@ -26,7 +27,7 @@ class PaymentMethodCard extends StatelessWidget {
               children: [
                 ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    child: Image.network(paymentMethodsModel.logo??'',height: 50,width: 50)),
+                    child: CachedImage(imageUrl:paymentMethodsModel.logo??'',height: 50,width: 50)),
                 const SizedBox(width: 20,),
                 Expanded(
                   child: Column(

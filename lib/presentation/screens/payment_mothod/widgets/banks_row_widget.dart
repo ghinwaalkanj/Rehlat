@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import 'package:trips/data/model/bank_model.dart';
+import 'package:trips/presentation/common_widgets/cached_image.dart';
 import 'package:trips/presentation/style/app_font_size.dart';
 import 'package:trips/presentation/style/app_text_style_2.dart';
 
@@ -16,7 +17,7 @@ class BankRowWidget extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(30)),
-              child: Image.network(bankModel.logo??'',height: 30,width: 30)),
+              child: CachedImage(imageUrl:bankModel.logo??'',height: 30,width: 30)),
           const SizedBox(width: 30,),
           Text(bankModel.name??'',style: AppTextStyle2.getMediumStyle(
             fontSize: AppFontSize.size_12,
