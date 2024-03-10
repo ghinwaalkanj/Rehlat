@@ -15,6 +15,7 @@ import 'core/utils/global.dart';
 import 'core/utils/utils_functions.dart';
 import 'cubit/booking/booking_cubit.dart';
 import 'cubit/evaluation/evaluation_cubit.dart';
+import 'cubit/fatora/fatora_cubit.dart';
 import 'cubit/home/home_cubit.dart';
 import 'cubit/main/main_cubit.dart';
 import 'cubit/main/main_states.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<BookingCubit>()..getBookingList()),
         BlocProvider(create: (context) => getIt<SupportCubit>()),
         BlocProvider(create: (context) => getIt<PaymentMethodCubit>()),
+        BlocProvider(create: (context) => getIt<FatoraCubit>()),
    ],
     child: ScreenUtilInit(
         designSize: const Size(429, 932),
@@ -102,6 +104,5 @@ class MyApp extends StatelessWidget {
       );
     }),
       );
-
   }
 }

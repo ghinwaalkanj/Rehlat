@@ -24,6 +24,7 @@ class AuthTextFormField extends StatelessWidget {
   final double? borderWidth;
   final double? borderRadius;
   final int? minLines;
+  final int? maxLength;
   final VoidCallback? onComplete;
   final Function(String value)? onChanged;
 
@@ -31,7 +32,8 @@ class AuthTextFormField extends StatelessWidget {
       {Key? key,
         this.borderRadius,
         this.borderWidth,
-      this.labelText,
+        this.labelText,
+        this.maxLength,
         this.borderColor,
         this.minLines,
       this.errorText,
@@ -59,6 +61,7 @@ class AuthTextFormField extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
+        maxLength: maxLength,
         minLines: minLines??1,
         maxLines: isObscure?1:14,
        scrollPadding: const EdgeInsets.only(bottom:300),

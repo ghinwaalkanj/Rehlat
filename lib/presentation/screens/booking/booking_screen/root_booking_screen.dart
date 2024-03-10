@@ -6,7 +6,6 @@ import 'package:trips/cubit/booking/booking_states.dart';
 import 'package:trips/presentation/common_widgets/base_app_bar.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
 import 'package:trips/presentation/screens/booking/booking_screen/temp_booking.dart';
-import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/booking/booking_cubit.dart';
@@ -44,7 +43,7 @@ class BookingScreen extends StatelessWidget {
           LoadingDialog().closeDialog(context);
           Navigator.pop(context);
           ErrorDialog.openDialog(context,'success_confirm_temp'.translate(),verifySuccess: true );
-          AppRouter.navigateTo(context: context, destination: const PaymentMethodScreen());
+
         }
         if(state is ErrorConfirmReservationState){
           LoadingDialog().closeDialog(context);

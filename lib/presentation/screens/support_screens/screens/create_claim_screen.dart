@@ -70,6 +70,7 @@ class CreateClaimScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // todo
                               // CustomButton(
                               //   h: 50,
                               //   rowChild: const Icon(Icons.calendar_today_outlined,
@@ -135,7 +136,9 @@ class CreateClaimScreen extends StatelessWidget {
                                   labelText: 'claim_content'.translate(),
                                   labelStyle: AppTextStyle.darkGreyNormal_16,
                                   borderColor:AppColors.xBlack,
-                                  enableColor: AppColors.darkGreen),
+                                  enableColor: AppColors.darkGreen,
+                                maxLength: 150,
+                              ),
                               const SizedBox(height:30,),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 33.0),

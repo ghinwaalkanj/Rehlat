@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
+
 import '../../../../core/utils/app_router.dart';
 import '../../../../cubit/home/home_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_cubit.dart';
@@ -35,7 +36,7 @@ class PaymentDetailsScreen extends StatelessWidget {
         if(state is ErrorReserveSeatsState){
           LoadingDialog().closeDialog(context);
           ErrorDialog.openDialog(context, '${state.error} , \n${'try_again'.translate()}');}
-        if(state is SuccessReserveSeatsState){
+        if(state is SuccessReserveSeatsState && context.read<PassengerCubit>().temp==true ){
           LoadingDialog().closeDialog(context);
           successReservationDialog(context: context,onConfirm: () {
             context.read<SeatsCubit>().timer?.cancel();
@@ -46,7 +47,10 @@ class PaymentDetailsScreen extends StatelessWidget {
             context.read<PassengerCubit>().passengerList=[];
             context.read<PassengerCubit>().isSamePrimaryPassenger=false;
           });
-      }},
+      }
+        if(state is SuccessReserveSeatsState && context.read<PassengerCubit>().temp==false ){
+        AppRouter.navigateTo(context: context, destination:  PaymentMethodScreen(reservationId: context.read<PassengerCubit>().reservationId??0,));}
+        },
       child: Scaffold(
           body: BaseAppBar(
               titleScreen: 'payment_option'.translate(),
@@ -58,27 +62,28 @@ class PaymentDetailsScreen extends StatelessWidget {
                   Container(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(33))
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(33))
                   ),
-                  child:
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                   const TimeRowWidget(),
-                  Container(
-                  color: AppColors.lightXXXGrey,
-                  child: const SizedBox(
-                 //     height: 620,
-                      child: PaymentDetailsCard()),
-                ),
-                ]),
-              )
-              ),
+                        child:
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                         const TimeRowWidget(),
+                        Container(
+                        color: AppColors.lightXXXGrey,
+                        child: const SizedBox(
+                       //     height: 620,
+                            child: PaymentDetailsCard()),
+                      ),
+                      ]),
+                    )
+                    ),
                 Row(
                   children: [
                     if(context.read<ResultSearchCubit>().selectedTripModel?.canReserveTemp != false)
-                    Expanded(child: InkWell(
+                    Expanded(
+                        child: InkWell(
                       onTap: () {
                         context.read<PassengerCubit>().isSamePrimaryPassenger=false;
                         if(context.read<ReserveTripCubit>().acceptTerms==true) {
@@ -95,7 +100,12 @@ class PaymentDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                         AppRouter.navigateTo(context: context, destination: const PaymentMethodScreen());
+                          context.read<PassengerCubit>().isSamePrimaryPassenger=false;
+                          if(context.read<ReserveTripCubit>().acceptTerms==true) {
+                            context.read<PassengerCubit>().reserveSeats(isTemp:false,seatsIds:context.read<SeatsCubit>().seatsIds);
+                          } else {
+                            ErrorDialog.openDialog(context,'accept_terms'.translate());
+                          }
                         },
                         child: Container(
                           height: 80,

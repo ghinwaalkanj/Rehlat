@@ -51,7 +51,7 @@
 
        <receiver
            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
-           android:exported="false"
+           android:exported="true"
            android:permission="com.google.android.c2dm.permission.SEND"
            tools:replace="android:exported">
            <intent-filter>
@@ -61,7 +61,7 @@
 
        <receiver
            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-           android:exported="false"
+           android:exported="true"
            tools:replace="android:exported"
            android:permission="com.google.android.c2dm.permission.SEND" >
            <intent-filter>
@@ -75,7 +75,7 @@
 
        <service
            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-           android:exported="false"
+           android:exported="true"
            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
            android:visibleToInstantApps="true"
            tools:replace="android:exported" />

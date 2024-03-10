@@ -41,7 +41,7 @@ class UserProfileInfoScreen extends StatelessWidget {
         )
             : SingleChildScrollView(
               child: Column(
-          children: [
+               children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Column(

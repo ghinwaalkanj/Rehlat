@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:trips/core/localization/app_localization.dart';
+import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/image_helper.dart';
+import 'package:trips/presentation/screens/payment_mothod/screens/payment_methods_screens.dart';
 import 'package:trips/presentation/style/app_images.dart';
 
 import '../../../../cubit/booking/booking_cubit.dart';
@@ -35,7 +37,8 @@ class BookingCard extends StatelessWidget {
          const SizedBox(width:15 ,),
          if(isTemp)InkWell(
            onTap: () {
-             context.read<BookingCubit>().verifyCodeBooking(bookingTripModel: bookingTripModel,isBookingScreen: true);
+             AppRouter.navigateTo(context: context, destination:  PaymentMethodScreen(reservationId:bookingTripModel.id??0 ,));
+            // context.read<BookingCubit>().verifyCodeBooking(bookingTripModel: bookingTripModel,isBookingScreen: true);
            },
            child: Container(
              decoration: const BoxDecoration(

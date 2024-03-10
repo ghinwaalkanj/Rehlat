@@ -6,13 +6,15 @@ import 'package:trips/cubit/payment_methods/payment_method_cubit.dart';
 import 'package:trips/cubit/payment_methods/payment_method_states.dart';
 import 'package:trips/presentation/common_widgets/custom_error_screen.dart';
 import 'package:trips/presentation/screens/payment_mothod/widgets/payment_card.dart';
+import 'package:trips/presentation/style/app_colors.dart';
 
 import '../../../style/app_text_style.dart';
 import '../../root_screens/root_screen.dart';
 import '../../support_screens/widgets/logo.dart';
 
 class PaymentMethodScreen extends StatelessWidget {
-  const PaymentMethodScreen({Key? key}) : super(key: key);
+  final int reservationId;
+  const PaymentMethodScreen({Key? key, required this.reservationId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class PaymentMethodScreen extends StatelessWidget {
                 const LogoWidget(),
                 const SizedBox(height: 20,),
                 (state is LoadingGetPaymentMethodsState)
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(color: AppColors.darkGreen)
                     : (state is ErrorGetPaymentMethodsState)
                     ?  CustomErrorScreen(onTap:() => context.read<PaymentMethodCubit>().getPaymentMethods())
                     : Column(
@@ -40,7 +42,7 @@ class PaymentMethodScreen extends StatelessWidget {
                              physics: const NeverScrollableScrollPhysics(),
                              padding: EdgeInsets.zero,
                              shrinkWrap:true,
-                            itemBuilder: (context, index) => PaymentMethodCard(paymentMethodsModel:context.read<PaymentMethodCubit>().paymentMethodsList[index] ),
+                            itemBuilder: (context, index) => PaymentMethodCard(paymentMethodsModel:context.read<PaymentMethodCubit>().paymentMethodsList[index],reservationId: reservationId  , ),
                             separatorBuilder:(context, index) => const SizedBox(height: 12,),
                             itemCount: context.read<PaymentMethodCubit>().paymentMethodsList.length),
                         const SizedBox(height: 30,),

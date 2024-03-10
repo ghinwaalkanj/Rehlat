@@ -1,6 +1,6 @@
 abstract class Links {
-    // static const baseUrl = "https://rehlat.sy/backend/api/v1/";
-      static const baseUrl = "http://192.168.1.6:8000/api/v1/";
+     static const baseUrl = "https://rehlat.sy/backend/api/v1/";
+    //  static const baseUrl = "http://192.168.1.6:8000/api/v1/";
 
   //region trips
   static const searchTrips = "trips";
@@ -29,6 +29,7 @@ abstract class Links {
   static const getPaymentMethods = "methods";
   static const terms = "terms-of-use";
   static const privacy = "privacy-policy";
+  static const fatora = "reservations/payment/fatora";
   //endregion
 
 }

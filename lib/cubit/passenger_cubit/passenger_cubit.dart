@@ -12,6 +12,8 @@ class PassengerCubit extends Cubit<PassengerStates> {
   List<PassengerModel> passengerList=[];
   bool isSamePrimaryPassenger=false;
   bool isNavigate=false;
+  bool? temp;
+  int? reservationId;
   TripsRepo tripsRepo;
 
   PassengerCubit({required this.tripsRepo}) : super(PassengerInitialState());
@@ -142,6 +144,7 @@ class PassengerCubit extends Cubit<PassengerStates> {
   }
 
   Future<void> reserveSeats({required bool isTemp,required List<SeatModel> seatsIds}) async {
+    temp=isTemp;
     List<int> seatApiList=[];
     for (var element in seatsIds) {
       seatApiList.add(element.id!);
@@ -152,6 +155,9 @@ class PassengerCubit extends Cubit<PassengerStates> {
     emit(LoadingReserveSeatsState());
     (await tripsRepo.reserveSeats(ids:seatApiList, passengerList: passengerList,isTemp: isTemp)).fold((l) => emit(ErrorReserveSeatsState(error: l)),
             (r) {
+      print('tripsRepo.reserveSeats');
+      print(r);
+          reservationId=r;
           emit(SuccessReserveSeatsState());
         });
   }

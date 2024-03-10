@@ -76,7 +76,7 @@ class TripsRepo  {
         });
   }
 
-  Future<Either<String, dynamic>> reserveSeats(
+  Future<Either<String, int>> reserveSeats(
       {required List<int> ids, List<PassengerModel>? passengerList,required bool isTemp}) {
     Map<dynamic, int> idSeatsMap = {};
     Map<String, dynamic> passengersMap = {};
@@ -98,7 +98,9 @@ class TripsRepo  {
           ...idSeatsMap,
         }),
         converter: (value) {
-          return value['message'];
+          print('testxxxxxxxxx');
+          print(value['data'][1]);
+          return value['data'][1];
         });
   }
 

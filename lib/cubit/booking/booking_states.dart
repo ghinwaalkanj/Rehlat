@@ -1,10 +1,11 @@
 import '../../data/model/booking_trip_model.dart';
 
 abstract class BookingStates{}
+class BookingInitialState extends BookingStates{}
 class ChangeIndexState extends BookingStates{}
 class OpenSlidableState extends BookingStates{}
 class CloseSlidableState extends BookingStates{}
-class BookingInitialState extends BookingStates{}
+
 
 class LoadingBookingState extends BookingStates{}
 class SuccessBookingState extends BookingStates{}
