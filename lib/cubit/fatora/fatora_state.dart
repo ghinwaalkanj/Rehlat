@@ -1,5 +1,6 @@
 abstract class FatoraStates{}
 class FatoraInitialState extends FatoraStates{}
+class IsGoogleState extends FatoraStates{}
 class LoadingFatoraState extends FatoraStates{}
 class SuccessFatoraState extends FatoraStates{}
 class ErrorFatoraState extends FatoraStates{

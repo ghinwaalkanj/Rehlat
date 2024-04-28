@@ -9,13 +9,14 @@ import 'banks_card.dart';
 
 class PaymentMethodCard extends StatelessWidget {
   final int reservationId;
+  final int index;
   final PaymentMethodsModel paymentMethodsModel;
-  const PaymentMethodCard({Key? key, required this.paymentMethodsModel, required this.reservationId}) : super(key: key);
+  const PaymentMethodCard({Key? key, required this.paymentMethodsModel, required this.reservationId, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>AppRouter.navigateTo(context: context, destination:  FatoraWebView(reservationId:  reservationId,)),
+      onTap: () =>(index==0)?AppRouter.navigateTo(context: context, destination:  FatoraWebView(reservationId:  reservationId,)):null,
       child: Stack(
         children: [
           Container(

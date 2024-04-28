@@ -10,12 +10,12 @@ import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../common_widgets/dialog/action_alert_dialog.dart';
 import '../../../style/app_images.dart';
 
-cancelReservationDialog({required BuildContext context,}) {
+cancelReservationDialog({required BuildContext context,String? message }) {
   return ActionAlertDialog.show(
               context,
               imageUrl:const ImageWidget(url:  AppImages.errorDialogImage,width: 88,height: 88,fit: BoxFit.fill,).buildAssetSvgImage(),
               dialogTitle: 'cancel'.translate(),
-              message: 'cancel_reservation_msg'.translate(),
+              message: message??'cancel_reservation_msg'.translate(),
               confirmText: "got_it".translate(),
               onConfirm: () {
                 context.read<SeatsCubit>().seconds=null;

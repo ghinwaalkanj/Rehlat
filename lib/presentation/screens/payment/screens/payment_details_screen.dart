@@ -49,7 +49,7 @@ class PaymentDetailsScreen extends StatelessWidget {
           });
       }
         if(state is SuccessReserveSeatsState && context.read<PassengerCubit>().temp==false ){
-        AppRouter.navigateTo(context: context, destination:  PaymentMethodScreen(reservationId: context.read<PassengerCubit>().reservationId??0,));}
+        AppRouter.navigateTo(context: context, destination:  PaymentMethodScreen(reservationId: context.read<PassengerCubit>().reservationId??0,fromPaymentDetails: true,));}
         },
       child: Scaffold(
           body: BaseAppBar(
