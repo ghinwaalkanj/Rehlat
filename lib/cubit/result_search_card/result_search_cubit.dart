@@ -8,6 +8,7 @@ import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
 import '../../data/model/trip_model.dart';
 import '../../domain/models/sort_model.dart';
 import '../../presentation/screens/root_screens/home_screen/widgets/companies_dialog.dart';
+import '../otp_cubit/otp_cubit.dart';
 
 class ResultSearchCubit extends Cubit<ResultSearchStates> {
   TripsRepo tripsRepo;
@@ -116,15 +117,20 @@ class ResultSearchCubit extends Cubit<ResultSearchStates> {
   }
 
 
-  Future<void> getTripDetails() async {
+  Future<void> getTripDetails({BuildContext? context,}) async {
     emit(LoadingGetTripDetailsState());
-    (await tripsRepo.getTrip(selectedTripModel!.id!)).fold((l) => emit(ErrorGetTripDetailsState(error: l)),
+    (await tripsRepo.getTrip(selectedTripModel!.id!)).fold((l) {
+     if(context!=null){
+       context.read<OtpCubit>().afterErrorFromTripDetails(existError: true);}
+       emit(ErrorGetTripDetailsState(error: l));
+     },
             (r) {
       selectedTripModel=r;
           emit(SuccessGetTripDetailsState());
          navigateToSeats();
         });
   }
+
   afterSearchTrip({required  List<TripModel> newTripsList}){
     tripsList=newTripsList;
     emit(SortState());

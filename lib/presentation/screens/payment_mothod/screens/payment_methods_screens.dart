@@ -42,7 +42,7 @@ class PaymentMethodScreen extends StatelessWidget {
                   (state is LoadingGetPaymentMethodsState)
                       ? const CircularProgressIndicator(color: AppColors.darkGreen)
                       : (state is ErrorGetPaymentMethodsState)
-                      ?  CustomErrorScreen(onTap:() => context.read<PaymentMethodCubit>().getPaymentMethods())
+                      ?  CustomErrorScreen(onTap:() => context.read<PaymentMethodCubit>().getPaymentMethods(),error: state.error,)
                       : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

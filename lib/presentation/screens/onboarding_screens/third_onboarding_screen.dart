@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/data/data_resource/local_resource/data_store.dart';
 
 import '../../../core/utils/app_router.dart';
@@ -13,8 +14,8 @@ class ThirdOnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseOnBoardingScreen(
         urlImage: AppImages.onBoarding3Image,
-        title: 'orem ipsum is  spam placeholder',
-        subTitle: 'Lorem ipsum is a placeholder texta typeface without relying on meaningful content ',
+        title: '',
+        subTitle: 'boarding3'.translate(),
         navigateToFun:() {
           DataStore.instance.setIsFirstTime(false);
           AppRouter.navigateReplacementTo(context: context, destination: const RootScreen());});

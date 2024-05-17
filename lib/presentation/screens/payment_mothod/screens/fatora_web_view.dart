@@ -43,11 +43,11 @@ class _FatoraWebViewState extends State<FatoraWebView> {
              body: (state is LoadingFatoraState )
              ? const Center(child: CircularProgressIndicator(color: AppColors.darkGreen,))
              : (state is ErrorFatoraState)
-             ?  CustomErrorScreen(onTap:() => context.read<FatoraCubit>().getFatoraUrl(reservationId: widget.reservationId))
+             ?  CustomErrorScreen(onTap:() => context.read<FatoraCubit>().getFatoraUrl(reservationId: widget.reservationId),error:state.error)
              : ( context.read<FatoraCubit>().webViewController != null && context.read<FatoraCubit>().completeDownloading==true)
              ?  WebViewWidget(controller: context.read<FatoraCubit>().webViewController!)
              :  context.read<FatoraCubit>().webViewController == null
-             ? CustomErrorScreen(onTap:() => context.read<FatoraCubit>().getFatoraUrl(reservationId:widget.reservationId))
+             ? CustomErrorScreen(onTap:() => context.read<FatoraCubit>().getFatoraUrl(reservationId:widget.reservationId,))
                  :const Center(child: CircularProgressIndicator(color: AppColors.darkGreen,))
     ));
   }

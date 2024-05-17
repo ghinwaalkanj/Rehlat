@@ -25,6 +25,7 @@ class PaymentDetailsCard extends StatelessWidget {
     return BlocBuilder<ReserveTripCubit,ReserveTripStates>(
       bloc:context.read<ReserveTripCubit>()..acceptTerms=false ,
       builder: (context, state) => SingleChildScrollView(
+        reverse: true,
         child: Column(
           children: [
             Padding(

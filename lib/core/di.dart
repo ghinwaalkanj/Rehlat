@@ -4,6 +4,7 @@ import 'package:trips/cubit/payment_methods/payment_method_cubit.dart';
 import 'package:trips/data/data_resource/remote_resource/repo/payment_repo.dart';
 
 import '../cubit/booking/booking_cubit.dart';
+import '../cubit/cash_cubit/cash_cubit.dart';
 import '../cubit/evaluation/evaluation_cubit.dart';
 import '../cubit/home/home_cubit.dart';
 import '../cubit/main/main_cubit.dart';
@@ -43,6 +44,7 @@ void setUp() {
   getIt.registerFactory(()=> PaymentMethodCubit(paymentRepo: getIt<PaymentRepo>(),));
   getIt.registerFactory(()=> PrivacyCubit(profileRepo: getIt<ProfileRepo>(),));
   getIt.registerFactory(()=> FatoraCubit(paymentRepo: getIt<PaymentRepo>(),));
+  getIt.registerFactory(()=> CashCubit(paymentRepo: getIt<PaymentRepo>(),));
  //repo
   getIt.registerLazySingleton(()=> TripsRepo());
   getIt.registerLazySingleton(()=> PaymentRepo());

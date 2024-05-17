@@ -34,3 +34,4 @@ class ErrorVerifyOtpState extends OtpStates{
   final String? error;
   ErrorVerifyOtpState({required this.error});
 }
+class AfterErrorFromTripDetailsState extends OtpStates{}

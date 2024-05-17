@@ -28,7 +28,8 @@ class SendPhoneScreen extends StatelessWidget {
         if(state is LoadingSendOtpState)LoadingDialog().openDialog(context);
         if(state is ErrorSendOtpState){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context, '${state.error}');}
+          ErrorDialog.openDialog(context, '${state.error}');
+        }
         if(state is SuccessSendOtpState){
           LoadingDialog().closeDialog(context);
          if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: VerifyOTPScreen(isFromSettings: isFromSettings,));

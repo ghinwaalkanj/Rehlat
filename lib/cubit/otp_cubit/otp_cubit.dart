@@ -9,7 +9,6 @@ import 'package:trips/data/data_resource/local_resource/data_store.dart';
 import '../../core/utils/app_regexp.dart';
 import '../../core/utils/utils_functions.dart';
 import '../../data/data_resource/remote_resource/repo/trips_repo.dart';
-import '../../data/model/trip_model.dart';
 import '../../data/model/user_model.dart';
 import 'otp_states.dart';
 
@@ -17,7 +16,6 @@ class OtpCubit extends Cubit<OtpStates> {
   TextEditingController nameController=TextEditingController();
   TextEditingController phoneController=TextEditingController();
   TripsRepo tripsRepo;
-  TripModel? tripModel;
   String? phoneNumber;
   String? fullName;
   String? code;
@@ -89,5 +87,10 @@ class OtpCubit extends Cubit<OtpStates> {
   updateToSignUp({required bool updateLogin}){
     isLogin=updateLogin;
     emit(UpdateToSignUpState());
+  }
+  afterErrorFromTripDetails({required bool existError}){
+    if(existError) {
+      emit(AfterErrorFromTripDetailsState());
+    }
   }
 }

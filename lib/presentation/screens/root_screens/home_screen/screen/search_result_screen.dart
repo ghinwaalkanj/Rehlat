@@ -70,7 +70,7 @@ class SearchResultScreen extends StatelessWidget {
         }
         if(state is ErrorGetTripDetailsState){
           LoadingDialog().closeDialog(context);
-          ErrorDialog.openDialog(context, 'error_evaluation'.translate());
+          ErrorDialog.openDialog(context, state.error);
         }
       },
       builder: (context, state) => WillPopScope(

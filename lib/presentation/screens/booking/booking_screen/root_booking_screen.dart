@@ -145,7 +145,9 @@ class BookingScreen extends StatelessWidget {
             ),
           ),
         ),
-           if(context.read<BookingCubit>().isError)CustomErrorScreen(onTap: () => context.read<BookingCubit>()..getBookingList(),),
+           if(context.read<BookingCubit>().isError)CustomErrorScreen(
+             error:context.read<BookingCubit>().error,
+             onTap: () => context.read<BookingCubit>()..getBookingList(),),
             if(!context.read<BookingCubit>().isError)...[
             if(context.read<BookingCubit>().index==0) ConfirmedBookingScreen(contextx: context),
               if(context.read<BookingCubit>().index==1)const TempBookingScreen(),

@@ -26,26 +26,17 @@ class FatoraCubit extends Cubit<FatoraStates> {
                ..setNavigationDelegate(
                    NavigationDelegate(
                      onProgress: (int progress) {
-                       print('progress');
-                       print(progress);
                        if(progress==50){
                        completeDownloading=true;
                        emit(SuccessFatoraState());}
                      },
                      onPageStarted: (String url) {
-                       print('onPageStarted');
-                       print(url);
                        completeDownloading=true;
                        emit(SuccessFatoraState());
                      },
                      onPageFinished: (String url) {
-                       print('onPageFinished');
-                       print(url);
                      },
                      onUrlChange: (change) {
-
-                       print('onUrlChange');
-                       print(change.url);
                        if (change.url?.contains('https://www.google.com/')??false){
                          isGoogle=true;
                          emit(IsGoogleState());

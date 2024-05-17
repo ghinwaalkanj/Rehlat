@@ -14,6 +14,7 @@ import 'core/notifications/message_notification_hundler.dart';
 import 'core/utils/global.dart';
 import 'core/utils/utils_functions.dart';
 import 'cubit/booking/booking_cubit.dart';
+import 'cubit/cash_cubit/cash_cubit.dart';
 import 'cubit/evaluation/evaluation_cubit.dart';
 import 'cubit/fatora/fatora_cubit.dart';
 import 'cubit/home/home_cubit.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SupportCubit>()),
         BlocProvider(create: (context) => getIt<PaymentMethodCubit>()),
         BlocProvider(create: (context) => getIt<FatoraCubit>()),
+        BlocProvider(create: (context) => getIt<CashCubit>()),
    ],
     child: ScreenUtilInit(
         designSize: const Size(429, 932),

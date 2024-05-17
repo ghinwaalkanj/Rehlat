@@ -49,30 +49,17 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
     String? appSignature;
     String? otpCode;
 
-    // @override
-    // void codeUpdated() {
-    //   setState(() {
-    //     otpCode ='000000';
-    //   });
-    // }
-    //
-    // getSignture() async {
-    //   await SmsAutoFill().listenForCode();
-    //    SmsAutoFill().code.listen((event) {
-    //      print('event222');
-    //      print(event);
-    //    });
-    //   await SmsAutoFill().getAppSignature.then((signature) {
-    //     setState(() {
-    //       appSignature = signature;
-    //     });
-    //   });
-    // }
-    // @override
-    // void initState() {
-    //   super.initState();
-    //   getSignture();
-    // }
+    codeListen() async {
+      await SmsAutoFill().listenForCode();
+    }
+    setUpNotification() async {
+    await PushNotificationService().setupInteractedMessage();}
+
+    @override
+    void initState() {
+      super.initState();
+      codeListen();
+    }
     //
     // @override
     // void dispose() {
@@ -84,18 +71,27 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
       bloc:  context.read<OtpCubit>()..clearCode(),
       listener: (context, state) async {
         if(state is ValidateVerifyOtpState){ErrorDialog.openDialog(context, state.error);}
-        if(state is OtpInit2State){ await SmsAutoFill().listenForCode();}
-        if(state is BlockState){ ErrorDialog.openDialog(context, state.error);}
+        if(state is OtpInit2State){
+          codeListen();
+          // await SmsAutoFill().listenForCode();
+        }
+        if(state is BlockState){
+          ErrorDialog.openDialog(context, state.error);}
         if(state is LoadingVerifyOtpState) LoadingDialog().openDialog(context);
+        if(state is AfterErrorFromTripDetailsState){
+          LoadingDialog().closeDialog(context);
+          Navigator.pop(context);
+          codeListen();
+        }
         if(state is ErrorVerifyOtpState){
           LoadingDialog().closeDialog(context);
-          await SmsAutoFill().listenForCode();
+          codeListen();
+          //await SmsAutoFill().listenForCode();
         }
         if(state is SuccessVerifyOtpState && widget.isFromSettings ==false){
            context.read<SeatsCubit>().seconds=context.read<HomeCubit>().timer;
-           if(DataStore.instance.token!=null)context.read<ResultSearchCubit>().getTripDetails();
-           context.read<ResultSearchCubit>().selectedTripModel=context.read<OtpCubit>().tripModel;
-           successVerifyDialog(context: context,isVerifyOtp:true,onConfirm: (){
+           if(DataStore.instance.token!=null)context.read<ResultSearchCubit>().getTripDetails(context: context,);
+            successVerifyDialog(context: context,isVerifyOtp:true,onConfirm: (){
              SchedulerBinding.instance.addPostFrameCallback((_) {
             navigatorKey.currentContext!.read<SeatsCubit>().seatsIds=[];
             if(context.read<ResultSearchCubit>().selectedTripModel?.busModel?.numberSeat==33) {
@@ -119,7 +115,8 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
           });
           });
            context.read<RootPageCubit>().sendLang();
-            if(DataStore.instance.token!=null)await PushNotificationService().setupInteractedMessage();
+            if(DataStore.instance.token!=null) setUpNotification();
+             // await PushNotificationService().setupInteractedMessage();
          }
         if(state is SuccessVerifyOtpState && widget.isFromSettings ==true){
         AppRouter.navigateRemoveTo(context: context, destination: RootScreen());

@@ -182,5 +182,12 @@
   "no_trips_claims": "Complain is accepted during 7 days of trip",
   "no_notification_yet": "There is no notification yet",
   "banks": "deals with these banks",
-  "cancel_payment": "cancel payment and back to home"
- }
+  "cancel_payment": "cancel payment and back to home",
+  "boarding1":"-Select source, destination point and date you want",
+  "boarding2":"-Choose a company you want to travel with , which has empty seats,\n- choose your seat\n- book for you and for your family",
+  "boarding3":"-pay later in company office which you travel with \n- or pay online ",
+  "pay_online": "Pay online",
+  "pay_mtn": "Pay By Mtn",
+  "pay2": "Pay",
+  "pay_syriatel": "Pay By Syriatel"
+}

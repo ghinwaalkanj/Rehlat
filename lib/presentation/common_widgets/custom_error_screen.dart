@@ -10,7 +10,8 @@ import 'custom_button.dart';
 
 class CustomErrorScreen extends StatelessWidget {
   final Function()? onTap;
-  const CustomErrorScreen({super.key, required this.onTap});
+  final String? error;
+  const CustomErrorScreen({super.key, required this.onTap, this.error});
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +21,30 @@ class CustomErrorScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 10),
             Lottie.asset(AppImages.noInternetIcon,),
-            const SizedBox(height: 20),
-            CustomButton(
-              onPressed: (){
-                onTap!();
-              },
-              color: Colors.grey.shade300,
-              text: 'Retry',
-              textStyle:   AppTextStyle2.getBoldStyle(
-              fontSize: AppFontSize.size_14,
-              color:  Colors.black,
-              fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
-              w: 200.w,
+            if(error!=null)
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(error!,
+              textAlign: TextAlign.center,
+              style: AppTextStyle2.getSemiBoldStyle(
+                fontSize: AppFontSize.size_14,
+                color: Colors.black,
+                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: CustomButton(
+                onPressed: (){
+                  onTap!();
+                },
+                color: Colors.grey.shade300,
+                text: 'Retry',
+                textStyle:   AppTextStyle2.getBoldStyle(
+                fontSize: AppFontSize.size_14,
+                color:  Colors.black,
+                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                w: 200.w,
+              ),
             )
           ],
         ),

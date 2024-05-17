@@ -26,7 +26,7 @@ class UserProfileInfoScreen extends StatelessWidget {
       builder:(context, state) => BaseAppBar(
         titleScreen: 'profile'.translate(),
           child: (state is ErrorGetProfileState )
-              ? CustomErrorScreen(onTap:() => context.read<ProfileCubit>().getProfile(), )
+              ? CustomErrorScreen(onTap:() => context.read<ProfileCubit>().getProfile(),error: state.error, )
               : DataStore.instance.token== null
         ?  const MustLoginScreen()
         :  (state is LoadingGetProfileState)

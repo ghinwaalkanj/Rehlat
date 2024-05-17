@@ -145,7 +145,7 @@ class BookingCard extends StatelessWidget {
                                child: Column(
                                  mainAxisAlignment: MainAxisAlignment.start,
                                  children: [
-                                   Text('${bookingTripModel.startDate?.hour??''} : ${bookingTripModel.startDate?.minute??''}',
+                                   Text(DateFormat('jm',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
                                      style:   AppTextStyle2.getMediumStyle(
                                        fontSize: AppFontSize.size_12,
                                        color:  Colors.black,

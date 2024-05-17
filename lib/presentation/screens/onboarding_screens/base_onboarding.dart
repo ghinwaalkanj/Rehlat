@@ -60,6 +60,7 @@ class BaseOnBoardingScreen extends StatelessWidget {
                           style:   AppTextStyle2.getRegularStyle(
                           fontSize: AppFontSize.size_16,
                           color:  Colors.black,
+                          fontWeight: FontWeight.w600,
                           fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',)
                         ),
                       //  const Spacer(),

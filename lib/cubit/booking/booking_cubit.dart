@@ -13,6 +13,7 @@ import 'booking_states.dart';
   BookingCubit({required this.tripsRepo}) : super(BookingInitialState());
   int index=0;
   bool isError=false;
+  String? error;
   bool isLoading=false;
   String code='';
   List confirmedList=[];
@@ -31,10 +32,12 @@ import 'booking_states.dart';
     if(DataStore.instance.token!=null){
       isLoading=true;
       isError=false;
+      error=null;
        emit(LoadingBookingState());
       (await tripsRepo.getBooingList()).fold((l){
         isLoading=false;
         isError=true;
+        error=l;
         confirmedList=[];
         emit(ErrorBookingState(error: l));
       }, (r) {

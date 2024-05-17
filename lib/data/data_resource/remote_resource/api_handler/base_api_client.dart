@@ -55,9 +55,13 @@ class BaseApiClient {
         }
         if(saveToken != null)saveToken(response.headers['Authorization']!.first);
         if(getHeaders11 != null)getHeaders11(response.headers);
+        print('e.response?.data right');
+        print(response?.data);
         return right(converter(response.data));
       } else {
         if(getHeaders11 != null)getHeaders11(response.headers);
+        print('e.response?.data else');
+        print(response?.data['message']);
         return left(response.data['message']);
       }
     } on DioException catch (e) {
@@ -65,12 +69,16 @@ class BaseApiClient {
       if (kDebugMode) {
         print(e);
       }
+      print('e.response?.data DioException');
+      print(e.response?.data['message']);
       if(getHeaders11 != null)getHeaders11(e.response!.headers);
       return left(e.response?.data['message']??dioError['message']);
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+      print('e.response?.data catch');
+      print(e.toString());
       return left(e.toString());
     }
   }
