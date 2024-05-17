@@ -189,5 +189,6 @@
   "pay_online": "Pay online",
   "pay_mtn": "Pay By Mtn",
   "pay2": "Pay",
-  "pay_syriatel": "Pay By Syriatel"
+  "pay_syriatel": "Pay By Syriatel",
+  "phone_cash_valid": "phone number not valid,must be 9 characters and start with 9 "
 }

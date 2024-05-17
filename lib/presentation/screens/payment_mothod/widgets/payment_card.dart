@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trips/core/utils/app_router.dart';
+import 'package:trips/cubit/cash_cubit/cash_cubit.dart';
 import 'package:trips/presentation/common_widgets/cached_image.dart';
 import 'package:trips/presentation/screens/payment_mothod/screens/fatora_web_view.dart';
 
 import '../../../../data/model/payment_model.dart';
 import '../../../style/app_text_style.dart';
-import '../screens/mtn.dart';
-import '../screens/syriatel.dart';
+import '../screens/mtn/send_code_mtn.dart';
+import '../screens/syriatel/syriatel.dart';
 import 'banks_card.dart';
 
 class PaymentMethodCard extends StatelessWidget {
@@ -20,8 +22,12 @@ class PaymentMethodCard extends StatelessWidget {
     return InkWell(
       onTap: (){
         if(index==0)AppRouter.navigateTo(context: context, destination:  FatoraWebView(reservationId:  reservationId,));
-        if(index==1)AppRouter.navigateTo(context: context, destination:  const MtnCashScreen());
-        if(index==2)AppRouter.navigateTo(context: context, destination:  const SyriatelCashScreen());
+        if(index==1){
+          context.read<CashCubit>().reservationId=reservationId;
+          AppRouter.navigateTo(context: context, destination:  MtnCashScreen(reservationId:  reservationId,));}
+          if(index==2){
+            context.read<CashCubit>().reservationId=reservationId;
+            AppRouter.navigateTo(context: context, destination:  const SyriatelCashScreen());}
       },
       child: Stack(
         children: [

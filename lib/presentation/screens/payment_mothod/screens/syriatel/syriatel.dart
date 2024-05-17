@@ -13,6 +13,7 @@ class SyriatelCashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CashCubit,CashStates>(
+      bloc: context.read<CashCubit>()..clearValues() ,
       listener: (context, state) {
         if(state is LoadingSendCodeSyriatelState) LoadingDialog().openDialog(context);
         if(state is ErrorSendCodeSyriatelState){

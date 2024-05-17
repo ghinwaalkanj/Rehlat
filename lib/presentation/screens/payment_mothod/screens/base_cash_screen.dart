@@ -51,7 +51,7 @@ class BaseCashScreen extends StatelessWidget {
                         AuthTextFormField(
                           controller: phoneController,
                           keyboardType: TextInputType.phone,
-                          hintText: '09xxxxxxxx',
+                          hintText: '9xxxxxxxx',
                           labelStyle: AppTextStyle2.getBoldStyle(
                             fontSize: AppFontSize.size_14,
                             color: AppColors.lightXGreen,

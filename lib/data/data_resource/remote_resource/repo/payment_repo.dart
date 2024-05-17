@@ -21,7 +21,29 @@ class PaymentRepo {
           "reservation_id": reservationId,
         }),
         converter: (value) {
-          print(value);
+          return value['url'];
+        });
+  }
+
+  Future<Either<String,int>> sendCodeMtn({required int reservationId,required String phone,}) {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.initMtn}',
+        formData: FormData.fromMap({
+          "reservation_id": reservationId,
+          "phone":phone
+        }),
+        converter: (value) {
+          return value['data']['operation_number'];
+        });
+  }
+  Future<Either<String,String>> confirmCodeMtn({required String code,required String operationNumber,}) {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.confirmMtn}',
+        formData: FormData.fromMap({
+          "operation_number": operationNumber,
+          "code":code
+        }),
+        converter: (value) {
           return value['url'];
         });
   }

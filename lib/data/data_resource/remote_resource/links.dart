@@ -30,6 +30,8 @@ abstract class Links {
   static const terms = "terms-of-use";
   static const privacy = "privacy-policy";
   static const fatora = "reservations/payment/fatora";
+  static const initMtn = "mtn/init-payment";
+  static const confirmMtn = "mtn/confirm-payment";
   //endregion
 
 }

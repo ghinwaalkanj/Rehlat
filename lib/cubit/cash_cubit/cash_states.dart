@@ -24,3 +24,6 @@ class ErrorConfirmCodeSyriatelState extends CashStates{
   final String error;
   ErrorConfirmCodeSyriatelState({required this.error});
 }
+
+class ValidatePhoneState extends CashStates{}
+class ValidateCodeState extends CashStates{}
