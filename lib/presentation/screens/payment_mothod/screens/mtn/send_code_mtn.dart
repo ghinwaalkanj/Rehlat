@@ -16,7 +16,6 @@ class MtnCashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CashCubit,CashStates>(
-      bloc: context.read<CashCubit>()..clearValues(),
       listener: (context, state) {
           if(state is LoadingSendCodeMtnState) LoadingDialog().openDialog(context);
           if(state is ErrorSendCodeMtnState){
@@ -27,7 +26,8 @@ class MtnCashScreen extends StatelessWidget {
           }
           if(state is SuccessSendCodeMtnState){
             LoadingDialog().closeDialog(context);
-            AppRouter.navigateTo(context: context, destination:const MtnOTPCodeScreen());
+            if (state.isVerifyScreen==false)AppRouter.navigateTo(context: context, destination: const MtnOTPCodeScreen());
+            if (state.isVerifyScreen==true)ErrorDialog.openDialog(context,'success_resend_otp'.translate(),verifySuccess: true );
         }
       },
       builder:(context, state) =>  BaseCashScreen(
@@ -35,7 +35,7 @@ class MtnCashScreen extends StatelessWidget {
           phoneController: context.read<CashCubit>().mtnPhoneController,
           onChanged: (value) {},
           onConfirm: () {
-            context.read<CashCubit>().sendCodeMtn();
+            context.read<CashCubit>().sendCodeMtn(isVerifyScreen: false);
           },),
     );
   }

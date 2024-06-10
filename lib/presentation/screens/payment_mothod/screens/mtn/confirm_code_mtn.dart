@@ -5,8 +5,10 @@ import 'package:trips/presentation/common_widgets/base_verify_code_screen.dart';
 import 'package:trips/presentation/common_widgets/dialog/error_dialog.dart';
 import 'package:trips/presentation/common_widgets/dialog/loading_dialog.dart';
 
+import '../../../../../core/utils/app_router.dart';
 import '../../../../../cubit/cash_cubit/cash_cubit.dart';
 import '../../../../../cubit/cash_cubit/cash_states.dart';
+import '../../../root_screens/root_screen.dart';
 
 class MtnOTPCodeScreen extends StatelessWidget {
   const MtnOTPCodeScreen({Key? key}) : super(key: key);
@@ -22,7 +24,8 @@ class MtnOTPCodeScreen extends StatelessWidget {
           ErrorDialog.openDialog(context, 'code_valid'.translate());
         }
         if(state is SuccessConfirmCodeMtnState){
-          ErrorDialog.openDialog(context,'profile_send_otp'.translate(),verifySuccess: true);
+          ErrorDialog.openDialog(context,'pay_success'.translate(),verifySuccess: true);
+          AppRouter.navigateRemoveTo(context: context, destination:  const RootScreen());
         }
         if(state is ErrorConfirmCodeMtnState){
           LoadingDialog().closeDialog(context);
@@ -31,7 +34,9 @@ class MtnOTPCodeScreen extends StatelessWidget {
       },
       builder: (context, state) => BaseOTPCodeScreen(
         onTap: () {context.read<CashCubit>().confirmCodeMtn();},
-        onResend: () {context.read<CashCubit>().sendCodeMtn();},
+        onResend: () {
+          print('sendCodeMtn');
+          context.read<CashCubit>().sendCodeMtn(isVerifyScreen: true);},
         phoneNumber:context.read<CashCubit>().mtnPhoneController.text,
         isErrorState: false,
         code: context.read<CashCubit>().mtnCode??'',

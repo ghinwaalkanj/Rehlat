@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:trips/core/localization/app_localization.dart';
 
 import '../../data/data_resource/local_resource/data_store.dart';
 import '../style/app_font_size.dart';
@@ -38,7 +39,7 @@ class CustomErrorScreen extends StatelessWidget {
                   onTap!();
                 },
                 color: Colors.grey.shade300,
-                text: 'Retry',
+                text: 'Retry'.translate(),
                 textStyle:   AppTextStyle2.getBoldStyle(
                 fontSize: AppFontSize.size_14,
                 color:  Colors.black,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as intel;
 import 'package:trips/core/localization/app_localization.dart';
 import 'package:trips/core/utils/app_router.dart';
 import 'package:trips/core/utils/image_helper.dart';
@@ -87,13 +87,12 @@ class BookingCard extends StatelessWidget {
                    child: Column(
                      children: [
                        SizedBox(height: 12.h,),
-
                         Text(bookingTripModel.reservationNumber??'',style: AppTextStyle2.getBoldStyle(
                         fontSize: AppFontSize.size_17,
                         color:  Colors.black,
                         fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),),
                        SizedBox(height: 8.h,),
-                        Text(DateFormat('E, LLL d ',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
+                        Text(intel.DateFormat('E, LLL d ',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
                          textAlign: TextAlign.center,
                          style:   AppTextStyle2.getMediumStyle(
                               fontSize: AppFontSize.size_14,
@@ -104,23 +103,26 @@ class BookingCard extends StatelessWidget {
                            //DataStore.instance.lang=='ar'?'Tajawal-Bold':,
                          ),),
                        SizedBox(height: 8.h,),
-                       Padding(
-                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                         child: Wrap(
-                           children: [
-                             Text((bookingTripModel.company?.name??''),style: AppTextStyle2.getBoldStyle(
-                               fontSize: AppFontSize.size_10,
-                               color: AppColors.darkGreen,
-                               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
-                               maxLines: 3,
-                             ),
-                             Text('company'.translate(),style: AppTextStyle2.getBoldStyle(
-                               fontSize: AppFontSize.size_10,
-                               color: AppColors.darkGreen,
-                               fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
-                               maxLines: 3,
-                             ),
-                           ],
+                       Directionality(
+                         textDirection: TextDirection.ltr,
+                         child: Padding(
+                           padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                           child: Wrap(
+                             children: [
+                               Text((bookingTripModel.company?.name??'' ),style: AppTextStyle2.getBoldStyle(
+                                 fontSize: AppFontSize.size_10,
+                                 color: AppColors.darkGreen,
+                                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                                 maxLines: 3,
+                               ),
+                               Text('company'.translate(),style: AppTextStyle2.getBoldStyle(
+                                 fontSize: AppFontSize.size_10,
+                                 color: AppColors.darkGreen,
+                                 fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
+                                 maxLines: 3,
+                               ),
+                             ],
+                           ),
                          ),
                        ),
                      ],
@@ -145,7 +147,7 @@ class BookingCard extends StatelessWidget {
                                child: Column(
                                  mainAxisAlignment: MainAxisAlignment.start,
                                  children: [
-                                   Text(DateFormat('jm',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
+                                   Text(intel.DateFormat('jm',DataStore.instance.lang).format(bookingTripModel.startDate??DateTime.now()).toString(),
                                      style:   AppTextStyle2.getMediumStyle(
                                        fontSize: AppFontSize.size_12,
                                        color:  Colors.black,

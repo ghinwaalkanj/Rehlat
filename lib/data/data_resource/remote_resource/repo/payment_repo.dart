@@ -44,7 +44,44 @@ class PaymentRepo {
           "code":code
         }),
         converter: (value) {
-          return value['url'];
+          return 'confirm';
+        });
+  }
+
+  Future<Either<String,String>> sendCodeSyriatel({required int reservationId,required String phone,}) {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.initSyriatel}',
+        formData: FormData.fromMap({
+          "reservation_id": reservationId,
+          "phone":phone
+        }),
+        converter: (value) {
+          return value['data']['transId'];
+        });
+  }
+  Future<Either<String,String>> confirmCodeSyriatel({required String code,required String transId,required String phoneNumber,}) {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.confirmSyriatel}',
+        formData: FormData.fromMap({
+        "otp":code,
+        "transId":transId,
+        "phone":phoneNumber,
+        }),
+        converter: (value) {
+          return 'confirm';
+        });
+  }
+
+
+  Future<Either<String,int>> resendCodeSyriatel({required String transId,required String phoneNumber,}) {
+    return BaseApiClient.post(
+        url: '${Links.baseUrl}${Links.resendSyriatel}',
+        formData: FormData.fromMap({
+          "transId":transId,
+          "phone":phoneNumber,
+        }),
+        converter: (value) {
+          return value['data']['operation_number'];
         });
   }
 }

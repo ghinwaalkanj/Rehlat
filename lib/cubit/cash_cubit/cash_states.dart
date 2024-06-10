@@ -1,7 +1,11 @@
 abstract class CashStates{}
 class CashInitialState extends CashStates{}
 class LoadingSendCodeMtnState extends CashStates{}
-class SuccessSendCodeMtnState extends CashStates{}
+class SuccessSendCodeMtnState extends CashStates{
+  final bool? isVerifyScreen;
+
+  SuccessSendCodeMtnState({required this.isVerifyScreen});
+}
 class ErrorSendCodeMtnState extends CashStates{
   final String error;
   ErrorSendCodeMtnState({required this.error});
@@ -23,6 +27,12 @@ class SuccessConfirmCodeSyriatelState extends CashStates{}
 class ErrorConfirmCodeSyriatelState extends CashStates{
   final String error;
   ErrorConfirmCodeSyriatelState({required this.error});
+}
+class LoadingResendCodeSyriatelState extends CashStates{}
+class SuccessResendCodeSyriatelState extends CashStates{}
+class ErrorResendCodeSyriatelState extends CashStates{
+  final String error;
+  ErrorResendCodeSyriatelState({required this.error});
 }
 
 class ValidatePhoneState extends CashStates{}

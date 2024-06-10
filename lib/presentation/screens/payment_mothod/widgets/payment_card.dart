@@ -8,7 +8,7 @@ import 'package:trips/presentation/screens/payment_mothod/screens/fatora_web_vie
 import '../../../../data/model/payment_model.dart';
 import '../../../style/app_text_style.dart';
 import '../screens/mtn/send_code_mtn.dart';
-import '../screens/syriatel/syriatel.dart';
+import '../screens/syriatel/send_code_syriatel.dart';
 import 'banks_card.dart';
 
 class PaymentMethodCard extends StatelessWidget {
@@ -24,9 +24,11 @@ class PaymentMethodCard extends StatelessWidget {
         if(index==0)AppRouter.navigateTo(context: context, destination:  FatoraWebView(reservationId:  reservationId,));
         if(index==1){
           context.read<CashCubit>().reservationId=reservationId;
+          context.read<CashCubit>().clearValues();
           AppRouter.navigateTo(context: context, destination:  MtnCashScreen(reservationId:  reservationId,));}
           if(index==2){
             context.read<CashCubit>().reservationId=reservationId;
+            context.read<CashCubit>().clearValues();
             AppRouter.navigateTo(context: context, destination:  const SyriatelCashScreen());}
       },
       child: Stack(

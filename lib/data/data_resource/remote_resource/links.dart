@@ -32,6 +32,9 @@ abstract class Links {
   static const fatora = "reservations/payment/fatora";
   static const initMtn = "mtn/init-payment";
   static const confirmMtn = "mtn/confirm-payment";
+  static const initSyriatel = "syriatel/init-payment";
+  static const confirmSyriatel = "syriatel/confirm-payment";
+  static const resendSyriatel = "syriatel/resend-otp";
   //endregion
 
 }

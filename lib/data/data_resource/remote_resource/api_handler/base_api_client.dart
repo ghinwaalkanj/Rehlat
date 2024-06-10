@@ -8,7 +8,10 @@ import '../links.dart';
 import 'dio_errors_handler.dart';
 
 class BaseApiClient {
-  static Dio client = Dio();
+  static Dio client = Dio(
+      BaseOptions(
+          sendTimeout:const Duration(minutes: 1)  ,
+          connectTimeout:const Duration(minutes: 1) ));
   static const String _acceptHeader = 'application/json';
 
   BaseApiClient() {
