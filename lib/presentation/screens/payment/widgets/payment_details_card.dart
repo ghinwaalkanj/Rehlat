@@ -184,20 +184,24 @@ class PaymentDetailsCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 80),
-              child: CheckboxListTile(
-                activeColor: AppColors.darkGreen,
-                controlAffinity:ListTileControlAffinity.leading ,
-                title:Text('terms_cond'.translate(),style: AppTextStyle2.getSemiBoldStyle(
-                fontSize: AppFontSize.size_16,
-                color: Colors.black,
-                fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),softWrap: true
-                  ,  maxLines: 2) ,
-                value:context.read<ReserveTripCubit>().acceptTerms ,
-                onChanged: (value) {
-                  context.read<ReserveTripCubit>().acceptTermsFun(value??false);
-                },),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 80),
+              child: SizedBox()
+              // CheckboxListTile(
+              //   activeColor: AppColors.darkGreen,
+              //   controlAffinity:ListTileControlAffinity.leading ,
+              //   title:Text('terms_cond'.translate(),style: AppTextStyle2.getSemiBoldStyle(
+              //   fontSize: AppFontSize.size_16,
+              //   color: Colors.black,
+              //   fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),softWrap: true
+              //     ,  maxLines: 2) ,
+              //   value:context.read<ReserveTripCubit>().acceptTerms ,
+              //   onChanged: (value) {
+              //     acceptTermsDialog(context: context,
+              //       onConfirm: (p0) => context.read<ReserveTripCubit>().acceptTermsFun(p0),
+              //       onCancel: (p0) => context.read<ReserveTripCubit>().acceptTermsFun(p0),
+              //     );
+              //     }),
             ),
           ],
         ),

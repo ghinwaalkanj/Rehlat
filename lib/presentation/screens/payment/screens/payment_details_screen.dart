@@ -8,7 +8,6 @@ import '../../../../cubit/home/home_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_cubit.dart';
 import '../../../../cubit/passenger_cubit/passenger_states.dart';
 import '../../../../cubit/result_search_card/result_search_cubit.dart';
-import '../../../../cubit/reverse_trip/reserve_trip_cubit.dart';
 import '../../../../cubit/seats/seats_cubit.dart';
 import '../../../../data/data_resource/local_resource/data_store.dart';
 import '../../../common_widgets/base_app_bar.dart';
@@ -88,26 +87,26 @@ class PaymentDetailsScreen extends StatelessWidget {
                         child: InkWell(
                       onTap: () {
                         context.read<PassengerCubit>().isSamePrimaryPassenger=false;
-                        if(context.read<ReserveTripCubit>().acceptTerms==true) {
+                       // if(context.read<ReserveTripCubit>().acceptTerms==true) {
                           context.read<PassengerCubit>().reserveSeats(isTemp:true,seatsIds:context.read<SeatsCubit>().seatsIds);
-                        } else {
-                          ErrorDialog.openDialog(context, 'accept_terms'.translate());
-                        }
+                        // } else {
+                        //   ErrorDialog.openDialog(context, 'accept_terms'.translate());
+                        // }
                         },
-                      child: Container(
-                          height: 80,
-                          color: AppColors.white,
-                          child: Center(child: Text('pay_later'.translate(),style: AppTextStyle.lightYellowW600_14,))),
-                    )),
+                          child: Container(
+                              height: 80,
+                              color: AppColors.white,
+                              child: Center(child: Text('pay_later'.translate(),style: AppTextStyle.lightYellowW600_14,))),
+                        )),
                     Expanded(
                       child: InkWell(
                         onTap: () {
                           context.read<PassengerCubit>().isSamePrimaryPassenger=false;
-                          if(context.read<ReserveTripCubit>().acceptTerms==true) {
+                     //     if(context.read<ReserveTripCubit>().acceptTerms==true) {
                             context.read<PassengerCubit>().reserveSeats(isTemp:false,seatsIds:context.read<SeatsCubit>().seatsIds);
-                          } else {
-                            ErrorDialog.openDialog(context,'accept_terms'.translate());
-                          }
+                          // } else {
+                          //   ErrorDialog.openDialog(context,'accept_terms'.translate());
+                          // }
                         },
                         child: Container(
                           height: 80,

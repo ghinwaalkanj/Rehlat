@@ -46,7 +46,7 @@
   "payment_option": "Payment Option",
   "accept_all": "Accept all",
   "terms_cond": "Accept all the  terms  condition and privacy policy",
-  "accept_terms": "Please accept our terms",
+  "accept_terms": "Please accept our privacy policy",
   "pay_later": "Pay Later",
   "online_pay": "Online Pay",
   "passenger": "Passenger",
@@ -192,5 +192,7 @@
   "pay_syriatel": "Pay By Syriatel",
   "phone_cash_valid": "phone number not valid,must be 9 characters and start with 9 ",
   "Retry": "Retry",
-  "pay_success": "Your transaction has been processed successfully"
+  "pay_success": "Your transaction has been processed successfully",
+  "accept": "accept",
+  "reject": "reject"
 }

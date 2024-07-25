@@ -35,3 +35,4 @@ class ErrorVerifyOtpState extends OtpStates{
   ErrorVerifyOtpState({required this.error});
 }
 class AfterErrorFromTripDetailsState extends OtpStates{}
+class AcceptTermsOTPState extends OtpStates{}

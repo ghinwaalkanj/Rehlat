@@ -15,6 +15,7 @@ import '../../style/app_colors.dart';
 import '../../style/app_font_size.dart';
 import '../../style/app_images.dart';
 import '../../style/app_text_style_2.dart';
+import '../payment/widgets/accept_terms_dialog.dart';
 
 class SendPhoneScreen extends StatelessWidget {
   final bool? isFromSettings;
@@ -114,6 +115,24 @@ class SendPhoneScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32,),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  child: CheckboxListTile(
+                      activeColor: AppColors.darkGreen,
+                      controlAffinity:ListTileControlAffinity.leading ,
+                      title:Text('terms_cond'.translate(),style: AppTextStyle2.getSemiBoldStyle(
+                        fontSize: AppFontSize.size_16,
+                        color: Colors.black,
+                        fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),softWrap: true
+                          ,  maxLines: 2) ,
+                      value:context.read<OtpCubit>().acceptTerms ,
+                      onChanged: (value) {
+                        acceptTermsDialog(context: context,
+                          onConfirm: (p0) => context.read<OtpCubit>().acceptTermsFun(p0),
+                          onCancel: (p0) => context.read<OtpCubit>().acceptTermsFun(p0),
+                        );
+                      }),
+                ),
                 CustomButton(
                   h: 55,
                   w: 300,
@@ -124,9 +143,13 @@ class SendPhoneScreen extends StatelessWidget {
                     fontSize: AppFontSize.size_14,
                     color: Colors.white,
                     fontFamily: DataStore.instance.lang=='ar'?'Tajawal':'Poppins',),
-                  //AppTextStyle.whiteW600_14,
                   onPressed: () {
-                    context.read<OtpCubit>().sendOtp(isVerifyScreen: false);
+                    if(context.read<OtpCubit>().acceptTerms==false){
+                      ErrorDialog.openDialog(context, 'accept_terms'.translate());
+                    }
+                    else{
+                      context.read<OtpCubit>().sendOtp(isVerifyScreen: false);
+                    }
                   },),
                 const SizedBox(height: 20,),
                 (context.read<OtpCubit>().isLogin==true)

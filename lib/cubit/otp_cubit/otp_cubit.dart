@@ -24,6 +24,7 @@ class OtpCubit extends Cubit<OtpStates> {
   String? blockedDuration;
   Headers? verifyHeaders;
   bool isLogin=true;
+  bool acceptTerms=false;
   OtpCubit({required this.tripsRepo}) : super(OtpInitialState());
 
   clearCode(){
@@ -93,4 +94,10 @@ class OtpCubit extends Cubit<OtpStates> {
       emit(AfterErrorFromTripDetailsState());
     }
   }
+
+  acceptTermsFun(bool value){
+    acceptTerms=value;
+    emit(AcceptTermsOTPState());
+  }
+
 }
